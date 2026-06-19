@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-ExamoBeApplication<examo-be>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "cz.zakharchenkoartem.examo_be.ExamoBeApplication",
+      "projectName": "examo-be",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

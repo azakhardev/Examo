@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: examo-be
+
+  # 1. Pstgresql configuration
+  datasource:
+    url: jdbc:postgresql://localhost:5432/examo
+    username: postgres
+    password: 123456Ab
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update # Autoupdate tables based on DTOs
+    show-sql: true # Shows SQL in console
+
+  # 2. MongoDb configuration
+  mongodb:
+    uri: mongodb://localhost:27017/examo
+
+server:
+  port: 8080 # Backend port
