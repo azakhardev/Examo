@@ -13,6 +13,7 @@ CREATE TABLE "quizzes" (
   "name" varchar(256) NOT NULL,
   "description" text,
   "author_id" integer NOT NULL,
+  "visibility" varchar(50) DEFAULT 'PRIVATE',
   "created_at" timestamp DEFAULT (now())
 );
 
@@ -54,6 +55,20 @@ CREATE TABLE "practice_history" (
   "correct_answers" integer NOT NULL
 );
 
+CREATE TABLE "quiz_shares" (
+  "id" bigserial PRIMARY KEY,
+  "quiz_id" uuid NOT NULL,
+  "user_id" integer NOT NULL,
+  "access_level" varchar(50) DEFAULT 'READ'
+);
+
+CREATE TABLE "quiz_blocks" (
+  "id" bigserial PRIMARY KEY,
+  "quiz_id" uuid NOT NULL,
+  "user_id" integer NOT NULL,
+  "blocked_at" timestamp DEFAULT (now())
+);
+
 ALTER TABLE "quizzes" ADD FOREIGN KEY ("author_id") REFERENCES "users" ("id") ON DELETE CASCADE DEFERRABLE INITIALLY IMMEDIATE;
 
 ALTER TABLE "online_tests" ADD FOREIGN KEY ("quiz_id") REFERENCES "quizzes" ("id") DEFERRABLE INITIALLY IMMEDIATE;
@@ -67,3 +82,11 @@ ALTER TABLE "student_answers" ADD FOREIGN KEY ("submission_id") REFERENCES "test
 ALTER TABLE "practice_history" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE DEFERRABLE INITIALLY IMMEDIATE;
 
 ALTER TABLE "practice_history" ADD FOREIGN KEY ("quiz_id") REFERENCES "quizzes" ("id") DEFERRABLE INITIALLY IMMEDIATE;
+
+ALTER TABLE "quiz_shares" ADD FOREIGN KEY ("quiz_id") REFERENCES "quizzes" ("id") ON DELETE CASCADE DEFERRABLE INITIALLY IMMEDIATE;
+
+ALTER TABLE "quiz_shares" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE DEFERRABLE INITIALLY IMMEDIATE;
+
+ALTER TABLE "quiz_blocks" ADD FOREIGN KEY ("quiz_id") REFERENCES "quizzes" ("id") ON DELETE CASCADE DEFERRABLE INITIALLY IMMEDIATE;
+
+ALTER TABLE "quiz_blocks" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE DEFERRABLE INITIALLY IMMEDIATE;
