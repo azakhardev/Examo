@@ -9,6 +9,16 @@
       "projectName": "examo-be",
       "args": "",
       "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-Application<examo-be>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "cz.zakharchenkoartem.examo_be.Application",
+      "projectName": "examo-be",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
     }
   ]
 }
