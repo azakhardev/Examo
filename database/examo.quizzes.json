@@ -1,153 +1,116 @@
-[{
-  "_id": "550e8400-e29b-41d4-a716-446655440000",
-  "title": "Database Fundamentals",
-  "description": "Preparation for the final exam.",
-  "authorId": 2,
-  "updatedAt": "2026-06-20T10:00:00Z",
-  "questions": [
-    {
-      "id": "q1",
-      "type": "SINGLE_CHOICE",
-      "questionText": "Which database is purely relational?",
-      "options": [
-        "MongoDB",
-        "PostgreSQL",
-        "Redis"
-      ],
-      "correctAnswers": [
-        "PostgreSQL"
-      ],
-      "maxPoints": 1,
-      "negativePoints": 0.5
-    },
-    {
-      "id": "q2",
-      "type": "OPEN",
-      "questionText": "Which SQL command is used to delete a table?",
-      "correctAnswers": [
-        "DROP TABLE"
-      ],
-      "maxPoints": 2,
-      "negativePoints": 0
-    }
-  ]
-},
-{
-  "_id": "111e8400-e29b-41d4-a716-446655441111",
-  "title": "Software Architecture Patterns",
-  "description": "Advanced quiz covering microservices, monolithic designs, and fundamental design patterns.",
-  "authorId": 2,
-  "updatedAt": "2026-06-20T12:00:00Z",
-  "questions": [
-    {
-      "id": "q1",
-      "type": "SINGLE_CHOICE",
-      "questionText": "What does the 'C' in MVC stand for?",
-      "options": [
-        "Component",
-        "Controller",
-        "Container",
-        "Context"
-      ],
-      "correctAnswers": [
-        "Controller"
-      ],
-      "maxPoints": 1,
-      "negativePoints": 0.5
-    },
-    {
-      "id": "q2",
-      "type": "MULTIPLE_CHOICE",
-      "questionText": "Which of the following are primary characteristics of a Microservices architecture?",
-      "options": [
-        "Highly coupled components",
-        "Independently deployable",
-        "Single shared database",
-        "Organized around business capabilities"
-      ],
-      "correctAnswers": [
-        "Independently deployable",
-        "Organized around business capabilities"
-      ],
-      "maxPoints": 4,
-      "negativePoints": 1
-    },
-    {
-      "id": "q3",
-      "type": "YES_NO",
-      "questionText": "Is the 'Singleton' pattern classified as a behavioral design pattern?",
-      "options": [
-        "YES",
-        "NO"
-      ],
-      "correctAnswers": [
-        "NO"
-      ],
-      "maxPoints": 1,
-      "negativePoints": 1
-    },
-    {
-      "id": "q4",
-      "type": "OPEN",
-      "questionText": "What are the three pillars of the CAP theorem? (Write them separated by commas)",
-      "correctAnswers": [
-        "Consistency, Availability, Partition tolerance"
-      ],
-      "maxPoints": 3,
-      "negativePoints": 0
-    }
-  ]
-},
-{
-  "_id": "222e8400-e29b-41d4-a716-446655442222",
-  "title": "React Native & Expo Basics",
-  "description": "A quick test on cross-platform mobile development components and state management.",
-  "authorId": 1,
-  "updatedAt": "2026-06-20T12:30:00Z",
-  "questions": [
-    {
-      "id": "q1",
-      "type": "SINGLE_CHOICE",
-      "questionText": "Which component is highly optimized for rendering long scrolling lists of data in React Native?",
-      "options": [
-        "ScrollView",
-        "ListView",
-        "FlatList",
-        "DataGrid"
-      ],
-      "correctAnswers": [
-        "FlatList"
-      ],
-      "maxPoints": 2,
-      "negativePoints": 0.5
-    },
-    {
-      "id": "q2",
-      "type": "MULTIPLE_CHOICE",
-      "questionText": "Which of the following are valid state management tools commonly used with React Native?",
-      "options": [
-        "Redux",
-        "Zustand",
-        "Hibernate",
-        "React Context"
-      ],
-      "correctAnswers": [
-        "Redux",
-        "Zustand",
-        "React Context"
-      ],
-      "maxPoints": 3,
-      "negativePoints": 1.5
-    },
-    {
-      "id": "q3",
-      "type": "OPEN",
-      "questionText": "What is the standard terminal command to start an Expo development server?",
-      "correctAnswers": [
-        "npx expo start"
-      ],
-      "maxPoints": 2,
-      "negativePoints": 0
-    }
-  ]
-}]
+[
+  {
+    "_id": "550e8400-e29b-41d4-a716-446655440000",
+    "title": "Database Fundamentals",
+    "description": "Preparation for the final exam.",
+    "categories": ["SQL", "Database"],
+    "authorId": 2,
+    "updatedAt": "2026-06-20T10:00:00Z",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "SINGLE_CHOICE",
+        "questionText": "Which database is purely relational?",
+        "options": ["MongoDB", "PostgreSQL", "Redis"],
+        "correctAnswers": ["PostgreSQL"],
+        "maxPoints": 1,
+        "negativePoints": 0.5
+      },
+      {
+        "id": "q2",
+        "type": "OPEN",
+        "questionText": "Which SQL command is used to delete a table?",
+        "correctAnswers": ["DROP TABLE"],
+        "maxPoints": 2,
+        "negativePoints": 0
+      }
+    ]
+  },
+  {
+    "_id": "111e8400-e29b-41d4-a716-446655441111",
+    "title": "Software Architecture Patterns",
+    "description": "Advanced quiz covering microservices, monolithic designs, and fundamental design patterns.",
+    "authorId": 2,
+    "updatedAt": "2026-06-20T12:00:00Z",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "SINGLE_CHOICE",
+        "questionText": "What does the 'C' in MVC stand for?",
+        "options": ["Component", "Controller", "Container", "Context"],
+        "correctAnswers": ["Controller"],
+        "maxPoints": 1,
+        "negativePoints": 0.5
+      },
+      {
+        "id": "q2",
+        "type": "MULTIPLE_CHOICE",
+        "questionText": "Which of the following are primary characteristics of a Microservices architecture?",
+        "options": [
+          "Highly coupled components",
+          "Independently deployable",
+          "Single shared database",
+          "Organized around business capabilities"
+        ],
+        "correctAnswers": [
+          "Independently deployable",
+          "Organized around business capabilities"
+        ],
+        "maxPoints": 4,
+        "negativePoints": 1
+      },
+      {
+        "id": "q3",
+        "type": "YES_NO",
+        "questionText": "Is the 'Singleton' pattern classified as a behavioral design pattern?",
+        "options": ["YES", "NO"],
+        "correctAnswers": ["NO"],
+        "maxPoints": 1,
+        "negativePoints": 1
+      },
+      {
+        "id": "q4",
+        "type": "OPEN",
+        "questionText": "What are the three pillars of the CAP theorem? (Write them separated by commas)",
+        "correctAnswers": ["Consistency, Availability, Partition tolerance"],
+        "maxPoints": 3,
+        "negativePoints": 0
+      }
+    ]
+  },
+  {
+    "_id": "222e8400-e29b-41d4-a716-446655442222",
+    "title": "React Native & Expo Basics",
+    "description": "A quick test on cross-platform mobile development components and state management.",
+    "authorId": 1,
+    "updatedAt": "2026-06-20T12:30:00Z",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "SINGLE_CHOICE",
+        "questionText": "Which component is highly optimized for rendering long scrolling lists of data in React Native?",
+        "options": ["ScrollView", "ListView", "FlatList", "DataGrid"],
+        "correctAnswers": ["FlatList"],
+        "maxPoints": 2,
+        "negativePoints": 0.5
+      },
+      {
+        "id": "q2",
+        "type": "MULTIPLE_CHOICE",
+        "questionText": "Which of the following are valid state management tools commonly used with React Native?",
+        "options": ["Redux", "Zustand", "Hibernate", "React Context"],
+        "correctAnswers": ["Redux", "Zustand", "React Context"],
+        "maxPoints": 3,
+        "negativePoints": 1.5
+      },
+      {
+        "id": "q3",
+        "type": "OPEN",
+        "questionText": "What is the standard terminal command to start an Expo development server?",
+        "correctAnswers": ["npx expo start"],
+        "maxPoints": 2,
+        "negativePoints": 0
+      }
+    ]
+  }
+]

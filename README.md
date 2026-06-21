@@ -108,6 +108,7 @@ Stores the live, editable quiz definitions. The `_id` matches the `id` of the qu
   "_id": "UUID (Matches quizzes.id in Postgres)",
   "title": "Database Fundamentals",
   "description": "Preparation for the final exam.",
+  "categories": ["IT", "SQL", "Databases"],
   "authorId": 42,
   "updatedAt": "2026-06-19T18:15:00Z",
   "questions": [
@@ -144,7 +145,8 @@ Stores the live, editable quiz definitions. The `_id` matches the `id` of the qu
       "questionText": "Which SQL command is used to delete a table?",
       "correctAnswers": ["DROP TABLE"],
       "maxPoints": 2.0,
-      "negativePoints": 0.0
+      "negativePoints": 0.0,
+      "imageUrl": "/images/test_UUID/q4.jpg"
     }
   ]
 }
