@@ -10,9 +10,9 @@ A full-stack, feature-rich mobile quiz application designed for both students an
   - **PostgreSQL:** For structured data (user accounts, authentication, exam history, analytics).
   - **MongoDB:** For schema-less quiz layouts, flexible question types (multiple-choice, open questions), and offline-ready JSON templates.
 
-### 📊 PostgreSQL Database Schema (Relational & Access Control)
+### 📊 PostgreSQL Database Schema
 
-This database handles users, access management (sharing and blocking), test sessions, and aggregated statistics.
+This database handles users, access management (sharing and blocking), test sessions, practice history and aggregated statistics.
 
 ```mermaid
 erDiagram
@@ -67,6 +67,7 @@ erDiagram
         timestamp start_at
         timestamp end_at
         int time_limit_minutes
+        boolean allow_review
     }
     test_submissions {
         bigint id PK
@@ -178,3 +179,7 @@ _In PostgreSQL, the student_answers.question_id column maps directly to the inne
 - **Teacher Tools:** Automated PDF test generator with custom page layout and unique test IDs.
 - **Seamless Sharing:** Instant quiz sharing via generated QR codes or deep links.
 - **Offline First:** Local JSON/XML export and import capabilities using `expo-file-system`.
+
+## Links
+
+- Figma: [Examo](https://www.figma.com/design/IvHsNmpnB761eMDljY8AZ6/Untitled?node-id=0-1&p=f&t=jtLGXAnMlPA03DBp-0)

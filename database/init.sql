@@ -24,7 +24,8 @@ CREATE TABLE "online_tests" (
   "access_code" varchar(10) UNIQUE NOT NULL,
   "start_at" timestamp NOT NULL,
   "end_at" timestamp NOT NULL,
-  "time_limit_minutes" integer NOT NULL
+  "time_limit_minutes" integer NOT NUL
+  "allow_review" boolean DEFAULT true
 );
 
 CREATE TABLE "test_submissions" (
