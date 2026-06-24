@@ -61,6 +61,7 @@ CREATE TABLE "quiz_shares" (
   "quiz_id" uuid NOT NULL,
   "user_id" integer NOT NULL,
   "access_level" varchar(50) DEFAULT 'READ'
+  "favorite" boolean DEFAULT false
 );
 
 CREATE TABLE "quiz_blocks" (
