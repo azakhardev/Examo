@@ -1,10 +1,10 @@
 import COLORS from "@/constants/colors";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import SearchBar from "@/components/layout/SearchBar";
-import { Quizz } from "@/types/Quizz";
+import { Quiz } from "@/types/Quiz";
 
 export default function Explore() {
-  const recent: Quizz[] = [];
+  const recent: Quiz[] = [];
 
   return (
     <View style={styles.container}>

@@ -3,13 +3,13 @@ import { Ionicons } from "@expo/vector-icons";
 import COLORS from "@/constants/colors";
 import MyQuizzesHeader from "@/components/layout/MyQuizzesHeader";
 import ExploreHeader from "@/components/layout/ExploreHeader";
-import TestsHeader from "@/components/layout/TestsHeader";
 import ProfileHeader from "@/components/layout/ProfileHeader";
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
+        sceneStyle: { backgroundColor: COLORS.background },
         tabBarStyle: {
           backgroundColor: COLORS.surface,
           borderTopWidth: 1,
@@ -45,7 +45,7 @@ export default function TabLayout() {
         name="tests"
         options={{
           title: "Tests",
-          header: () => false,
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Ionicons name="calendar" size={24} color={color} />
           ),

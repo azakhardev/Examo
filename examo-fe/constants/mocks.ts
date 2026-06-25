@@ -1,4 +1,8 @@
-export const quizz_1 = {
+import { Question } from "@/types/Question";
+import { Quiz } from "@/types/Quiz";
+import { Test } from "@/types/Test";
+
+export const quiz_1: Quiz = {
   id: "550e8400-e29b-41d4-a716-446655440000",
   title: "Database Fundamentals",
   description: "Preparation for the final exam.",
@@ -27,7 +31,7 @@ export const quizz_1 = {
   ],
 };
 
-export const quizz_2 = {
+export const quiz_2: Quiz = {
   id: "111e8400-e29b-41d4-a716-446655441111",
   title: "Software Architecture Patterns",
   description:
@@ -85,9 +89,9 @@ export const quizz_2 = {
   ],
 };
 
-export const quizz_array = [quizz_1, quizz_2];
+export const quizz_array: Quiz[] = [quiz_1, quiz_2];
 
-export const question = {
+export const question: Question = {
   id: "q1",
   type: "SINGLE_CHOICE",
   questionText: "Which database is purely relational?",
@@ -95,4 +99,39 @@ export const question = {
   correctAnswers: ["PostgreSQL"],
   maxPoints: 1,
   negativePoints: 0.5,
+};
+
+export const upcoming_test: Test = {
+  id: 1,
+  quiz: {
+    id: "a1b2",
+    title: "Applied Robotics",
+    author: "ČVUT",
+    description: "Some description",
+    updatedAt: "2026-06-20T12:00:00Z",
+    favorite: true,
+  },
+  access_code: "ROBO2026",
+  start_at: "22. 06. 2026 17:20",
+  end_at: "22. 06. 2026 18:20",
+  time_limit_minutes: 60,
+};
+
+// Příklad dokončeného testu (History)
+export const history_test: Test = {
+  id: 2,
+  quiz: {
+    id: "x9y8",
+    title: "Low Level Programming",
+    author: "ČVUT",
+    description: "Some description",
+    updatedAt: "2026-06-20T12:00:00Z",
+    favorite: false,
+  },
+  access_code: "ASM2026",
+  start_at: "22. 06. 2026 17:20",
+  end_at: "22. 06. 2026 18:20",
+  time_limit_minutes: 60,
+  total_gained_points: 17,
+  submitted_at: "22. 06. 2026 18:05",
 };

@@ -1,17 +1,18 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Quizz } from "@/types/Quizz";
+import { Quiz } from "@/types/Quiz";
 import COLORS from "@/constants/colors";
 
 type QuizCardProps = {
-  quizz: Quizz;
+  quizz: Quiz;
+  onPress?: () => void;
 };
 
-export default function QuizzCard({ quizz }: QuizCardProps) {
+export default function QuizCard({ quizz, onPress }: QuizCardProps) {
   const uuid_array = quizz.id.split("-");
   return (
-    <TouchableOpacity style={styles.card} activeOpacity={0.7}>
+    <TouchableOpacity style={styles.card} activeOpacity={0.7} onPress={onPress}>
       <View style={styles.headerRow}>
         <Text style={styles.title} numberOfLines={1}>
           {quizz.title}

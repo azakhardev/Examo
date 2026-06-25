@@ -3,9 +3,10 @@ import { View, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "@/constants/colors";
 import { quizz_array } from "@/constants/mocks";
-import QuizzCard from "@/components/quizzes/QuizzCard";
+import QuizCard from "@/components/quizzes/QuizCard";
 import SearchBar from "@/components/layout/SearchBar";
-import Fab from "@/components/utils/Fab";
+import Fab from "@/components/ui/Fab";
+import { router } from "expo-router";
 
 export default function QuizzesScreen() {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -31,7 +32,18 @@ export default function QuizzesScreen() {
 
       <FlatList
         data={quizz_array}
-        renderItem={({ item }) => <QuizzCard key={item.id} quizz={item} />}
+        renderItem={({ item }) => (
+          <QuizCard
+            key={item.id}
+            quizz={item}
+            onPress={() =>
+              router.push({
+                pathname: "/quizzes/[uuid]",
+                params: { uuid: item.id },
+              })
+            }
+          />
+        )}
         contentContainerStyle={{ padding: 16 }}
       />
 
