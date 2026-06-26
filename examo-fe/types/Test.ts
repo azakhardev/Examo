@@ -3,6 +3,7 @@ import { Quiz } from "./Quiz";
 export type Test = {
   id: number;
   quiz: Quiz;
+  description?: string;
   access_code: string;
   start_at: string;
   end_at: string;

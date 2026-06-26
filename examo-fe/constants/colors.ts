@@ -11,8 +11,8 @@ const COLORS = {
   text: "#F8F8F8", // Main headings, typed text
   textSecondary: "#A0A0A5", // Subtitles, placeholders
 
-  correct: "#4EAF74", // Success, right answer
-  incorrect: "#E65C5C", // Error, wrong answer
+  success: "#4EAF74", // Success, right answer
+  danger: "#E65C5C", // Error, wrong answer
   disabled: "#4A4A52",
 };
 

@@ -37,12 +37,12 @@ INSERT INTO quiz_blocks (quiz_id, user_id) VALUES
 
 -- 4. ONLINE TESTS (Live test instances launched by teachers)
 -- Teacher Jane launches the Architecture test
-INSERT INTO online_tests (quiz_id, snapshot_id, access_code, start_at, end_at, time_limit_minutes) VALUES
-('111e8400-e29b-41d4-a716-446655441111', '333e8400-e29b-41d4-a716-446655443333', 'ARCH2026', '2026-06-20 10:00:00', '2026-06-20 12:00:00', 30);
+INSERT INTO online_tests (quiz_id, snapshot_id, description, access_code, start_at, end_at, time_limit_minutes) VALUES
+('111e8400-e29b-41d4-a716-446655441111', '333e8400-e29b-41d4-a716-446655443333', 'Test about modern arhcitecture with bit of geometry and something else. You have half an hour for the test.' ,'ARCH2026', '2026-06-20 10:00:00', '2026-06-20 12:00:00', 30);
 
 -- Artem launches his React Native test for friends
-INSERT INTO online_tests (quiz_id, snapshot_id, access_code, start_at, end_at, time_limit_minutes) VALUES
-('222e8400-e29b-41d4-a716-446655442222', '444e8400-e29b-41d4-a716-446655444444', 'REACT123', '2026-06-20 12:00:00', '2026-06-21 12:00:00', 15);
+INSERT INTO online_tests (quiz_id, snapshot_id, description, access_code, start_at, end_at, time_limit_minutes) VALUES
+('222e8400-e29b-41d4-a716-446655442222', '444e8400-e29b-41d4-a716-446655444444', 'Welcome to my test about React. Do you want to test your knowledge?', 'REACT123', '2026-06-20 12:00:00', '2026-06-21 12:00:00', 15);
 
 -- 5. TEST SUBMISSIONS (Records of users who submitted the test)
 INSERT INTO test_submissions (test_id, user_id, submitted_at, total_gained_points) VALUES
