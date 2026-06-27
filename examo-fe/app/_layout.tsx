@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import * as NavigationBar from "expo-navigation-bar";
 import { Platform } from "react-native";
 import { ThemeProvider, DarkTheme } from "@react-navigation/native";
+import EditQuiz from "./quizzes/[uuid]/edit";
+import EditQuizHeader from "@/components/layout/EditQuizHeader";
 
 export default function RootLayout() {
   useEffect(() => {
@@ -35,16 +37,29 @@ export default function RootLayout() {
       >
         <Stack.Screen name="(tabs)" />
 
-        <Stack.Screen name="quizzes/[id]" />
+        <Stack.Screen name="quizzes/[uuid]" />
 
         <Stack.Screen name="tests/[id]" />
 
         <Stack.Screen
-          name="edit-question"
+          name="quizzes/[uuid]/edit"
           options={{
-            presentation: "modal",
-            title: "Edit Question",
+            presentation: "fullScreenModal",
+            title: "Edit Quiz",
             headerShown: true,
+            header: () => <EditQuizHeader />,
+            animation: "fade",
+          }}
+        />
+
+        <Stack.Screen
+          name="quizzes/[uuid]/tests/index.tsx"
+          options={{
+            presentation: "fullScreenModal",
+            title: "Start Test",
+            headerShown: true,
+            headerStyle: { backgroundColor: COLORS.background },
+            animation: "fade",
           }}
         />
       </Stack>

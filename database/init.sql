@@ -50,11 +50,12 @@ CREATE TABLE "practice_history" (
   "user_id" integer NOT NULL,
   "quiz_id" uuid NOT NULL,
   "mode" varchar(50) NOT NULL,
-  "completed_at" timestamp NOT NULL DEFAULT (now()),
-  "duration_seconds" integer NOT NULL,
+  "started_at" timestamp NOT NULL DEFAULT (now())
+  "completed_at" timestamp,
+  "duration_minutes" integer,
   "total_questions" integer NOT NULL,
-  "total_answers" integer NOT NULL,
-  "correct_answers" integer NOT NULL
+  "total_answers" integer,
+  "correct_answers" integer
 );
 
 CREATE TABLE "quiz_shares" (

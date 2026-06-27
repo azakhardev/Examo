@@ -59,6 +59,6 @@ INSERT INTO student_answers (submission_id, question_id, student_answer_text, ga
 ((SELECT id FROM test_submissions WHERE user_id = (SELECT id FROM users WHERE username = 'azakhardev') AND test_id = (SELECT id FROM online_tests WHERE access_code = 'ARCH2026')), 'q4', 'Consistency, Availability, Partition tolerance', 3.0);
 
 -- 7. PRACTICE HISTORY (Offline/Solo learning statistics)
-INSERT INTO practice_history (user_id, quiz_id, mode, duration_seconds, total_questions, total_answers, correct_answers) VALUES
-((SELECT id FROM users WHERE username = 'azakhardev'), '111e8400-e29b-41d4-a716-446655441111', 'PRACTICE', 320, 4, 4, 3),
-((SELECT id FROM users WHERE username = 'azakhardev'), '550e8400-e29b-41d4-a716-446655440000', 'FLASHCARDS', 120, 2, 2, 2);
+INSERT INTO practice_history (user_id, quiz_id, mode, start_at ,completed_at, duration_minutes, total_questions, total_answers, correct_answers) VALUES
+((SELECT id FROM users WHERE username = 'azakhardev'), '111e8400-e29b-41d4-a716-446655441111', 'PRACTICE',NOW() - INTERVAL '1 hour', NOW() ,320, 4, 4, 3),
+((SELECT id FROM users WHERE username = 'azakhardev'), '550e8400-e29b-41d4-a716-446655440000', 'FLASHCARDS',NOW() - INTERVAL '30 minute', NOW() ,120, 2, 2, 2);
