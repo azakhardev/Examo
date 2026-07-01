@@ -22,6 +22,7 @@ CREATE TABLE "online_tests" (
   "quiz_id" uuid NOT NULL,
   "snapshot_id" uuid NOT NULL,
   "access_code" varchar(10) UNIQUE NOT NULL,
+  "title" varchar(256) NOT NULL DEFAULT "Missing title",
   "description" text default null,
   "start_at" timestamp NOT NULL,
   "end_at" timestamp NOT NULL,

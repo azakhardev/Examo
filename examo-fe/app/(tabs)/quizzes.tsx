@@ -8,7 +8,7 @@ import SearchBar from "@/components/layout/SearchBar";
 import Fab from "@/components/ui/Fab";
 import { router } from "expo-router";
 
-export default function Quizzes() {
+function QuizzesScreen() {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
@@ -55,6 +55,8 @@ export default function Quizzes() {
     </View>
   );
 }
+
+export default QuizzesScreen;
 
 const styles = StyleSheet.create({
   container: {

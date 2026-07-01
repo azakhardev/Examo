@@ -12,29 +12,34 @@ import COLORS from "@/constants/colors";
 import QuizDetailHeader from "@/components/layout/QuizDetailHeader";
 import QuizSettingsModal from "@/components/quizzes/QuizSettingsModal";
 import QuizQuestionCard from "@/components/quizzes/QuizQuestionCard";
-import { quiz_1 } from "@/constants/mocks";
+import { QUIZ_1 } from "@/constants/mocks";
 
-export default function QuizDetail() {
+function QuizDetailScreen() {
   const { uuid }: { uuid: string } = useLocalSearchParams();
 
   const [isSettingsVisible, setIsSettingsVisible] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const quiz = quiz_1;
+  const quiz = QUIZ_1;
 
-  const handlePractice = () => {
+  function handlePractice() {
     router.push({
       pathname: "/quizzes/[uuid]/practice",
       params: { uuid: uuid },
     });
-  };
+  }
 
-  const handleStartTest = () => {
+  function handleStartTest() {
     router.push({
       pathname: "/quizzes/[uuid]/tests",
       params: { uuid: uuid },
     });
-  };
+  }
+
+  function handleToggleFavorite() {
+    setIsFavorite((old) => !old);
+    console.log("Toggle favorite - send request", isFavorite);
+  }
 
   return (
     <View style={styles.container}>
@@ -42,7 +47,7 @@ export default function QuizDetail() {
         title="React Hooks Mastery"
         isFavorite={isFavorite}
         isEditing={false}
-        onFavoriteToggle={() => setIsFavorite(!isFavorite)}
+        onFavoriteToggle={handleToggleFavorite}
         onSettingsPress={() => setIsSettingsVisible(true)}
       />
       <ScrollView>
@@ -95,6 +100,8 @@ export default function QuizDetail() {
     </View>
   );
 }
+
+export default QuizDetailScreen;
 
 const styles = StyleSheet.create({
   container: {

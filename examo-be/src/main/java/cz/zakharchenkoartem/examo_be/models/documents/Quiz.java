@@ -15,6 +15,8 @@ public class Quiz {
 
     private String description;
 
+    private String link;
+
     private List<String> categories;
 
     private Integer authorId;
@@ -45,6 +47,14 @@ public class Quiz {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public List<String> getCategories() {
@@ -86,6 +96,7 @@ public class Quiz {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         result = prime * result + ((description == null) ? 0 : description.hashCode());
+        result = prime * result + ((link == null) ? 0 : link.hashCode());
         result = prime * result + ((categories == null) ? 0 : categories.hashCode());
         result = prime * result + ((authorId == null) ? 0 : authorId.hashCode());
         result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
@@ -117,6 +128,11 @@ public class Quiz {
                 return false;
         } else if (!description.equals(other.description))
             return false;
+        if (link == null) {
+            if (other.link != null)
+                return false;
+        } else if (!link.equals(other.link))
+            return false;
         if (categories == null) {
             if (other.categories != null)
                 return false;
@@ -142,7 +158,9 @@ public class Quiz {
 
     @Override
     public String toString() {
-        return "Quiz [id=" + id + ", title=" + title + ", description=" + description + ", categories=" + categories
-                + ", authorId=" + authorId + ", updatedAt=" + updatedAt + ", questions=" + questions + "]";
+        return "Quiz [id=" + id + ", title=" + title + ", description=" + description + ", link=" + link
+                + ", categories=" + categories + ", authorId=" + authorId + ", updatedAt=" + updatedAt + ", questions="
+                + questions + "]";
     }
+
 }

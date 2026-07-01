@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import COLORS from "@/constants/colors";
 
-function QuizTestDetail() {
+function QuizTestDetailScreen() {
   return (
     <View style={styles.container}>
       <Text style={{ color: COLORS.text, fontWeight: "bold" }}>
@@ -11,7 +11,7 @@ function QuizTestDetail() {
   );
 }
 
-export default QuizTestDetail;
+export default QuizTestDetailScreen;
 
 const styles = StyleSheet.create({
   container: {

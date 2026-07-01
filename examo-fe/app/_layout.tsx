@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import * as NavigationBar from "expo-navigation-bar";
 import { Platform } from "react-native";
 import { ThemeProvider, DarkTheme } from "@react-navigation/native";
-import EditQuiz from "./quizzes/[uuid]/edit";
+import EditQuizScreen from "./quizzes/[uuid]/edit";
 import EditQuizHeader from "@/components/layout/EditQuizHeader";
 
 export default function RootLayout() {
@@ -59,6 +59,26 @@ export default function RootLayout() {
             title: "Start Test",
             headerShown: true,
             headerStyle: { backgroundColor: COLORS.background },
+            animation: "fade",
+          }}
+        />
+
+        <Stack.Screen
+          name="quizzes/[uuid]/manage-access.tsx"
+          options={{
+            presentation: "fullScreenModal",
+            title: "Manage access",
+            headerShown: true,
+            animation: "fade",
+          }}
+        />
+
+        <Stack.Screen
+          name="quizzes/[uuid]/practice.tsx"
+          options={{
+            presentation: "fullScreenModal",
+            title: "Practice",
+            headerShown: true,
             animation: "fade",
           }}
         />

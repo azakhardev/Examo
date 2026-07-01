@@ -1,13 +1,17 @@
 import { Question } from "@/types/Question";
 import { Quiz } from "@/types/Quiz";
+import { QuizParticipant } from "@/types/QuizParticipant";
 import { Test } from "@/types/Test";
+import { User } from "@/types/User";
 
-export const quiz_1: Quiz = {
+export const QUIZ_1: Quiz = {
   id: "550e8400-e29b-41d4-a716-446655440000",
   title: "Database Fundamentals",
   description: "Preparation for the final exam.",
   author: "Edgar Allan Poe",
   favorite: false,
+  link: "https://examo:4asdf564a...",
+  visibility: "Private",
   updatedAt: "2026-06-20T10:00:00Z",
   categories: ["SQL", "Database"],
   questions: [
@@ -31,7 +35,7 @@ export const quiz_1: Quiz = {
   ],
 };
 
-export const quiz_2: Quiz = {
+export const QUIZ_2: Quiz = {
   id: "111e8400-e29b-41d4-a716-446655441111",
   title: "Software Architecture Patterns",
   description:
@@ -89,7 +93,7 @@ export const quiz_2: Quiz = {
   ],
 };
 
-export const quizz_array: Quiz[] = [quiz_1, quiz_2];
+export const quizz_array: Quiz[] = [QUIZ_1, QUIZ_2];
 
 export const question: Question = {
   id: "q1",
@@ -117,7 +121,6 @@ export const upcoming_test: Test = {
   time_limit_minutes: 60,
 };
 
-// Příklad dokončeného testu (History)
 export const history_test: Test = {
   id: 2,
   quiz: {
@@ -135,3 +138,28 @@ export const history_test: Test = {
   total_gained_points: 17,
   submitted_at: "22. 06. 2026 18:05",
 };
+
+export const USER: User = {
+  id: 1,
+  username: "azakhardev",
+  name: "Artem",
+  surname: "Zakharchenko",
+  email: "zakharchenkoarte@xxx.cz",
+};
+
+export const INITIAL_SHARES: QuizParticipant[] = [
+  {
+    id: 1,
+    user: USER,
+    quiz_id: "q-1",
+    access_level: "Read",
+    blocked: false,
+  },
+  {
+    id: 2,
+    user: { ...USER, username: "Artemos" },
+    quiz_id: "q-1",
+    access_level: "Blocked",
+    blocked: true,
+  },
+];

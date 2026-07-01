@@ -13,23 +13,15 @@ import COLORS from "@/constants/colors";
 import Fab from "@/components/ui/Fab";
 import ProfileForm from "@/components/profile/ProfileForm";
 import { ProfileFormData } from "@/types/ProfileFormData";
-import { User } from "@/types/User";
+import { USER } from "@/constants/mocks";
 
-export default function ProfileScreen() {
-  const user: User = {
-    id: 1,
-    username: "azakhardev",
-    name: "Artem",
-    surname: "Zakharchenko",
-    email: "zakharchenkoarte@xxx.cz",
-  };
-
+function ProfileScreen() {
   const { control, handleSubmit } = useForm<ProfileFormData>({
     defaultValues: {
-      username: user.username,
-      name: user.name,
-      surname: user.surname,
-      email: user.email,
+      username: USER.username,
+      name: USER.name,
+      surname: USER.surname,
+      email: USER.email,
     },
   });
 
@@ -70,6 +62,8 @@ export default function ProfileScreen() {
     </KeyboardAvoidingView>
   );
 }
+
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {

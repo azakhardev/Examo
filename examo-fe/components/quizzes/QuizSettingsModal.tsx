@@ -53,6 +53,7 @@ export default function QuizSettingsModal({
                     pathname: "/quizzes/[uuid]/manage-access",
                     params: { uuid: uuid },
                   });
+                  onClose();
                 }}
               >
                 <Text style={styles.optionText}>Manage Access</Text>

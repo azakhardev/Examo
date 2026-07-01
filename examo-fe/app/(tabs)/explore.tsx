@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import SearchBar from "@/components/layout/SearchBar";
 import { Quiz } from "@/types/Quiz";
 
-export default function Explore() {
+function ExploreScreen() {
   const recent: Quiz[] = [];
 
   return (
@@ -28,6 +28,8 @@ export default function Explore() {
     </View>
   );
 }
+
+export default ExploreScreen;
 
 const styles = StyleSheet.create({
   container: {

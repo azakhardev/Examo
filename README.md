@@ -108,6 +108,7 @@ Stores the live, editable quiz definitions. The `_id` matches the `id` of the qu
 {
   "_id": "UUID (Matches quizzes.id in Postgres)",
   "title": "Database Fundamentals",
+  "link": "https://asdfasfd",
   "description": "Preparation for the final exam.",
   "categories": ["IT", "SQL", "Databases"],
   "authorId": 42,

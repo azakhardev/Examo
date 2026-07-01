@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import COLORS from "@/constants/colors";
 
-function EditQuiz() {
+function EditQuizScreen() {
   return (
     <View style={styles.container}>
       <Text style={{ color: COLORS.text, fontWeight: "bold" }}>EDIT PAGE</Text>
@@ -9,7 +9,7 @@ function EditQuiz() {
   );
 }
 
-export default EditQuiz;
+export default EditQuizScreen;
 
 const styles = StyleSheet.create({
   container: {

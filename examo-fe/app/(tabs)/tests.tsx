@@ -7,10 +7,8 @@ import { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 
-function Tests() {
-  const [activeTab, setActiveTab] = useState<"upcoming" | "history">(
-    "upcoming",
-  );
+function TestsScreen() {
+  const [activeTab, setActiveTab] = useState<string>("upcoming");
 
   let tests: Test[] = [];
 
@@ -25,6 +23,10 @@ function Tests() {
       <TestsHeader
         activeTab={activeTab}
         onTabChange={(tab) => setActiveTab(tab)}
+        tabs={[
+          { id: "upcoming", value: "Upcoming" },
+          { id: "history", value: "history" },
+        ]}
       />
       <View style={styles.container}>
         <FlatList
@@ -47,7 +49,7 @@ function Tests() {
   );
 }
 
-export default Tests;
+export default TestsScreen;
 
 const styles = StyleSheet.create({
   container: {
