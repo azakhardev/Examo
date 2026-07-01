@@ -14,6 +14,8 @@ import Fab from "@/components/ui/Fab";
 import ProfileForm from "@/components/profile/ProfileForm";
 import { ProfileFormData } from "@/types/ProfileFormData";
 import { USER } from "@/constants/mocks";
+import ScreenWrapper from "@/components/layout/ScreenWrapper";
+import ProfileHeader from "@/components/layout/ProfileHeader";
 
 function ProfileScreen() {
   const { control, handleSubmit } = useForm<ProfileFormData>({
@@ -34,24 +36,27 @@ function ProfileScreen() {
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
-      <ScrollView contentContainerStyle={styles.container}>
-        <ProfileForm control={control} />
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            style={[styles.actionButton, styles.primaryButton]}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.primaryButtonText}>Change Password</Text>
-          </TouchableOpacity>
+      <ScreenWrapper>
+        <ProfileHeader />
+        <ScrollView contentContainerStyle={styles.container}>
+          <ProfileForm control={control} />
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity
+              style={[styles.actionButton, styles.primaryButton]}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.primaryButtonText}>Change Password</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={[styles.actionButton, styles.dangerButton]}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.dangerButtonText}>Delete Account</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+            <TouchableOpacity
+              style={[styles.actionButton, styles.dangerButton]}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.dangerButtonText}>Delete Account</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </ScreenWrapper>
 
       <Fab
         icon="save-outline"
@@ -69,8 +74,6 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     backgroundColor: COLORS.background,
-    padding: 16,
-    paddingBottom: 100,
   },
   inputGroup: {
     marginBottom: 16,

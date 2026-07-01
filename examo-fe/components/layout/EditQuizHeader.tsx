@@ -3,7 +3,6 @@ import COLORS from "@/constants/colors";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 function EditQuizHeader() {
-  //Top padding
   const insets = useSafeAreaInsets();
 
   return (
@@ -21,8 +20,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 16,
     backgroundColor: COLORS.background,
   },
   headerTitle: {

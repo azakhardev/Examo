@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { Ionicons, Feather } from "@expo/vector-icons";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Tabs from "@/components/ui/Tabs";
 import { QuizParticipant } from "@/types/QuizParticipant";
 import COLORS from "@/constants/colors";
@@ -10,13 +9,12 @@ import ParticipantCard from "@/components/manage-access/ParticipantCard";
 import QrCodeModal from "@/components/manage-access/QrCodeModal";
 import { useLocalSearchParams } from "expo-router";
 import * as Clipboard from "expo-clipboard";
+import ScreenWrapper from "@/components/layout/ScreenWrapper";
 
 function ManageAccessScreen() {
   const { uuid }: { uuid: string } = useLocalSearchParams();
 
   const quiz = QUIZ_1; //TODO:Fetch data
-
-  const instest = useSafeAreaInsets();
 
   const [activeTab, setActiveTab] = useState<string>("users");
   const [shares, setShares] = useState<QuizParticipant[]>(INITIAL_SHARES);
@@ -41,13 +39,13 @@ function ManageAccessScreen() {
   }
 
   function handleChangeGlobalAccess() {
-    const levels: ("Private" | "Public" | "Protected")[] = [
-      "Private",
-      "Protected",
-      "Public",
+    const levels: ("PRIVATE" | "PUBLIC" | "RESTRICTED")[] = [
+      "PRIVATE",
+      "PUBLIC",
+      "RESTRICTED",
     ];
     const nextIndex =
-      (levels.indexOf(accessLevel as "Private" | "Public" | "Protected") + 1) %
+      (levels.indexOf(accessLevel as "PRIVATE" | "PUBLIC" | "RESTRICTED") + 1) %
       levels.length;
     setAccessLevel(levels[nextIndex]);
   }
@@ -66,7 +64,7 @@ function ManageAccessScreen() {
                 s.id === share.id
                   ? {
                       ...s,
-                      access_level: s.access_level === "Read" ? "Edit" : "Read",
+                      access_level: s.access_level === "READ" ? "EDIT" : "READ",
                     }
                   : s,
               ),
@@ -140,8 +138,7 @@ function ManageAccessScreen() {
   }
 
   return (
-    <View style={[styles.container, { paddingTop: instest.top }]}>
-      {/* Header Section */}
+    <ScreenWrapper>
       <Text style={styles.headerTitle}>{quiz.title} - Manage Access</Text>
 
       <View style={styles.row}>
@@ -208,18 +205,13 @@ function ManageAccessScreen() {
         onHide={setModalVisible}
         link={quiz.link!}
       />
-    </View>
+    </ScreenWrapper>
   );
 }
 
 export default ManageAccessScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.background,
-    paddingHorizontal: 20,
-  },
   headerTitle: {
     color: COLORS.text,
     fontSize: 22,

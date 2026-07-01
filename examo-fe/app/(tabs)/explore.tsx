@@ -2,12 +2,15 @@ import COLORS from "@/constants/colors";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import SearchBar from "@/components/layout/SearchBar";
 import { Quiz } from "@/types/Quiz";
+import ScreenWrapper from "@/components/layout/ScreenWrapper";
+import ExploreHeader from "@/components/layout/ExploreHeader";
 
 function ExploreScreen() {
   const recent: Quiz[] = [];
 
   return (
-    <View style={styles.container}>
+    <ScreenWrapper>
+      <ExploreHeader />
       <View style={styles.searchContainer}>
         <SearchBar placeholder="Find interesting Quizzes!" />
       </View>
@@ -25,22 +28,15 @@ function ExploreScreen() {
           Search more Quizzes to display them in your recent history
         </Text>
       )}
-    </View>
+    </ScreenWrapper>
   );
 }
 
 export default ExploreScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    backgroundColor: COLORS.background,
-  },
   searchContainer: {
     flexDirection: "row",
-    paddingHorizontal: 16,
     gap: 12,
     marginBottom: 16,
   },

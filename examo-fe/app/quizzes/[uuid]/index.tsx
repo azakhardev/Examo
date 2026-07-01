@@ -13,6 +13,7 @@ import QuizDetailHeader from "@/components/layout/QuizDetailHeader";
 import QuizSettingsModal from "@/components/quizzes/QuizSettingsModal";
 import QuizQuestionCard from "@/components/quizzes/QuizQuestionCard";
 import { QUIZ_1 } from "@/constants/mocks";
+import ScreenWrapper from "@/components/layout/ScreenWrapper";
 
 function QuizDetailScreen() {
   const { uuid }: { uuid: string } = useLocalSearchParams();
@@ -42,7 +43,7 @@ function QuizDetailScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <ScreenWrapper>
       <QuizDetailHeader
         title="React Hooks Mastery"
         isFavorite={isFavorite}
@@ -50,7 +51,7 @@ function QuizDetailScreen() {
         onFavoriteToggle={handleToggleFavorite}
         onSettingsPress={() => setIsSettingsVisible(true)}
       />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.descriptionContainer}>
           <Text style={styles.descriptionText}>{quiz.description}</Text>
         </View>
@@ -97,19 +98,13 @@ function QuizDetailScreen() {
         onClose={() => setIsSettingsVisible(false)}
         onDelete={() => console.log("Delete triggered")}
       />
-    </View>
+    </ScreenWrapper>
   );
 }
 
 export default QuizDetailScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    paddingHorizontal: 16,
-    backgroundColor: COLORS.background,
-    paddingBottom: 40,
-  },
   descriptionContainer: {
     marginBottom: 24,
   },

@@ -1,6 +1,5 @@
 import { StyleSheet, View, Text } from "react-native";
 import COLORS from "@/constants/colors";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Tabs, { TabItem } from "../ui/Tabs";
 
 interface TestsHeaderProps {
@@ -14,10 +13,8 @@ export default function TestsHeader({
   onTabChange,
   tabs,
 }: TestsHeaderProps) {
-  const insets = useSafeAreaInsets();
-
   return (
-    <View style={[styles.header, { paddingTop: insets.top }]}>
+    <View style={[styles.header]}>
       <Text style={styles.headerTitle}>Tests</Text>
 
       <Tabs activeTab={activeTab} onTabChange={onTabChange} tabs={tabs} />
@@ -27,7 +24,6 @@ export default function TestsHeader({
 
 const styles = StyleSheet.create({
   header: {
-    paddingHorizontal: 16,
     paddingBottom: 16,
     backgroundColor: COLORS.background,
   },

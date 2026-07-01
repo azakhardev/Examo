@@ -1,13 +1,9 @@
 import { StyleSheet, View, Text } from "react-native";
 import COLORS from "@/constants/colors";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 function ExploreHeader() {
-  //Top padding
-  const insets = useSafeAreaInsets();
-
   return (
-    <View style={[styles.header, { paddingTop: insets.top }]}>
+    <View style={[styles.header]}>
       <Text style={styles.headerTitle}>Explore</Text>
     </View>
   );
@@ -20,8 +16,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingTop: 16,
     paddingBottom: 16,
     backgroundColor: COLORS.background,
   },

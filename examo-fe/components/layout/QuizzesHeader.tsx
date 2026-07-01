@@ -1,13 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import COLORS from "@/constants/colors";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-function MyQuizzesHeader() {
-  //Top padding
-  const insets = useSafeAreaInsets();
-
+function QuizzesHeader() {
   return (
-    <View style={[styles.header, { paddingTop: insets.top }]}>
+    <View style={[styles.header]}>
       <Text style={styles.headerTitle}>My Quizzes</Text>
 
       <TouchableOpacity style={styles.importButton} activeOpacity={0.7}>
@@ -18,17 +14,15 @@ function MyQuizzesHeader() {
   );
 }
 
-export default MyQuizzesHeader;
+export default QuizzesHeader;
 
 const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 16,
     backgroundColor: COLORS.background,
+    paddingBottom: 16,
   },
   headerTitle: {
     fontSize: 24,

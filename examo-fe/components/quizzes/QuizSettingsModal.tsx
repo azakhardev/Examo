@@ -16,6 +16,7 @@ type QuizSettingsModalProps = {
   onDelete: () => void;
 };
 
+//TODO: Display buttons based on access level
 export default function QuizSettingsModal({
   uuid,
   visible,

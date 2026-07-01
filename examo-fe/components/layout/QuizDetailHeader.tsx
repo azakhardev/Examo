@@ -19,10 +19,8 @@ export default function QuizDetailHeader({
   onFavoriteToggle,
   onSettingsPress,
 }: QuizDetailHeaderProps) {
-  const insets = useSafeAreaInsets();
-
   return (
-    <View style={[styles.container, { paddingTop: insets.top }]}>
+    <View style={[styles.container]}>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{title}</Text>
       </View>

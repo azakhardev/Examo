@@ -7,6 +7,8 @@ import QuizCard from "@/components/quizzes/QuizCard";
 import SearchBar from "@/components/layout/SearchBar";
 import Fab from "@/components/ui/Fab";
 import { router } from "expo-router";
+import ScreenWrapper from "@/components/layout/ScreenWrapper";
+import QuizzesHeader from "@/components/layout/QuizzesHeader";
 
 function QuizzesScreen() {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -19,7 +21,8 @@ function QuizzesScreen() {
   }, [searchQuery]);
 
   return (
-    <View style={[styles.container]}>
+    <ScreenWrapper>
+      <QuizzesHeader />
       <View style={styles.searchContainer}>
         <SearchBar
           onChangeText={(v) => setSearchQuery(v)}
@@ -44,7 +47,6 @@ function QuizzesScreen() {
             }
           />
         )}
-        contentContainerStyle={{ padding: 16 }}
       />
 
       <Fab
@@ -52,24 +54,17 @@ function QuizzesScreen() {
         backgroundColor={COLORS.primary}
         onPress={() => console.log("CREATE QUIZ")}
       />
-    </View>
+    </ScreenWrapper>
   );
 }
 
 export default QuizzesScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.background,
-  },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 16,
   },
   headerTitle: {
     fontSize: 24,
@@ -93,7 +88,6 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     flexDirection: "row",
-    paddingHorizontal: 16,
     gap: 12,
     marginBottom: 16,
   },

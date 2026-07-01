@@ -1,23 +1,15 @@
 import { View, Text, StyleSheet } from "react-native";
 import COLORS from "@/constants/colors";
+import ScreenWrapper from "@/components/layout/ScreenWrapper";
 
 function QuizTestDetailScreen() {
   return (
-    <View style={styles.container}>
+    <ScreenWrapper>
       <Text style={{ color: COLORS.text, fontWeight: "bold" }}>
         QUIZ TEST DETAIL
       </Text>
-    </View>
+    </ScreenWrapper>
   );
 }
 
 export default QuizTestDetailScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.background,
-    paddingHorizontal: 16,
-    paddingTop: 16,
-  },
-});

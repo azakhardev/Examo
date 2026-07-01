@@ -1,11 +1,9 @@
 import { View, StyleSheet, Text } from "react-native";
 import COLORS from "@/constants/colors";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 function ProfileHeader() {
-  const padding = useSafeAreaInsets();
   return (
-    <View style={[styles.header, { paddingTop: padding.top }]}>
+    <View style={[styles.header]}>
       <Text style={styles.headerTitle}>Profile</Text>
     </View>
   );
@@ -18,8 +16,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingTop: 16,
     paddingBottom: 16,
     backgroundColor: COLORS.background,
   },

@@ -6,6 +6,7 @@ import { Test } from "@/types/Test";
 import { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { router } from "expo-router";
+import ScreenWrapper from "@/components/layout/ScreenWrapper";
 
 function TestsScreen() {
   const [activeTab, setActiveTab] = useState<string>("upcoming");
@@ -19,43 +20,32 @@ function TestsScreen() {
   }
 
   return (
-    <>
+    <ScreenWrapper>
       <TestsHeader
         activeTab={activeTab}
         onTabChange={(tab) => setActiveTab(tab)}
         tabs={[
           { id: "upcoming", value: "Upcoming" },
-          { id: "history", value: "history" },
+          { id: "history", value: "History" },
         ]}
       />
-      <View style={styles.container}>
-        <FlatList
-          data={tests}
-          renderItem={({ item }) => (
-            <TestCard
-              key={item.id}
-              test={item}
-              onPress={() => {
-                router.push({
-                  pathname: "/tests/[id]",
-                  params: { id: item.id },
-                });
-              }}
-            />
-          )}
-        ></FlatList>
-      </View>
-    </>
+      <FlatList
+        data={tests}
+        renderItem={({ item }) => (
+          <TestCard
+            key={item.id}
+            test={item}
+            onPress={() => {
+              router.push({
+                pathname: "/tests/[id]",
+                params: { id: item.id },
+              });
+            }}
+          />
+        )}
+      ></FlatList>
+    </ScreenWrapper>
   );
 }
 
 export default TestsScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "flex-start",
-    backgroundColor: COLORS.background,
-    paddingHorizontal: 16,
-  },
-});
