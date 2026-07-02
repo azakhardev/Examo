@@ -106,7 +106,7 @@ Stores the live, editable quiz definitions. The `_id` matches the `id` of the qu
 
 ```json
 {
-  "_id": "UUID (Matches quizzes.id in Postgres)",
+  "id": "UUID (Matches quizzes.id in Postgres)",
   "title": "Database Fundamentals",
   "link": "https://asdfasfd",
   "description": "Preparation for the final exam.",
@@ -118,34 +118,19 @@ Stores the live, editable quiz definitions. The `_id` matches the `id` of the qu
       "id": "q1",
       "type": "SINGLE_CHOICE",
       "questionText": "Which database is purely relational?",
-      "options": ["MongoDB", "PostgreSQL", "Redis"],
-      "correctAnswers": ["PostgreSQL"],
+      "options": [
+        { "id": "1", "text": "MongoDB", "isCorrect": false },
+        { "id": "2", "text": "PostgreSQL", "isCorrect": true },
+        { "id": "3", "text": "Redis", "isCorrect": false }
+      ],
       "maxPoints": 1.0,
       "negativePoints": 0.5
-    },
-    {
-      "id": "q2",
-      "type": "MULTIPLE_CHOICE",
-      "questionText": "Select the NoSQL databases:",
-      "options": ["MongoDB", "PostgreSQL", "Cassandra", "Redis"],
-      "correctAnswers": ["MongoDB", "Cassandra", "Redis"],
-      "maxPoints": 3.0,
-      "negativePoints": 1.0
-    },
-    {
-      "id": "q3",
-      "type": "YES_NO",
-      "questionText": "Does SQL stand for Structured Query Language?",
-      "options": ["YES", "NO"],
-      "correctAnswers": ["YES"],
-      "maxPoints": 1.0,
-      "negativePoints": 1.0
     },
     {
       "id": "q4",
       "type": "OPEN",
       "questionText": "Which SQL command is used to delete a table?",
-      "correctAnswers": ["DROP TABLE"],
+      "options": [{ "id": "1", "text": "DROP TABLE", "isCorrect": true }],
       "maxPoints": 2.0,
       "negativePoints": 0.0,
       "imageUrl": "/images/test_UUID/q4.jpg"
@@ -162,12 +147,22 @@ Immutable snapshots generated the moment a teacher launches a live online_test o
 
 ```json
 {
-  "_id": "UUID (Matches online_tests.snapshot_id in Postgres)",
+  "id": "UUID (Matches online_tests.snapshot_id in Postgres)",
   "originalQuizId": "UUID",
-  "snapshotDate": "2026-06-20T10:00:00Z",
+  "snapshotDate": "2026-06-20T10:00:00",
   "questions": [
-    { "id": "q1", "type": "SINGLE_CHOICE", "...": "..." },
-    { "id": "q2", "type": "MULTIPLE_CHOICE", "...": "..." }
+    {
+      "id": "q1",
+      "type": "SINGLE_CHOICE",
+      "questionText": "Which database is purely relational?",
+      "options": [
+        { "id": "1", "text": "MongoDB", "isCorrect": false },
+        { "id": "2", "text": "PostgreSQL", "isCorrect": true },
+        { "id": "3", "text": "Redis", "isCorrect": false }
+      ],
+      "maxPoints": 1.0,
+      "negativePoints": 0.5
+    }
   ]
 }
 ```

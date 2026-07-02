@@ -25,6 +25,18 @@ public class Quiz {
 
     private List<Question> questions;
 
+    public Quiz(String id, String title, String description, String link, List<String> categories, Integer authorId,
+            LocalDateTime updatedAt, List<Question> questions) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.link = link;
+        this.categories = categories;
+        this.authorId = authorId;
+        this.updatedAt = updatedAt;
+        this.questions = questions;
+    }
+
     public String getId() {
         return id;
     }

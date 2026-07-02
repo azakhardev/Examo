@@ -1,9 +1,10 @@
-export enum QuestionType {
-  "SINGLE_CHOICE",
-  "MULTIPLE_CHOICE",
-  "TRUE_FALSE",
-  "OPEN",
-}
+import { QuestionOption } from "./QuestionOption";
+
+export type QuestionType =
+  | "SINGLE_CHOICE"
+  | "MULTIPLE_CHOICE"
+  | "TRUE_FALSE"
+  | "OPEN";
 
 export type Question = {
   id: string;
@@ -11,7 +12,6 @@ export type Question = {
   questionText: string;
   maxPoints: number;
   negativePoints?: number;
-  options?: string[];
-  correctAnswers?: string[];
+  options?: QuestionOption[];
   imageUrl?: string;
 };

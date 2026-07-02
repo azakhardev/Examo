@@ -37,12 +37,12 @@ function QuizzesScreen() {
         data={quizz_array}
         renderItem={({ item }) => (
           <QuizCard
-            key={item.id}
+            key={item.id!}
             quizz={item}
             onPress={() =>
               router.push({
                 pathname: "/quizzes/[uuid]",
-                params: { uuid: item.id },
+                params: { uuid: item.id! },
               })
             }
           />
@@ -52,7 +52,7 @@ function QuizzesScreen() {
       <Fab
         icon="add"
         backgroundColor={COLORS.primary}
-        onPress={() => console.log("CREATE QUIZ")}
+        onPress={() => router.push({ pathname: "/quizzes/create" })}
       />
     </ScreenWrapper>
   );

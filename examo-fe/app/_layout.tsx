@@ -45,7 +45,7 @@ export default function RootLayout() {
           options={{
             presentation: "fullScreenModal",
             title: "Edit Quiz",
-            headerShown: true,
+            headerShown: false,
             header: () => <EditQuizHeader />,
             animation: "fade",
           }}

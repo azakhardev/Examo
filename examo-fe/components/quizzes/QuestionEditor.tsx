@@ -1,7 +1,8 @@
 import COLORS from "@/constants/colors";
-import { Question } from "@/types/Question";
+import { Question, QuestionType } from "@/types/Question";
 import { Ionicons } from "@expo/vector-icons";
 import * as DocumentPicker from "expo-document-picker";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 
 import {
   StyleSheet,
@@ -11,77 +12,141 @@ import {
   TextInput,
   ScrollView,
 } from "react-native";
+import EditQuestionHeader from "../layout/EditQuestionHeader";
+import { useEffect } from "react";
+import { QuestionOption } from "@/types/QuestionOption";
 
-const INPUT_MAPPER: Record<string, React.FC<InputProps>> = {
+const INPUT_MAPPER: Record<QuestionType, React.FC<InputProps>> = {
   MULTIPLE_CHOICE: MultipleChoiceInput,
   SINGLE_CHOICE: SingleChoiceInput,
-  TRUE_FALSE: TrueFalseInput, // Reusing SingleChoice style for True/False
+  TRUE_FALSE: TrueFalseInput,
   OPEN: OpenInput,
 };
+
 type QuestionEditorProps = {
   question: Question;
-  setQuestion: React.Dispatch<React.SetStateAction<Question | null>>;
-  onSave: () => void;
+  onSave: (data: Question) => void;
   onCancel: () => void;
 };
 
-export type Option = {
-  id: string;
-  text: string;
-  isCorrect: boolean;
-};
+function QuestionEditor({ question, onSave, onCancel }: QuestionEditorProps) {
+  const { control, handleSubmit, setValue, watch } = useForm<Question>({
+    defaultValues: {
+      ...question,
+    },
+  });
 
-function QuestionEditor({
-  question,
-  setQuestion,
-  onSave,
-  onCancel,
-}: QuestionEditorProps) {
+  const { fields, append, remove, update, replace } = useFieldArray({
+    control,
+    name: "options",
+  });
+
+  const type = watch("type");
+
+  useEffect(() => {
+    if (type === "TRUE_FALSE") {
+      setValue("options", [
+        { id: "q1", text: "True", isCorrect: true },
+        { id: "q2", text: "False", isCorrect: false },
+      ]);
+    } else {
+      setValue("options", question.options);
+    }
+  }, [setValue, type, question.options]);
+
+  function handleToggleType() {
+    const types = Object.keys(INPUT_MAPPER) as QuestionType[];
+    const nextIndex = (types.indexOf(type as QuestionType) + 1) % types.length;
+    const nextType = types[nextIndex];
+
+    setValue("type", nextType);
+  }
+
+  function handleToggleCorrect(index: number, currentOption: QuestionOption) {
+    if (type === "SINGLE_CHOICE" || type === "TRUE_FALSE") {
+      const updatedOptions = fields.map((field, i) => ({
+        ...field,
+        isCorrect: i === index,
+      }));
+      replace(updatedOptions);
+    } else {
+      update(index, { ...currentOption, isCorrect: !currentOption.isCorrect });
+    }
+  }
+
+  function handleOptionTextChange(
+    index: number,
+    currentOption: QuestionOption,
+    text: string,
+  ) {
+    update(index, { ...currentOption, text });
+  }
+
+  function handleSave() {
+    handleSubmit((data) => {
+      onSave(data);
+    })();
+  }
+
   return (
     <View style={styles.modalContainer}>
-      {/* Header */}
-      <View style={styles.modalHeader}>
-        <TouchableOpacity onPress={onCancel}>
-          <Text style={styles.cancelText}>Cancel</Text>
-        </TouchableOpacity>
-        <Text style={styles.modalTitle}>Edit Question</Text>
-        <TouchableOpacity style={styles.savePill} onPress={onSave}>
-          <Ionicons name="checkmark" size={16} color={COLORS.background} />
-          <Text style={styles.savePillText}>Save</Text>
-        </TouchableOpacity>
-      </View>
+      <EditQuestionHeader onSave={handleSave} onCancel={onCancel} />
 
       <ScrollView contentContainerStyle={styles.modalContent}>
         <Text style={styles.labelTitle}>Question Text:</Text>
-        <TextInput
-          style={styles.textArea}
-          multiline
-          textAlignVertical="top"
-          value={question.questionText}
+        <Controller
+          control={control}
+          name="questionText"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.textArea}
+              multiline
+              textAlignVertical="top"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+            />
+          )}
         />
 
         <View style={styles.row}>
           <Text style={styles.labelTitle}>Question Type:</Text>
-          <TouchableOpacity style={styles.inputBox}>
-            <Text style={styles.valueText}>{question.type}</Text>
+          <TouchableOpacity style={styles.inputBox} onPress={handleToggleType}>
+            <Text style={styles.valueText}>{type}</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.row}>
           <Text style={styles.labelTitle}>Maximum Points:</Text>
-          <TextInput
-            style={styles.smallInput}
-            keyboardType="numeric"
-            value={question.maxPoints.toString()}
+          <Controller
+            control={control}
+            name="maxPoints"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.smallInput}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                keyboardType="numeric"
+                value={value.toString()}
+              />
+            )}
           />
         </View>
 
         <View style={styles.row}>
           <Text style={styles.labelTitle}>Negative Points:</Text>
-          <TextInput
-            style={styles.smallInput}
-            keyboardType="numeric"
-            value={(question.negativePoints || 0).toString()}
+          <Controller
+            control={control}
+            name="negativePoints"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.smallInput}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                keyboardType="numeric"
+                value={value?.toString() ?? "0"}
+              />
+            )}
           />
         </View>
 
@@ -92,12 +157,19 @@ function QuestionEditor({
           </View>
         </View>
 
-        {/* --- Conditional Option Variants --- */}
-
         <View style={styles.sectionHeaderRow}>
           <Text style={styles.labelTitle}>Question Options:</Text>
-          {question.type !== "TRUE_FALSE" && (
-            <TouchableOpacity style={styles.addButton}>
+          {type !== "TRUE_FALSE" && (
+            <TouchableOpacity
+              style={styles.addButton}
+              onPress={() =>
+                append({
+                  id: `q${fields.length + 1}`,
+                  text: "",
+                  isCorrect: type === "OPEN" ? true : false,
+                })
+              }
+            >
               <Ionicons name="add" size={16} color={COLORS.background} />
               <Text style={styles.addButtonText}>Add</Text>
             </TouchableOpacity>
@@ -105,9 +177,21 @@ function QuestionEditor({
         </View>
 
         <View style={styles.optionSection}>
-          {question.options?.map((opt, i) => {
-            const Component = INPUT_MAPPER[question.type];
-            return Component ? <Component key={i} value={opt} /> : null;
+          {fields.map((field, index) => {
+            const Component = INPUT_MAPPER[type as QuestionType];
+
+            if (!Component) return null;
+
+            return (
+              <Component
+                key={index}
+                value={field.text}
+                isCorrect={field.isCorrect}
+                onCheck={() => handleToggleCorrect(index, field)}
+                onChange={(text) => handleOptionTextChange(index, field, text)}
+                onDelete={() => remove(index)}
+              />
+            );
           })}
         </View>
       </ScrollView>
@@ -119,7 +203,7 @@ type InputProps = {
   value: string;
   isCorrect?: boolean;
   onCheck?: () => void;
-  onChange?: () => void;
+  onChange?: (text: string) => void;
   onDelete?: () => void;
 };
 
@@ -224,14 +308,6 @@ export default QuestionEditor;
 
 const styles = StyleSheet.create({
   modalContainer: { flex: 1, backgroundColor: COLORS.background },
-  modalHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.stroke,
-  },
   modalContent: { padding: 16 },
   labelTitle: {
     color: COLORS.text,
@@ -305,18 +381,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   saveButtonText: { color: COLORS.background, fontWeight: "bold" },
-  cancelText: { color: COLORS.textSecondary, fontSize: 16 },
-  modalTitle: { color: COLORS.text, fontSize: 16, fontWeight: "bold" },
-  savePill: {
-    flexDirection: "row",
-    backgroundColor: COLORS.success,
-    paddingHorizontal: 16,
-    paddingVertical: 6,
-    borderRadius: 20,
-    alignItems: "center",
-    gap: 4,
-  },
-  savePillText: { color: COLORS.background, fontWeight: "bold" },
+
   inputBox: {
     backgroundColor: COLORS.input,
     padding: 10,

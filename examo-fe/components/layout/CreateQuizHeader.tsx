@@ -1,15 +1,15 @@
 import { StyleSheet, View, Text } from "react-native";
 import COLORS from "@/constants/colors";
 
-function EditQuizHeader() {
+function CreateQuizHeader() {
   return (
     <View style={[styles.header]}>
-      <Text style={styles.headerTitle}>Edit Quiz</Text>
+      <Text style={styles.headerTitle}>Create Quiz</Text>
     </View>
   );
 }
 
-export default EditQuizHeader;
+export default CreateQuizHeader;
 
 const styles = StyleSheet.create({
   header: {

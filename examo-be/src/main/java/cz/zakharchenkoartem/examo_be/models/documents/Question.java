@@ -9,15 +9,24 @@ public class Question {
 
     private String questionText;
 
-    private List<String> options;
-
-    private List<String> correctAnswers;
+    private List<QuestionOption> options;
 
     private Double maxPoints;
 
     private Double negativePoints;
 
     private String imageUrl;
+
+    public Question(String id, String type, String questionText, List<QuestionOption> options, Double maxPoints,
+            Double negativePoints, String imageUrl) {
+        this.id = id;
+        this.type = type;
+        this.questionText = questionText;
+        this.options = options;
+        this.maxPoints = maxPoints;
+        this.negativePoints = negativePoints;
+        this.imageUrl = imageUrl;
+    }
 
     public String getId() {
         return id;
@@ -43,20 +52,12 @@ public class Question {
         this.questionText = questionText;
     }
 
-    public List<String> getOptions() {
+    public List<QuestionOption> getOptions() {
         return options;
     }
 
-    public void setOptions(List<String> options) {
+    public void setOptions(List<QuestionOption> options) {
         this.options = options;
-    }
-
-    public List<String> getCorrectAnswers() {
-        return correctAnswers;
-    }
-
-    public void setCorrectAnswers(List<String> correctAnswers) {
-        this.correctAnswers = correctAnswers;
     }
 
     public Double getMaxPoints() {
@@ -91,7 +92,6 @@ public class Question {
         result = prime * result + ((type == null) ? 0 : type.hashCode());
         result = prime * result + ((questionText == null) ? 0 : questionText.hashCode());
         result = prime * result + ((options == null) ? 0 : options.hashCode());
-        result = prime * result + ((correctAnswers == null) ? 0 : correctAnswers.hashCode());
         result = prime * result + ((maxPoints == null) ? 0 : maxPoints.hashCode());
         result = prime * result + ((negativePoints == null) ? 0 : negativePoints.hashCode());
         result = prime * result + ((imageUrl == null) ? 0 : imageUrl.hashCode());
@@ -127,11 +127,6 @@ public class Question {
                 return false;
         } else if (!options.equals(other.options))
             return false;
-        if (correctAnswers == null) {
-            if (other.correctAnswers != null)
-                return false;
-        } else if (!correctAnswers.equals(other.correctAnswers))
-            return false;
         if (maxPoints == null) {
             if (other.maxPoints != null)
                 return false;
@@ -153,7 +148,7 @@ public class Question {
     @Override
     public String toString() {
         return "Question [id=" + id + ", type=" + type + ", questionText=" + questionText + ", options=" + options
-                + ", correctAnswers=" + correctAnswers + ", maxPoints=" + maxPoints + ", negativePoints="
+                + ", maxPoints=" + maxPoints + ", negativePoints="
                 + negativePoints + ", imageUrl=" + imageUrl + "]";
     }
 
