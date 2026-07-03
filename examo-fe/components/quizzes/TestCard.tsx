@@ -6,7 +6,7 @@ import { Test } from "@/types/Test";
 type TestCardProps = {
   test: Test;
   onPress?: () => void;
-  mode: "ongoing" | "finished";
+  mode: "live" | "finished";
 };
 
 export default function TestCard({ test, onPress, mode }: TestCardProps) {

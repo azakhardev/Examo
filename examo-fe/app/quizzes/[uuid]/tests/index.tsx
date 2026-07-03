@@ -46,7 +46,7 @@ const MOCK_TESTS: Test[] = [
 
 function QuizTestsScreen() {
   const { uuid } = useLocalSearchParams();
-  const [activeTab, setActiveTab] = useState<"ongoing" | "finished">("ongoing");
+  const [activeTab, setActiveTab] = useState<"live" | "finished">("live");
 
   const quiz = QUIZ_1; //TODO: Fetch quiz
   const displayedTests = MOCK_TESTS; //TODO: Fetch tests
@@ -60,11 +60,11 @@ function QuizTestsScreen() {
         <View style={styles.tabsContainer}>
           <Tabs
             tabs={[
-              { id: "ongoing", value: "Ongoing" },
+              { id: "live", value: "Live" },
               { id: "finished", value: "Finished" },
             ]}
             activeTab={activeTab}
-            onTabChange={(v) => setActiveTab(v as "ongoing" | "finished")}
+            onTabChange={(v) => setActiveTab(v as "live" | "finished")}
           />
         </View>
 
@@ -74,12 +74,19 @@ function QuizTestsScreen() {
           renderItem={({ item }) => (
             <TestCard
               test={item}
-              onPress={() =>
-                router.push({
-                  pathname: "/quizzes/[uuid]/tests/[id]",
-                  params: { uuid: uuid as string, id: item.id },
-                })
-              }
+              onPress={() => {
+                if (activeTab === "finished") {
+                  router.push({
+                    pathname: "/quizzes/[uuid]/tests/[id]/finished",
+                    params: { uuid: uuid as string, id: item.id },
+                  });
+                } else {
+                  router.push({
+                    pathname: "/quizzes/[uuid]/tests/[id]/live",
+                    params: { uuid: uuid as string, id: item.id },
+                  });
+                }
+              }}
               mode={activeTab}
             />
           )}
@@ -94,7 +101,7 @@ function QuizTestsScreen() {
           onPress={() =>
             router.push({
               pathname: "/quizzes/[uuid]/tests/create",
-              params: { uuid: uuid },
+              params: { uuid: uuid as string },
             })
           }
         />
