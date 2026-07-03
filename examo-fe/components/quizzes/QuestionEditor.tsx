@@ -150,6 +150,7 @@ function QuestionEditor({ question, onSave, onCancel }: QuestionEditorProps) {
           />
         </View>
 
+        {/* TODO: Image Selector */}
         <View style={styles.row}>
           <Text style={styles.labelTitle}>Image:</Text>
           <View style={styles.imagePlaceholder}>
