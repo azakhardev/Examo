@@ -6,7 +6,7 @@ type LiveTestInfoProps = {
   test: Test;
 };
 
-function LiveTestInfo({ test }: LiveTestInfoProps) {
+function TestInfo({ test }: LiveTestInfoProps) {
   return (
     <>
       <Text style={styles.description}>{test.description}</Text>
@@ -21,18 +21,11 @@ function LiveTestInfo({ test }: LiveTestInfoProps) {
           {test.end_at.replace("T", " ").substring(0, 16)}
         </Text>
       </View>
-
-      <View style={styles.accessCodeContainer}>
-        <View style={styles.accessCodePill}>
-          <Text style={styles.accessCodeText}>{test.access_code}</Text>
-        </View>
-        <Text style={styles.accessCodeLabel}>Access code</Text>
-      </View>
     </>
   );
 }
 
-export default LiveTestInfo;
+export default TestInfo;
 
 const styles = StyleSheet.create({
   description: {
@@ -52,30 +45,6 @@ const styles = StyleSheet.create({
   },
   boldText: {
     color: COLORS.text,
-    fontWeight: "bold",
-  },
-  accessCodeContainer: {
-    alignItems: "center",
-    marginBottom: 32,
-  },
-  accessCodePill: {
-    backgroundColor: COLORS.input,
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 24,
-    borderWidth: 1,
-    borderColor: COLORS.stroke,
-    marginBottom: 8,
-  },
-  accessCodeText: {
-    color: COLORS.text,
-    fontSize: 24,
-    fontWeight: "bold",
-    letterSpacing: 2,
-  },
-  accessCodeLabel: {
-    color: COLORS.textSecondary,
-    fontSize: 14,
     fontWeight: "bold",
   },
 });

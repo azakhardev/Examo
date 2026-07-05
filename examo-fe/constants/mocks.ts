@@ -1,3 +1,4 @@
+import { ParticipantResult } from "@/types/ParticipantResult";
 import { Question } from "@/types/Question";
 import { Quiz } from "@/types/Quiz";
 import { QuizParticipant } from "@/types/QuizParticipant";
@@ -190,5 +191,57 @@ export const INITIAL_SHARES: QuizParticipant[] = [
     quiz_id: "q-1",
     access_level: "Blocked",
     blocked: true,
+  },
+];
+
+export const RESULTS: ParticipantResult[] = [
+  {
+    user: {
+      id: 1,
+      username: "jackob.black",
+      email: "jackob.black@gmail.com",
+    },
+    points: 20,
+    maxPoints: 25,
+  },
+  {
+    user: { id: 2, username: "azakhardev", email: "azakhardev@gmail.com" },
+    points: 25,
+    maxPoints: 25,
+  },
+  {
+    user: {
+      id: 3,
+      username: "peterpeterson",
+      email: "peterpeterson@gmail.com",
+    },
+    points: 12,
+    maxPoints: 25,
+  },
+];
+
+export const PARTICIPANTS = [
+  {
+    user: {
+      id: 1,
+      username: "jackob.black",
+      email: "jackob.black@gmail.com",
+    },
+    answers: 8,
+    totalQuestions: 10,
+  },
+  {
+    user: { id: 2, username: "azakhardev", email: "azakhardev@gmail.com" },
+    answers: 10,
+    totalQuestions: 10,
+  },
+  {
+    user: {
+      id: 3,
+      username: "peterpeterson",
+      email: "peterpeterson@gmail.com",
+    },
+    answers: 2,
+    totalQuestions: 10,
   },
 ];

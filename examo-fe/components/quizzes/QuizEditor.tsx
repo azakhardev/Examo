@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Modal,
+  FlatList,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "@/constants/colors";
@@ -83,57 +84,59 @@ function QuizEditor({ quiz, setQuiz }: QuizEditorProps) {
   function handleDescriptionChange(text: string) {
     setQuiz((prev) => ({ ...prev, description: text }));
   }
-  return (
-    <View style={{ flex: 1 }}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={[styles.scrollContent]}
-      >
-        <View style={styles.headerTitleRow}>
-          <Ionicons name="create-outline" size={24} color={COLORS.text} />
-          <TextInput
-            style={styles.headerTitle}
-            onChangeText={handleTitleChange}
-          >
-            {quiz.title}
-          </TextInput>
-        </View>
 
+  const renderListHeader = () => (
+    <View>
+      <View style={styles.headerTitleRow}>
+        <Ionicons name="create-outline" size={24} color={COLORS.text} />
         <TextInput
-          style={styles.descriptionInput}
-          multiline
-          value={quiz.description}
-          onChangeText={handleDescriptionChange}
-          placeholder="Quiz Description"
+          style={styles.headerTitle}
+          value={quiz.title} // Ensure value is used, not children
+          onChangeText={handleTitleChange}
+          placeholder="Quiz Title"
           placeholderTextColor={COLORS.textSecondary}
         />
+      </View>
 
-        <View style={styles.sectionHeaderRow}>
-          <Text style={styles.sectionTitle}>
-            Questions ({quiz.questions?.length || 0})
-          </Text>
-          <TouchableOpacity
-            style={styles.addButton}
-            onPress={handleAddQuestion}
-          >
-            <Ionicons name="add" size={18} color={COLORS.background} />
-            <Text style={styles.addButtonText}>Add</Text>
-          </TouchableOpacity>
-        </View>
+      <TextInput
+        style={styles.descriptionInput}
+        multiline
+        value={quiz.description}
+        onChangeText={handleDescriptionChange}
+        placeholder="Quiz Description"
+        placeholderTextColor={COLORS.textSecondary}
+      />
 
-        <View style={styles.questionsList}>
-          {(quiz.questions || []).map((q, index) => (
-            <QuizQuestionCard
-              key={q.id}
-              question={q}
-              isEditing={true}
-              order={index + 1}
-              onPress={() => handleEditQuestion(q)}
-              onDelete={() => handleDeleteQuestion(q.id)}
-            />
-          ))}
-        </View>
-      </ScrollView>
+      <View style={styles.sectionHeaderRow}>
+        <Text style={styles.sectionTitle}>
+          Questions ({quiz.questions?.length || 0})
+        </Text>
+        <TouchableOpacity style={styles.addButton} onPress={handleAddQuestion}>
+          <Ionicons name="add" size={18} color={COLORS.background} />
+          <Text style={styles.addButtonText}>Add</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+
+  return (
+    <View style={{ flex: 1 }}>
+      <FlatList
+        data={quiz.questions || []}
+        keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+        ListHeaderComponent={renderListHeader}
+        renderItem={({ item, index }) => (
+          <QuizQuestionCard
+            question={item}
+            isEditing={true}
+            order={index + 1}
+            onPress={() => handleEditQuestion(item)}
+            onDelete={() => handleDeleteQuestion(item.id)}
+          />
+        )}
+      />
 
       <Fab
         icon="save-outline"

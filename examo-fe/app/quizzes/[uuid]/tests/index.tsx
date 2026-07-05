@@ -46,7 +46,7 @@ const MOCK_TESTS: Test[] = [
 
 function QuizTestsScreen() {
   const { uuid } = useLocalSearchParams();
-  const [activeTab, setActiveTab] = useState<"live" | "finished">("live");
+  const [activeTab, setActiveTab] = useState<"live" | "results">("live");
 
   const quiz = QUIZ_1; //TODO: Fetch quiz
   const displayedTests = MOCK_TESTS; //TODO: Fetch tests
@@ -61,10 +61,10 @@ function QuizTestsScreen() {
           <Tabs
             tabs={[
               { id: "live", value: "Live" },
-              { id: "finished", value: "Finished" },
+              { id: "results", value: "Results" },
             ]}
             activeTab={activeTab}
-            onTabChange={(v) => setActiveTab(v as "live" | "finished")}
+            onTabChange={(v) => setActiveTab(v as "live" | "results")}
           />
         </View>
 
@@ -75,9 +75,9 @@ function QuizTestsScreen() {
             <TestCard
               test={item}
               onPress={() => {
-                if (activeTab === "finished") {
+                if (activeTab === "results") {
                   router.push({
-                    pathname: "/quizzes/[uuid]/tests/[id]/finished",
+                    pathname: "/quizzes/[uuid]/tests/[id]/results",
                     params: { uuid: uuid as string, id: item.id },
                   });
                 } else {
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   listContent: {
-    paddingBottom: 80, // Extra padding at the bottom so the FAB doesn't block the last item
+    gap: 12,
   },
 });
 

@@ -11,4 +11,27 @@ function formatTimeLeft(endTimeString: string): string {
     .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 }
 
-export { formatTimeLeft };
+function formatDateTime(dateObj: Date) {
+  const formattedDate = `${dateObj.getDate().toString().padStart(2, "0")}.${(
+    dateObj.getMonth() + 1
+  )
+    .toString()
+    .padStart(2, "0")}.${dateObj.getFullYear()}`;
+
+  return formattedDate;
+}
+
+function formatDuration(minutes?: number) {
+  const formattedDuration = minutes
+    ? `${Math.floor(minutes / 60)}h ${minutes % 60}min`
+    : "0h 00min";
+  return formattedDuration;
+}
+
+function formatEnum(value: string, separator?: string) {
+  return value
+    .split("_")
+    .reduce((prev, current) => `${prev}${separator ?? " "}${current}`);
+}
+
+export { formatTimeLeft, formatDateTime, formatDuration, formatEnum };

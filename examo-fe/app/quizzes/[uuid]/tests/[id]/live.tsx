@@ -8,33 +8,9 @@ import { Test } from "@/types/Test";
 import { formatTimeLeft } from "@/utils";
 import ParticipantProgressBar from "@/components/tests/ParticipanProgressBar";
 import LiveTestHeader from "@/components/layout/LiveTestHeader";
-import LiveTestInfo from "@/components/tests/LiveTestInfo";
+import TestInfo from "@/components/tests/TestInfo";
+import { PARTICIPANTS } from "@/constants/mocks";
 
-const PARTICIPANTS = [
-  {
-    user: {
-      id: 1,
-      username: "jackob.black",
-      email: "jackob.black@gmail.com",
-    },
-    answers: 8,
-    totalQuestions: 10,
-  },
-  {
-    user: { id: 2, username: "azakhardev", email: "azakhardev@gmail.com" },
-    answers: 10,
-    totalQuestions: 10,
-  },
-  {
-    user: {
-      id: 3,
-      username: "peterpeterson",
-      email: "peterpeterson@gmail.com",
-    },
-    answers: 2,
-    totalQuestions: 10,
-  },
-];
 const mockFetchedTest: Test = {
   id: 1,
   title: "My Test",
@@ -107,7 +83,14 @@ function LiveTestScreen() {
       <View style={styles.container}>
         <LiveTestHeader test={test} timeLeft={timeLeft} />
 
-        <LiveTestInfo test={test} />
+        <TestInfo test={test} />
+
+        <View style={styles.accessCodeContainer}>
+          <View style={styles.accessCodePill}>
+            <Text style={styles.accessCodeText}>{test.access_code}</Text>
+          </View>
+          <Text style={styles.accessCodeLabel}>Access code</Text>
+        </View>
 
         <Text style={styles.sectionTitle}>Participants</Text>
         <FlatList
@@ -137,5 +120,29 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingBottom: 40,
+  },
+  accessCodeContainer: {
+    alignItems: "center",
+    marginBottom: 32,
+  },
+  accessCodePill: {
+    backgroundColor: COLORS.input,
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 24,
+    borderWidth: 1,
+    borderColor: COLORS.stroke,
+    marginBottom: 8,
+  },
+  accessCodeText: {
+    color: COLORS.text,
+    fontSize: 24,
+    fontWeight: "bold",
+    letterSpacing: 2,
+  },
+  accessCodeLabel: {
+    color: COLORS.textSecondary,
+    fontSize: 14,
+    fontWeight: "bold",
   },
 });

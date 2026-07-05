@@ -6,7 +6,7 @@ import { Test } from "@/types/Test";
 type TestCardProps = {
   test: Test;
   onPress?: () => void;
-  mode: "live" | "finished";
+  mode: "live" | "results";
 };
 
 export default function TestCard({ test, onPress, mode }: TestCardProps) {
@@ -18,7 +18,7 @@ export default function TestCard({ test, onPress, mode }: TestCardProps) {
       {/* Participants Badge (Absolute Top Right) */}
       <View style={styles.badge}>
         <Text style={styles.smallText}>
-          {mode === "finished" ? (
+          {mode === "results" ? (
             <>
               <Text style={styles.boldLabel}> Submissions: </Text>{" "}
               {test.totalSubmissions}/{test.totalParticipants}{" "}
@@ -54,12 +54,11 @@ export default function TestCard({ test, onPress, mode }: TestCardProps) {
 const styles = StyleSheet.create({
   card: {
     width: "100%",
-    backgroundColor: COLORS.surface, // Using surface background
-    borderColor: COLORS.stroke, // Added stroke border
+    backgroundColor: COLORS.surface,
+    borderColor: COLORS.stroke,
     borderWidth: 1,
     borderRadius: 12,
     padding: 16,
-    marginBottom: 16,
     position: "relative",
   },
   badge: {
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginTop: 4,
-    paddingRight: 100, // Crucial: Leaves empty space so long titles don't overlap the absolute badge
+    paddingRight: 100,
     marginBottom: 16,
   },
   bottomRow: {

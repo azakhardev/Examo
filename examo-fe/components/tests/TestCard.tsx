@@ -31,13 +31,13 @@ export default function TestCard({ test, maxPoints, onPress }: TestCardProps) {
       )}
 
       <Text style={styles.title} numberOfLines={2}>
-        {test.quiz.title}
+        {test.quiz?.title}
       </Text>
 
       {/* Autor */}
       <Text style={styles.authorText}>
         <Text style={styles.boldLabel}>Author: </Text>
-        {test.quiz.author}
+        {test.quiz?.author}
       </Text>
 
       <View style={styles.bottomRow}>
