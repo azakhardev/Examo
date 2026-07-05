@@ -10,14 +10,16 @@ type EditQuestionHeaderProps = {
 function EditQuestionHeader({ onSave, onCancel }: EditQuestionHeaderProps) {
   return (
     <View style={styles.modalHeader}>
-      <TouchableOpacity onPress={onCancel}>
-        <Text style={styles.cancelText}>Cancel</Text>
-      </TouchableOpacity>
       <Text style={styles.modalTitle}>Edit Question</Text>
-      <TouchableOpacity style={styles.savePill} onPress={onSave}>
-        <Ionicons name="checkmark" size={16} color={COLORS.background} />
-        <Text style={styles.savePillText}>Save</Text>
-      </TouchableOpacity>
+      <View style={styles.buttonsWrapper}>
+        <TouchableOpacity style={styles.savePill} onPress={onSave}>
+          <Ionicons name="checkmark" size={16} color={COLORS.background} />
+          <Text style={styles.savePillText}>Save</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onCancel}>
+          <Ionicons name="close" size={24} color={COLORS.text} />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -45,4 +47,10 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   savePillText: { color: COLORS.background, fontWeight: "bold" },
+  buttonsWrapper: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 20,
+  },
 });
