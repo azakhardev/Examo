@@ -37,7 +37,10 @@ function TestsScreen() {
             test={item}
             onPress={() => {
               router.push({
-                pathname: "/tests/[id]",
+                pathname:
+                  activeTab === "upcoming"
+                    ? "/tests/[id]/participate"
+                    : "/tests/[id]/history",
                 params: { id: item.id },
               });
             }}

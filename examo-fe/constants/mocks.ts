@@ -137,14 +137,10 @@ export const question: Question = {
 
 export const upcoming_test: Test = {
   id: 1,
-  quiz: {
-    id: "a1b2",
-    title: "Applied Robotics",
-    author: "ČVUT",
-    description: "Some description",
-    updatedAt: "2026-06-20T12:00:00Z",
-    favorite: true,
-  },
+  title: "Test about QUIZ1",
+  description:
+    "This is long ass description for the quiz1 just to fill in the space so I can see how it is rendered inside of the mobile phone",
+  quiz: QUIZ_1,
   access_code: "ROBO2026",
   start_at: "22. 06. 2026 17:20",
   end_at: "22. 06. 2026 18:20",

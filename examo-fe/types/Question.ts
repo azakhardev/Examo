@@ -1,5 +1,3 @@
-import { QuestionOption } from "./QuestionOption";
-
 export type QuestionType =
   | "SINGLE_CHOICE"
   | "MULTIPLE_CHOICE"
@@ -14,4 +12,10 @@ export type Question = {
   negativePoints?: number;
   options?: QuestionOption[];
   imageUrl?: string;
+};
+
+export type QuestionOption = {
+  id: string;
+  text: string;
+  isCorrect: boolean;
 };

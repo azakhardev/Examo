@@ -1,5 +1,5 @@
 import COLORS from "@/constants/colors";
-import { Question, QuestionType } from "@/types/Question";
+import { Question, QuestionType, QuestionOption } from "@/types/Question";
 import { Ionicons } from "@expo/vector-icons";
 import * as DocumentPicker from "expo-document-picker";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
@@ -14,7 +14,6 @@ import {
 } from "react-native";
 import EditQuestionHeader from "../layout/EditQuestionHeader";
 import { useEffect } from "react";
-import { QuestionOption } from "@/types/QuestionOption";
 
 const INPUT_MAPPER: Record<QuestionType, React.FC<InputProps>> = {
   MULTIPLE_CHOICE: MultipleChoiceInput,

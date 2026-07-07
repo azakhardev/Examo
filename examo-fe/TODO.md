@@ -1,0 +1,4 @@
+- [ ] Wire to backend
+- [ ] Create authentication hook
+- [ ] Disabling controls when sending data
+- [ ] Displaying loaders when fetching and sending data
