@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { ParticipantProgress } from "@/types/ParticipantProgress";
 import { Test } from "@/types/Test";
 import { formatTimeLeft } from "@/utils";
-import ParticipantProgressBar from "@/components/tests/ParticipanProgressBar";
+import ParticipantProgressBar from "@/components/tests/ParticipantProgressBar";
 import LiveTestHeader from "@/components/layout/LiveTestHeader";
 import TestInfo from "@/components/tests/TestInfo";
 import { PARTICIPANTS } from "@/constants/mocks";

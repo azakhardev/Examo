@@ -7,8 +7,10 @@
 - [ ] Style favicon and app logo
 - [ ] Fix alerts styles
 - [ ] Authorize user for actions (review test, edit, delete)
-- [ ] Datepickers
+- [ ] Datepicker, image picker, QR code scanner
+- [ ] Allow test review checkbox
 - [ ] Header nav buttons
+- [ ] Validation rules on form submissions
 
 ### Improvements
 

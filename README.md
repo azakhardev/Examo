@@ -73,15 +73,9 @@ erDiagram
         bigint id PK
         bigint test_id FK
         int user_id FK
+        uuid submission_id FK
         timestamp submitted_at
         float total_gained_points
-    }
-    student_answers {
-        bigint id PK
-        bigint submission_id FK
-        string question_id "MongoDB reference"
-        text student_answer_text
-        float gained_points
     }
     practice_history {
         bigint id PK

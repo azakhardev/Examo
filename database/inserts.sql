@@ -50,15 +50,7 @@ INSERT INTO test_submissions (test_id, user_id, submitted_at, total_gained_point
 ((SELECT id FROM online_tests WHERE access_code = 'ARCH2026'), (SELECT id FROM users WHERE username = 'john_smith'), '2026-06-20 10:50:00', 2.5),
 ((SELECT id FROM online_tests WHERE access_code = 'REACT123'), (SELECT id FROM users WHERE username = 'emma_watson'), '2026-06-20 13:10:00', 5.0);
 
--- 6. STUDENT ANSWERS (Detailed audit trail for azakhardev's submission in ARCH2026 test)
--- The question_id must map to the inner IDs inside the MongoDB test snapshot document
-INSERT INTO student_answers (submission_id, question_id, student_answer_text, gained_points) VALUES
-((SELECT id FROM test_submissions WHERE user_id = (SELECT id FROM users WHERE username = 'azakhardev') AND test_id = (SELECT id FROM online_tests WHERE access_code = 'ARCH2026')), 'q1', 'Controller', 1.0),
-((SELECT id FROM test_submissions WHERE user_id = (SELECT id FROM users WHERE username = 'azakhardev') AND test_id = (SELECT id FROM online_tests WHERE access_code = 'ARCH2026')), 'q2', 'Independently deployable, Organized around business capabilities', 4.0),
-((SELECT id FROM test_submissions WHERE user_id = (SELECT id FROM users WHERE username = 'azakhardev') AND test_id = (SELECT id FROM online_tests WHERE access_code = 'ARCH2026')), 'q3', 'YES', -1.0),
-((SELECT id FROM test_submissions WHERE user_id = (SELECT id FROM users WHERE username = 'azakhardev') AND test_id = (SELECT id FROM online_tests WHERE access_code = 'ARCH2026')), 'q4', 'Consistency, Availability, Partition tolerance', 3.0);
-
--- 7. PRACTICE HISTORY (Offline/Solo learning statistics)
+-- 6. PRACTICE HISTORY (Offline/Solo learning statistics)
 INSERT INTO practice_history (user_id, quiz_id, mode, started_at ,completed_at, duration_minutes, total_questions, total_answers, correct_answers) VALUES
 ((SELECT id FROM users WHERE username = 'azakhardev'), '111e8400-e29b-41d4-a716-446655441111', 'PRACTICE',NOW() - INTERVAL '1 hour', NOW() ,320, 4, 4, 3),
 ((SELECT id FROM users WHERE username = 'azakhardev'), '550e8400-e29b-41d4-a716-446655440000', 'FLASHCARDS',NOW() - INTERVAL '30 minute', NOW() ,120, 2, 2, 2);

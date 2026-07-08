@@ -49,8 +49,8 @@ export default function TestResultsScreen() {
               activeOpacity={0.7}
               onPress={() => {
                 router.push({
-                  pathname: "/tests/[id]",
-                  params: { id: id.toString() },
+                  pathname: "/tests/[id]/[userId]",
+                  params: { id: id.toString(), userId: item.user.id },
                 });
               }}
             >

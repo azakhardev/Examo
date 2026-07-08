@@ -2,6 +2,7 @@ import { Quiz } from "./Quiz";
 
 export type Test = {
   id: number;
+  author_id?: number;
   quiz?: Quiz;
   title?: string;
   description?: string;
@@ -11,6 +12,6 @@ export type Test = {
   time_limit_minutes?: number;
   total_gained_points?: number;
   submitted_at?: string;
-  totalParticipants?: number;
-  totalSubmissions?: number;
+  total_participants?: number;
+  total_submissions?: number;
 };

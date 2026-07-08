@@ -34,16 +34,9 @@ CREATE TABLE "test_submissions" (
   "id" bigserial PRIMARY KEY,
   "test_id" bigint NOT NULL,
   "user_id" integer NOT NULL,
+  "submission_id" uuid PRIMARY KEY,
   "submitted_at" timestamp NOT NULL DEFAULT (now()),
   "total_gained_points" float DEFAULT 0
-);
-
-CREATE TABLE "student_answers" (
-  "id" bigserial PRIMARY KEY,
-  "submission_id" bigint NOT NULL,
-  "question_id" varchar(64) NOT NULL,
-  "student_answer_text" text,
-  "gained_points" float DEFAULT 0
 );
 
 CREATE TABLE "practice_history" (
@@ -81,8 +74,6 @@ ALTER TABLE "online_tests" ADD FOREIGN KEY ("quiz_id") REFERENCES "quizzes" ("id
 ALTER TABLE "test_submissions" ADD FOREIGN KEY ("test_id") REFERENCES "online_tests" ("id") ON DELETE CASCADE DEFERRABLE INITIALLY IMMEDIATE;
 
 ALTER TABLE "test_submissions" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id") DEFERRABLE INITIALLY IMMEDIATE;
-
-ALTER TABLE "student_answers" ADD FOREIGN KEY ("submission_id") REFERENCES "test_submissions" ("id") ON DELETE CASCADE DEFERRABLE INITIALLY IMMEDIATE;
 
 ALTER TABLE "practice_history" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE DEFERRABLE INITIALLY IMMEDIATE;
 

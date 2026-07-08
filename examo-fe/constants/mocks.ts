@@ -3,6 +3,7 @@ import { Question } from "@/types/Question";
 import { Quiz } from "@/types/Quiz";
 import { QuizParticipant } from "@/types/QuizParticipant";
 import { Test } from "@/types/Test";
+import { TestSubmission } from "@/types/TestSubmission";
 import { User } from "@/types/User";
 
 export const QUIZ_1: Quiz = {
@@ -13,7 +14,7 @@ export const QUIZ_1: Quiz = {
   favorite: false,
   link: "https://examo:4asdf564a...",
   visibility: "Private",
-  updatedAt: "2026-06-20T10:00:00Z",
+  updated_at: "2026-06-20T10:00:00Z",
   categories: ["SQL", "Database"],
   questions: [
     {
@@ -56,7 +57,7 @@ export const QUIZ_2: Quiz = {
   description:
     "Advanced quiz covering microservices, monolithic designs, and fundamental design patterns.",
   author: "Azakhardev",
-  updatedAt: "2026-06-20T12:00:00Z",
+  updated_at: "2026-06-20T12:00:00Z",
   favorite: true,
   questions: [
     {
@@ -154,7 +155,7 @@ export const history_test: Test = {
     title: "Low Level Programming",
     author: "ČVUT",
     description: "Some description",
-    updatedAt: "2026-06-20T12:00:00Z",
+    updated_at: "2026-06-20T12:00:00Z",
     favorite: false,
   },
   access_code: "ASM2026",
@@ -241,3 +242,82 @@ export const PARTICIPANTS = [
     totalQuestions: 10,
   },
 ];
+
+export const TEST_SUBMISSON: TestSubmission = {
+  test_id: 1,
+  author_id: 1,
+  submission_id: "mongo_sub_123",
+  title: "Tests - Low Level Programming",
+  total_points_gained: 4,
+  answers: [
+    {
+      id: "ans_1",
+      gained_points: 2,
+      question: {
+        id: "q1",
+        type: "SINGLE_CHOICE",
+        maxPoints: 2,
+        questionText:
+          "Which hardware component is directly responsible for translating virtual memory addresses into physical memory addresses during execution?",
+        options: [
+          { id: "o1", text: "Arithmetic Logic Unit", isCorrect: false },
+          {
+            id: "o2",
+            text: "Direct Memory Access controller",
+            isCorrect: false,
+          },
+          { id: "o3", text: "Memory Management Unit", isCorrect: true },
+          { id: "o4", text: "Front-Side Bus (FSB)", isCorrect: false },
+        ],
+      },
+      answer: [{ text: "Memory Management Unit", correct: true }],
+    },
+    {
+      id: "ans_2",
+      gained_points: 2,
+      question: {
+        id: "q2",
+        type: "MULTIPLE_CHOICE",
+        maxPoints: 4,
+        questionText:
+          "Which of the following statements about Heap memory are true? (Select all that apply)",
+        options: [
+          {
+            id: "o1",
+            text: "It is automatically managed and cleaned up by the CPU hardware.",
+            isCorrect: false,
+          },
+          {
+            id: "o2",
+            text: "It requires manual allocation and deallocation in unmanaged languages like C and C++.",
+            isCorrect: true,
+          },
+          {
+            id: "o3",
+            text: "It is generally slower to allocate and access compared to Stack memory.",
+            isCorrect: true,
+          },
+          {
+            id: "o4",
+            text: "It is subject to memory fragmentation over time.",
+            isCorrect: true,
+          },
+        ],
+      },
+      answer: [
+        {
+          text: "It is automatically managed and cleaned up by the CPU hardware.",
+          correct: false,
+        },
+        {
+          text: "It is generally slower to allocate and access compared to Stack memory.",
+          correct: true,
+        },
+        {
+          text: "It is subject to memory fragmentation over time.",
+          correct: true,
+        },
+      ],
+    },
+  ],
+};

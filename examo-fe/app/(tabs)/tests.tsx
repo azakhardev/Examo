@@ -7,9 +7,12 @@ import { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import ScreenWrapper from "@/components/layout/ScreenWrapper";
+import { useAuth } from "@/components/providers/AuthContext";
 
 function TestsScreen() {
   const [activeTab, setActiveTab] = useState<string>("upcoming");
+
+  const { user } = useAuth();
 
   let tests: Test[] = [];
 
@@ -40,8 +43,8 @@ function TestsScreen() {
                 pathname:
                   activeTab === "upcoming"
                     ? "/tests/[id]/participate"
-                    : "/tests/[id]/history",
-                params: { id: item.id },
+                    : "/tests/[id]/[userId]",
+                params: { id: item.id, userId: user?.userId },
               });
             }}
           />

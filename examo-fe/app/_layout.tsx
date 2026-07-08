@@ -6,6 +6,7 @@ import * as NavigationBar from "expo-navigation-bar";
 import { Platform } from "react-native";
 import { ThemeProvider, DarkTheme } from "@react-navigation/native";
 import EditQuizHeader from "@/components/layout/EditQuizHeader";
+import AuthProvider from "@/components/providers/AuthContext";
 
 export default function RootLayout() {
   useEffect(() => {
@@ -27,61 +28,66 @@ export default function RootLayout() {
     >
       <StatusBar style="light" backgroundColor={COLORS.background} />
 
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          contentStyle: { backgroundColor: COLORS.background },
-          animation: "slide_from_right",
-        }}
-      >
-        <Stack.Screen name="(tabs)" />
-
-        <Stack.Screen name="quizzes/[uuid]" options={{ headerShown: false }} />
-
-        <Stack.Screen name="tests/[id]" />
-
-        <Stack.Screen
-          name="quizzes/[uuid]/edit"
-          options={{
-            presentation: "fullScreenModal",
-            title: "Edit Quiz",
+      <AuthProvider>
+        <Stack
+          screenOptions={{
             headerShown: false,
-            header: () => <EditQuizHeader />,
-            animation: "fade",
+            contentStyle: { backgroundColor: COLORS.background },
+            animation: "slide_from_right",
           }}
-        />
+        >
+          <Stack.Screen name="(tabs)" />
 
-        <Stack.Screen
-          name="quizzes/[uuid]/tests/index.tsx"
-          options={{
-            presentation: "fullScreenModal",
-            title: "Start Test",
-            headerShown: false,
-            headerStyle: { backgroundColor: COLORS.background },
-            animation: "fade",
-          }}
-        />
+          <Stack.Screen
+            name="quizzes/[uuid]"
+            options={{ headerShown: false }}
+          />
 
-        <Stack.Screen
-          name="quizzes/[uuid]/manage-access.tsx"
-          options={{
-            presentation: "fullScreenModal",
-            title: "Manage access",
-            headerShown: false,
-            animation: "fade",
-          }}
-        />
+          <Stack.Screen name="tests/[id]" />
 
-        <Stack.Screen
-          name="quizzes/[uuid]/practice.tsx"
-          options={{
-            presentation: "fullScreenModal",
-            title: "Practice",
-            headerShown: false,
-            animation: "fade",
-          }}
-        />
-      </Stack>
+          <Stack.Screen
+            name="quizzes/[uuid]/edit"
+            options={{
+              presentation: "fullScreenModal",
+              title: "Edit Quiz",
+              headerShown: false,
+              header: () => <EditQuizHeader />,
+              animation: "fade",
+            }}
+          />
+
+          <Stack.Screen
+            name="quizzes/[uuid]/tests/index.tsx"
+            options={{
+              presentation: "fullScreenModal",
+              title: "Start Test",
+              headerShown: false,
+              headerStyle: { backgroundColor: COLORS.background },
+              animation: "fade",
+            }}
+          />
+
+          <Stack.Screen
+            name="quizzes/[uuid]/manage-access.tsx"
+            options={{
+              presentation: "fullScreenModal",
+              title: "Manage access",
+              headerShown: false,
+              animation: "fade",
+            }}
+          />
+
+          <Stack.Screen
+            name="quizzes/[uuid]/practice.tsx"
+            options={{
+              presentation: "fullScreenModal",
+              title: "Practice",
+              headerShown: false,
+              animation: "fade",
+            }}
+          />
+        </Stack>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

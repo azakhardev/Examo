@@ -19,8 +19,8 @@ const MOCK_TESTS: Test[] = [
     description: "My test description",
     start_at: "22-06-2026T20:17:30Z",
     end_at: "22-06-2026T20:18:30Z",
-    totalParticipants: 30,
-    totalSubmissions: 25,
+    total_participants: 30,
+    total_submissions: 25,
   },
   {
     id: 2,
@@ -29,8 +29,8 @@ const MOCK_TESTS: Test[] = [
     description: "My test 2 description",
     start_at: "22-06-2026T20:18:05Z",
     end_at: "22-06-2026T20:19:05Z",
-    totalParticipants: 0,
-    totalSubmissions: 0,
+    total_participants: 0,
+    total_submissions: 0,
   },
   {
     id: 3,
@@ -39,8 +39,8 @@ const MOCK_TESTS: Test[] = [
     description: "My test 3 description",
     start_at: "22-06-2026T20:19:00Z",
     end_at: "22-06-2026T20:20:00Z",
-    totalParticipants: 12,
-    totalSubmissions: 10,
+    total_participants: 12,
+    total_submissions: 10,
   },
 ];
 

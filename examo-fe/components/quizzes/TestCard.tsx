@@ -22,12 +22,12 @@ export default function TestCard({ test, onPress, mode }: TestCardProps) {
           {mode === "results" ? (
             <>
               <Text style={styles.boldLabel}> Submissions: </Text>{" "}
-              {test.totalSubmissions}/{test.totalParticipants}{" "}
+              {test.total_submissions}/{test.total_participants}{" "}
             </>
           ) : (
             <>
               <Text style={styles.boldLabel}>Participants: </Text>
-              {test.totalParticipants || 0}
+              {test.total_participants || 0}
             </>
           )}
         </Text>

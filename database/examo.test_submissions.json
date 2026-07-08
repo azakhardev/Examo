@@ -1,0 +1,357 @@
+[{
+  "_id": "d0e14a2e-4b47-41ab-9b34-8c85116718d0",
+  "test_id": 1,
+  "user_id": 2,
+  "username": "azakhardev",
+  "title": "Software Architecture Patterns",
+  "total_points_gained": 7,
+  "submitted_at": "2026-06-20T10:45:00Z",
+  "answers": [
+    {
+      "id": "ans_aza_q1",
+      "gained_points": 1,
+      "question": {
+        "id": "q1",
+        "type": "SINGLE_CHOICE",
+        "questionText": "What does the 'C' in MVC stand for?",
+        "maxPoints": 1,
+        "negativePoints": 0.5,
+        "options": [
+          {
+            "id": "1",
+            "text": "Component",
+            "isCorrect": false
+          },
+          {
+            "id": "2",
+            "text": "Controller",
+            "isCorrect": true
+          },
+          {
+            "id": "3",
+            "text": "Container",
+            "isCorrect": false
+          },
+          {
+            "id": "4",
+            "text": "Context",
+            "isCorrect": false
+          }
+        ]
+      },
+      "answer": [
+        {
+          "text": "Controller",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "ans_aza_q2",
+      "gained_points": 4,
+      "question": {
+        "id": "q2",
+        "type": "MULTIPLE_CHOICE",
+        "questionText": "Which of the following are primary characteristics of a Microservices architecture?",
+        "maxPoints": 4,
+        "negativePoints": 1,
+        "options": [
+          {
+            "id": "1",
+            "text": "Highly coupled components",
+            "isCorrect": false
+          },
+          {
+            "id": "2",
+            "text": "Independently deployable",
+            "isCorrect": true
+          },
+          {
+            "id": "3",
+            "text": "Single shared database",
+            "isCorrect": false
+          },
+          {
+            "id": "4",
+            "text": "Organized around business capabilities",
+            "isCorrect": true
+          }
+        ]
+      },
+      "answer": [
+        {
+          "text": "Independently deployable",
+          "correct": true
+        },
+        {
+          "text": "Organized around business capabilities",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "ans_aza_q3",
+      "gained_points": -1,
+      "question": {
+        "id": "q3",
+        "type": "TRUE_FALSE",
+        "questionText": "Is the 'Singleton' pattern classified as a behavioral design pattern?",
+        "maxPoints": 1,
+        "negativePoints": 1,
+        "options": [
+          {
+            "id": "1",
+            "text": "YES",
+            "isCorrect": false
+          },
+          {
+            "id": "2",
+            "text": "NO",
+            "isCorrect": true
+          }
+        ]
+      },
+      "answer": [
+        {
+          "text": "YES",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "ans_aza_q4",
+      "gained_points": 3,
+      "question": {
+        "id": "q4",
+        "type": "OPEN",
+        "questionText": "What are the three pillars of the CAP theorem? (Write them separated by commas)",
+        "maxPoints": 3,
+        "negativePoints": 0,
+        "options": [
+          {
+            "id": "1",
+            "text": "Consistency, Availability, Partition tolerance",
+            "isCorrect": true
+          }
+        ]
+      },
+      "answer": [
+        {
+          "text": "Consistency, Availability, Partition tolerance",
+          "correct": true
+        }
+      ]
+    }
+  ]
+},
+{
+  "_id": "f5b21c4d-9e68-45fc-a128-3c4d5e6f7a8b",
+  "test_id": 1,
+  "user_id": 3,
+  "username": "john_smith",
+  "title": "Software Architecture Patterns",
+  "total_points_gained": 2.5,
+  "submitted_at": "2026-06-20T10:50:00Z",
+  "answers": [
+    {
+      "id": "ans_js_q1",
+      "gained_points": -0.5,
+      "question": {
+        "id": "q1",
+        "type": "SINGLE_CHOICE",
+        "questionText": "What does the 'C' in MVC stand for?",
+        "maxPoints": 1,
+        "negativePoints": 0.5,
+        "options": [
+          {
+            "id": "1",
+            "text": "Component",
+            "isCorrect": false
+          },
+          {
+            "id": "2",
+            "text": "Controller",
+            "isCorrect": true
+          },
+          {
+            "id": "3",
+            "text": "Container",
+            "isCorrect": false
+          },
+          {
+            "id": "4",
+            "text": "Context",
+            "isCorrect": false
+          }
+        ]
+      },
+      "answer": [
+        {
+          "text": "Component",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "ans_js_q2",
+      "gained_points": 2,
+      "question": {
+        "id": "q2",
+        "type": "MULTIPLE_CHOICE",
+        "questionText": "Which of the following are primary characteristics of a Microservices architecture?",
+        "maxPoints": 4,
+        "negativePoints": 1,
+        "options": [
+          {
+            "id": "1",
+            "text": "Highly coupled components",
+            "isCorrect": false
+          },
+          {
+            "id": "2",
+            "text": "Independently deployable",
+            "isCorrect": true
+          },
+          {
+            "id": "3",
+            "text": "Single shared database",
+            "isCorrect": false
+          },
+          {
+            "id": "4",
+            "text": "Organized around business capabilities",
+            "isCorrect": true
+          }
+        ]
+      },
+      "answer": [
+        {
+          "text": "Independently deployable",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "ans_js_q3",
+      "gained_points": 1,
+      "question": {
+        "id": "q3",
+        "type": "TRUE_FALSE",
+        "questionText": "Is the 'Singleton' pattern classified as a behavioral design pattern?",
+        "maxPoints": 1,
+        "negativePoints": 1,
+        "options": [
+          {
+            "id": "1",
+            "text": "YES",
+            "isCorrect": false
+          },
+          {
+            "id": "2",
+            "text": "NO",
+            "isCorrect": true
+          }
+        ]
+      },
+      "answer": [
+        {
+          "text": "NO",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "ans_js_q4",
+      "gained_points": 0,
+      "question": {
+        "id": "q4",
+        "type": "OPEN",
+        "questionText": "What are the three pillars of the CAP theorem? (Write them separated by commas)",
+        "maxPoints": 3,
+        "negativePoints": 0,
+        "options": [
+          {
+            "id": "1",
+            "text": "Consistency, Availability, Partition tolerance",
+            "isCorrect": true
+          }
+        ]
+      },
+      "answer": [
+        {
+          "text": "I don't remember, sorry",
+          "correct": false
+        }
+      ]
+    }
+  ]
+},
+{
+  "_id": "e7c32d5e-0f79-46fd-b239-4d5e6f7a8b9c",
+  "test_id": 2,
+  "user_id": 4,
+  "username": "emma_watson",
+  "title": "React Native & Expo Basics",
+  "total_points_gained": 5,
+  "submitted_at": "2026-06-20T13:10:00Z",
+  "answers": [
+    {
+      "id": "ans_ew_q1",
+      "gained_points": 2,
+      "question": {
+        "id": "q1",
+        "type": "SINGLE_CHOICE",
+        "questionText": "Which hook is used to manage state in a functional component?",
+        "maxPoints": 2,
+        "negativePoints": 1,
+        "options": [
+          {
+            "id": "1",
+            "text": "useEffect",
+            "isCorrect": false
+          },
+          {
+            "id": "2",
+            "text": "useState",
+            "isCorrect": true
+          },
+          {
+            "id": "3",
+            "text": "useContext",
+            "isCorrect": false
+          }
+        ]
+      },
+      "answer": [
+        {
+          "text": "useState",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "ans_ew_q2",
+      "gained_points": 3,
+      "question": {
+        "id": "q2",
+        "type": "OPEN",
+        "questionText": "What does JSX stand for?",
+        "maxPoints": 3,
+        "negativePoints": 0,
+        "options": [
+          {
+            "id": "1",
+            "text": "JavaScript XML",
+            "isCorrect": true
+          }
+        ]
+      },
+      "answer": [
+        {
+          "text": "JavaScript XML",
+          "correct": true
+        }
+      ]
+    }
+  ]
+}]

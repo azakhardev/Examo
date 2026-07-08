@@ -6,10 +6,10 @@ export type Quiz = {
   link?: string;
   description?: string;
   visibility?: string;
-  authorId?: number;
+  author_id?: number;
   author?: string;
-  updatedAt?: string;
-  maxPoints?: number;
+  updated_at?: string;
+  max_points?: number;
   categories?: string[];
   favorite?: boolean;
   questions?: Question[];
