@@ -1,5 +1,6 @@
 import COLORS from "@/constants/colors";
 import { Test } from "@/types/Test";
+import { formatDateTime } from "@/utils";
 import { View, Text, StyleSheet } from "react-native";
 
 type LiveTestInfoProps = {
@@ -14,11 +15,11 @@ function TestInfo({ test }: LiveTestInfoProps) {
       <View style={styles.dateRow}>
         <Text style={styles.dateText}>
           <Text style={styles.boldText}>Start: </Text>
-          {test.start_at}
+          {formatDateTime(new Date(test.start_at!))}
         </Text>
         <Text style={styles.dateText}>
           <Text style={styles.boldText}>End: </Text>
-          {test.end_at.replace("T", " ").substring(0, 16)}
+          {formatDateTime(new Date(test.end_at!))}
         </Text>
       </View>
     </>

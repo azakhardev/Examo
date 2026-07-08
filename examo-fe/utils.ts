@@ -16,7 +16,10 @@ function formatDateTime(dateObj: Date) {
     dateObj.getMonth() + 1
   )
     .toString()
-    .padStart(2, "0")}.${dateObj.getFullYear()}`;
+    .padStart(
+      2,
+      "0",
+    )}.${dateObj.getFullYear()} ${dateObj.getHours().toString().padStart(2, "0")}:${dateObj.getMinutes().toString().padStart(2, "0")}`;
 
   return formattedDate;
 }

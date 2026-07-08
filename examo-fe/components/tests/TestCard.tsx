@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import COLORS from "@/constants/colors";
 import { Test } from "@/types/Test";
+import { formatDateTime } from "@/utils";
 
 export type Quiz = {
   id: string;
@@ -43,7 +44,7 @@ export default function TestCard({ test, maxPoints, onPress }: TestCardProps) {
       <View style={styles.bottomRow}>
         <Text style={styles.smallText}>
           <Text style={styles.boldLabel}>Start: </Text>
-          {test.start_at}
+          {formatDateTime(new Date(test.start_at!))}
         </Text>
 
         {isHistory ? (
@@ -54,7 +55,7 @@ export default function TestCard({ test, maxPoints, onPress }: TestCardProps) {
         ) : (
           <Text style={styles.smallText}>
             <Text style={styles.boldLabel}>End: </Text>
-            {test.end_at}
+            {formatDateTime(new Date(test.end_at!))}
           </Text>
         )}
       </View>

@@ -1,4 +1,4 @@
-export type CreateTestFormSchema = {
+export type TestFormSchema = {
   title: string;
   description: string;
   startTime: string;

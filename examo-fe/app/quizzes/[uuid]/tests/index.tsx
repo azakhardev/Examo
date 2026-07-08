@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import COLORS from "@/constants/colors";
 import ScreenWrapper from "@/components/layout/ScreenWrapper";
 import { useState } from "react";
@@ -17,8 +17,8 @@ const MOCK_TESTS: Test[] = [
     quiz: { id: "1", title: "Quiz" } as any,
     title: "My test",
     description: "My test description",
-    start_at: "22. 06. 2026 17:20",
-    end_at: "22. 06. 2026 18:20",
+    start_at: "22-06-2026T20:17:30Z",
+    end_at: "22-06-2026T20:18:30Z",
     totalParticipants: 30,
     totalSubmissions: 25,
   },
@@ -27,8 +27,8 @@ const MOCK_TESTS: Test[] = [
     quiz: { id: "2", title: "Quiz 2" } as any,
     title: "My test 2",
     description: "My test 2 description",
-    start_at: "22. 06. 2026 18:20",
-    end_at: "22. 06. 2026 19:20",
+    start_at: "22-06-2026T20:18:05Z",
+    end_at: "22-06-2026T20:19:05Z",
     totalParticipants: 0,
     totalSubmissions: 0,
   },
@@ -37,8 +37,8 @@ const MOCK_TESTS: Test[] = [
     quiz: { id: "3", title: "Quiz 3" } as any,
     title: "My test 3",
     description: "My test 3 description",
-    start_at: "22. 06. 2026 19:20",
-    end_at: "22. 06. 2026 20:20",
+    start_at: "22-06-2026T20:19:00Z",
+    end_at: "22-06-2026T20:20:00Z",
     totalParticipants: 12,
     totalSubmissions: 10,
   },

@@ -1,11 +1,11 @@
 import COLORS from "@/constants/colors";
-import { CreateTestFormSchema } from "@/types/CreateTest";
+import { TestFormSchema } from "@/types/CreateTest";
 import { Ionicons } from "@expo/vector-icons";
 import { Control, Controller } from "react-hook-form";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 
 type CreateTestFormProps = {
-  control: Control<CreateTestFormSchema>;
+  control: Control<TestFormSchema>;
 };
 
 function CreateTestForm({ control }: CreateTestFormProps) {

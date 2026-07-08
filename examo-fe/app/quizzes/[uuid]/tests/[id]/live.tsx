@@ -10,19 +10,22 @@ import ParticipantProgressBar from "@/components/tests/ParticipanProgressBar";
 import LiveTestHeader from "@/components/layout/LiveTestHeader";
 import TestInfo from "@/components/tests/TestInfo";
 import { PARTICIPANTS } from "@/constants/mocks";
+import TestSettingsModal from "@/components/tests/TestSettingsModal";
 
 const mockFetchedTest: Test = {
   id: 1,
   title: "My Test",
   description:
     "In this test we will test your knowledge about creating modern looking mobile apps with advanced UX.",
-  start_at: "21. 05. 18:00",
-  end_at: "2026-05-21T19:00:00Z", // Use valid ISO for Date calculations
+  start_at: "2026-07-23T19:00:00Z",
+  end_at: "2026-07-24T19:00:00Z",
   access_code: "356482",
 };
 
 function LiveTestScreen() {
-  const { id } = useLocalSearchParams();
+  const { id, uuid } = useLocalSearchParams();
+
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const test = {
     ...mockFetchedTest,
@@ -47,6 +50,10 @@ function LiveTestScreen() {
     return () => clearInterval(timer);
   }, [test?.end_at]);
 
+  function handleDelete() {
+    //TODO: ALert and DELETE request to BE -> Redirect
+    console.log("DELETE CLICKED");
+  }
   // --- 3. WebSocket Connection ---
   //useEffect(() => {
   //if (!test) return;
@@ -81,7 +88,12 @@ function LiveTestScreen() {
   return (
     <ScreenWrapper>
       <View style={styles.container}>
-        <LiveTestHeader test={test} timeLeft={timeLeft} />
+        <LiveTestHeader
+          test={test}
+          timeLeft={timeLeft}
+          hasStarted={new Date(test.start_at!) <= new Date()}
+          onSettingsPress={() => setIsVisible(true)}
+        />
 
         <TestInfo test={test} />
 
@@ -101,6 +113,14 @@ function LiveTestScreen() {
           showsVerticalScrollIndicator={false}
         />
       </View>
+      <TestSettingsModal
+        id={id as string}
+        uuid={uuid as string}
+        visible={isVisible}
+        onClose={() => setIsVisible(false)}
+        onDelete={handleDelete}
+        test={test}
+      />
     </ScreenWrapper>
   );
 }
