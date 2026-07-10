@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, FlatList } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 
 import ScreenWrapper from "@/components/layout/ScreenWrapper";
 import PracticeHistoryCard from "@/components/practice/PracticeHistoryCard";
@@ -14,7 +14,13 @@ export default function PracticeOverviewScreen() {
 
   function onSubmit(data: PracticeSetup) {
     console.log("Starting new practice with strict setup:", data);
-    // TODO: Handle Start logic
+
+    // TODO: Send config to BE and redirect to started quiz by response id, saved locally
+
+    router.push({
+      pathname: "/quizzes/[uuid]/practice/[id]",
+      params: { uuid: uuid as string, id: 1 },
+    });
   }
 
   function handleContinuePractice(id: string | number) {
