@@ -1,26 +1,16 @@
 // screens/PracticeActiveScreen.tsx
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  Animated,
-  FlatList,
-  Alert,
-} from "react-native";
+import React, { useState, useCallback } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { useLocalSearchParams, router } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
 import COLORS from "@/constants/colors";
 import ScreenWrapper from "@/components/layout/ScreenWrapper";
-import { Quiz } from "@/types/Quiz";
 import { PracticeSetup } from "@/types/Practice";
-import { Question, QuestionOption } from "@/types/Question";
+import { Question } from "@/types/Question";
 import PracticeTimer from "@/components/practice/PracticeTimer";
 import QuestionContent from "@/components/practice/QuestionContent";
 import { QUIZ_1 } from "@/constants/mocks";
 import PracticeNavigation from "@/components/practice/PracticeNavigation";
+import PracticeHeader from "@/components/layout/PracticeHeader";
 
 // --- MOCK DATA (Replace with local storage / params) ---
 const MOCK_SETUP: PracticeSetup = {
@@ -44,12 +34,10 @@ export default function PracticeActiveScreen() {
   // Local answers: { questionId: string | string[] }
   const [answers, setAnswers] = useState<Record<string, string | string[]>>({});
   // Track which questions have been explicitly "submitted" to show feedback
-  const [submittedStates, setSubmittedStates] = useState<
-    Record<string, boolean>
-  >({});
+  const [submitted, setSubmitted] = useState<Record<string, boolean>>({});
 
   const currentQuestion = questions[currentIndex];
-  const isCurrentSubmitted = submittedStates[currentQuestion?.id];
+  const isCurrentSubmitted = submitted[currentQuestion?.id];
 
   // --- Interaction Handlers ---
   function handleSelectOption(optionId: string) {
@@ -71,10 +59,12 @@ export default function PracticeActiveScreen() {
     // TODO: Save updated answers to LocalStorage/AsyncStorage here
   }
 
-  function handleSubmitAnswer() {
-    setSubmittedStates((prev) => ({ ...prev, [currentQuestion.id]: true }));
+  const handleSubmitAnswer = useCallback(() => {
+    if (!currentQuestion) return;
+
+    setSubmitted((prev) => ({ ...prev, [currentQuestion.id]: true }));
     // TODO: Update LocalStorage session progress
-  }
+  }, [currentQuestion]);
 
   function handleNext() {
     if (currentIndex < questions.length - 1) {
@@ -104,20 +94,13 @@ export default function PracticeActiveScreen() {
 
   return (
     <ScreenWrapper>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="close" size={28} color={COLORS.text} />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>
-          {currentIndex + 1} / {questions.length}
-        </Text>
-        <TouchableOpacity onPress={handleFinishPractice}>
-          <Text style={styles.finishText}>Finish</Text>
-        </TouchableOpacity>
-      </View>
+      <PracticeHeader
+        index={currentIndex}
+        questionsCount={questions.length}
+        onFinishPractice={handleFinishPractice}
+      />
 
-      {setup.questionTimeLimit > 0 && (
+      {setup.mode === "RACE" && (
         <PracticeTimer
           timeLimit={setup.questionTimeLimit}
           onSubmit={handleSubmitAnswer}
@@ -134,7 +117,6 @@ export default function PracticeActiveScreen() {
         answers={answers}
       />
 
-      {/* Action Button */}
       <View style={styles.actionContainer}>
         {!isCurrentSubmitted && setup.showCorrectAnswers ? (
           <TouchableOpacity
@@ -152,37 +134,19 @@ export default function PracticeActiveScreen() {
         )}
       </View>
 
-      {/* Bottom Navigation (Jump between questions) */}
       <PracticeNavigation
         onPress={(id: number) => setCurrentIndex(id)}
         questions={questions}
         answers={answers}
         currentIndex={currentIndex}
+        submitted={submitted}
+        mode={setup.mode}
       />
     </ScreenWrapper>
   );
 }
 
 const styles = StyleSheet.create({
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    paddingBottom: 16,
-  },
-  headerTitle: {
-    color: COLORS.text,
-    fontSize: 18,
-    fontWeight: "bold",
-    fontVariant: ["tabular-nums"],
-  },
-  finishText: {
-    color: COLORS.primary,
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-
   actionContainer: {
     paddingHorizontal: 16,
     paddingBottom: 16,
