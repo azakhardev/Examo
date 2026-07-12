@@ -6,7 +6,7 @@ import ScreenWrapper from "@/components/layout/ScreenWrapper";
 import Fab from "@/components/ui/Fab";
 import ResultQuestionCard from "@/components/tests/ResultQuestionCard";
 import { TestSubmission, GradeSubmissionForm } from "@/types/TestSubmission";
-import { useAuth } from "@/components/providers/AuthContext";
+import { useAuth } from "@/components/providers/AuthProvider";
 import { TEST_SUBMISSON } from "@/constants/mocks";
 
 export default function TestHistoryDetailScreen() {
