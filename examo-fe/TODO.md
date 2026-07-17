@@ -1,7 +1,8 @@
 ### TODOs
 
 - [ ] Wire to backend
-- [ ] Create authentication hook
+- [x] Create authentication hook
+- [ ] OAuth login
 - [ ] Disabling controls when sending data
 - [ ] Displaying loaders when fetching and sending data
 - [ ] Style favicon and app logo

@@ -11,4 +11,9 @@ export const queryKeys = {
   practice: {
     history: ["practice", "history"] as const,
   },
+  quizzes: {
+    _: ["quizzes"],
+    search: ["quizzes", "search"],
+    recent: ["quizzes", "recent"],
+  },
 };

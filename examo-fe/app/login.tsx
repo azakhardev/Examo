@@ -17,8 +17,8 @@ import { useAuth } from "@/components/providers/AuthProvider";
 import useLogin from "@/api/auth/useLogin";
 
 type LoginForm = {
-  email: "";
-  password: "";
+  email: string;
+  password: string;
 };
 
 function Login() {
@@ -30,7 +30,7 @@ function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginForm>({
-    defaultValues: { email: "", password: "" },
+    defaultValues: { email: "azakhardev@gmail.com", password: "123456" },
   });
 
   const onSubmit = (data: LoginForm) => {

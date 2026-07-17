@@ -2,52 +2,72 @@ import React, { useEffect, useState } from "react";
 import { View, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "@/constants/colors";
-import { quizz_array } from "@/constants/mocks";
 import QuizCard from "@/components/quizzes/QuizCard";
 import SearchBar from "@/components/layout/SearchBar";
 import Fab from "@/components/ui/Fab";
 import { router } from "expo-router";
 import ScreenWrapper from "@/components/layout/ScreenWrapper";
 import QuizzesHeader from "@/components/layout/QuizzesHeader";
+import useGetQuizzes from "@/api/quizzes/useGetQuizzes";
+import Loader from "@/components/ui/Loader";
 
 function QuizzesScreen() {
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [debouncedQuery, setDebouncedQuery] = useState<string>("");
 
+  // 1. Debounce logika
   useEffect(() => {
-    const intervalId = setTimeout(() => {
-      console.log("Query:", searchQuery);
+    const handler = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
     }, 500);
-    return () => clearTimeout(intervalId);
+
+    return () => clearTimeout(handler);
   }, [searchQuery]);
 
+  //TODO: Set parameters through filter
+  const { data, isLoading, isError, error } = useGetQuizzes({
+    keyword: debouncedQuery,
+  });
+
+  if (isError) {
+    //TODO: If fetch fails try download from localhost
+  }
+
   return (
-    <ScreenWrapper>
+    <ScreenWrapper style={{ paddingBottom: 10 }}>
       <QuizzesHeader />
       <View style={styles.searchContainer}>
         <SearchBar
           onChangeText={(v) => setSearchQuery(v)}
           placeholder="Search your quizzes"
         />
+        {/* TODO: Open filters modal */}
         <TouchableOpacity style={styles.filterButton}>
           <Ionicons name="filter" size={20} color={COLORS.textSecondary} />
         </TouchableOpacity>
       </View>
 
-      <FlatList
-        data={quizz_array}
-        renderItem={({ item }) => (
-          <QuizCard
-            key={item.id!}
-            quizz={item}
-            onPress={() =>
-              router.push({
-                pathname: "/quizzes/[uuid]",
-                params: { uuid: item.id! },
-              })
-            }
-          />
-        )}
-      />
+      {isLoading ? (
+        <Loader message="Fetching your quizzes..." />
+      ) : (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={data}
+          renderItem={({ item }) => (
+            <QuizCard
+              key={item.id}
+              quizz={item}
+              onPress={() =>
+                router.push({
+                  pathname: "/quizzes/[uuid]",
+                  params: { uuid: item.id! },
+                })
+              }
+            />
+          )}
+          keyExtractor={(item) => item.id!}
+        />
+      )}
 
       <Fab
         icon="add"

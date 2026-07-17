@@ -5,7 +5,7 @@ A full-stack, feature-rich mobile quiz application designed for both students an
 ## 🛠️ Tech Stack & Architecture
 
 - **Frontend:** React Native + Expo (TypeScript, TanStack Query, Expo Router, MMKV)
-- **Backend:** Spring Boot (Java/Kotlin, Spring Security, JWT, OAuth2)
+- **Backend:** Spring Boot (Java, Spring Security, JWT, OAuth2)
 - **Databases:**
   - **PostgreSQL:** For structured data (user accounts, authentication, exam history, analytics).
   - **MongoDB:** For schema-less quiz layouts, flexible question types (multiple-choice, open questions), and offline-ready JSON templates.
@@ -106,6 +106,7 @@ Stores the live, editable quiz definitions. The `_id` matches the `id` of the qu
   "description": "Preparation for the final exam.",
   "categories": ["IT", "SQL", "Databases"],
   "authorId": 42,
+  "author": "Artem Dev",
   "updatedAt": "2026-06-19T18:15:00Z",
   "questions": [
     {
@@ -173,3 +174,7 @@ _In PostgreSQL, the student_answers.question_id column maps directly to the inne
 ## Links
 
 - Figma: [Examo](https://www.figma.com/design/IvHsNmpnB761eMDljY8AZ6/Untitled?node-id=0-1&p=f&t=jtLGXAnMlPA03DBp-0)
+
+## Possible Improvements
+
+- Adding pagination

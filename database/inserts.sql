@@ -22,13 +22,21 @@ INSERT INTO users (username, name, surname, email, password) VALUES
 INSERT INTO quizzes (id, name, description, author_id, visibility) VALUES
 ('550e8400-e29b-41d4-a716-446655440000', 'Database Fundamentals', 'Preparation for the final exam.', (SELECT id FROM users WHERE username = 'teacher_jane'), 'PUBLIC'),
 ('111e8400-e29b-41d4-a716-446655441111', 'Software Architecture Patterns', 'Advanced microservices quiz.', (SELECT id FROM users WHERE username = 'teacher_jane'), 'PRIVATE'),
-('222e8400-e29b-41d4-a716-446655442222', 'React Native & Expo Basics', 'My personal React Native testing deck.', (SELECT id FROM users WHERE username = 'azakhardev'), 'RESTRICTED');
+('222e8400-e29b-41d4-a716-446655442222', 'React Native & Expo Basics', 'My personal React Native testing deck.', (SELECT id FROM users WHERE username = 'azakhardev'), 'RESTRICTED'),
+('a1111111-1111-4111-8111-111111111111', 'Advanced React Patterns', 1, 'PUBLIC', now()),
+('c3333333-3333-4333-8333-333333333333', 'History of the Roman Empire', 1, 'PUBLIC', now()),
+('e5555555-5555-4555-8555-555555555555', 'Space Exploration & Astronomy', 1, 'PRIVATE', now()),
+('b2222222-2222-4222-8222-222222222222', 'World Geography Basics', (SELECT id FROM users WHERE username = 'azakhardev'), 'PUBLIC', now()),
+('d4444444-4444-4444-8444-444444444444', 'Biology and Human Anatomy', (SELECT id FROM users WHERE username = 'azakhardev'), 'RESTRICTED', now()),
+('f6666666-6666-4666-8666-666666666666', 'Modern Java and Spring Boot', (SELECT id FROM users WHERE username = 'azakhardev'), 'PRIVATE', now());
 
--- 3. ACCESS CONTROL (Sharing and Blocking for azakhardev's quiz)
--- Sharing the restricted quiz with John and Emma
-INSERT INTO quiz_shares (quiz_id, user_id, access_level) VALUES
-('222e8400-e29b-41d4-a716-446655442222', (SELECT id FROM users WHERE username = 'john_smith'), 'READ'),
-('222e8400-e29b-41d4-a716-446655442222', (SELECT id FROM users WHERE username = 'emma_watson'), 'EDIT');
+-- 3. ACCESS CONTROL
+INSERT INTO quiz_shares (quiz_id, user_id, access_level, favorite) VALUES
+('222e8400-e29b-41d4-a716-446655442222', (SELECT id FROM users WHERE username = 'john_smith'), 'READ', false),
+('222e8400-e29b-41d4-a716-446655442222', (SELECT id FROM users WHERE username = 'emma_watson'), 'EDIT', true)
+('a1111111-1111-4111-8111-111111111111', (SELECT id FROM users WHERE username = 'azakhardev'), 'READ', true),
+('c3333333-3333-4333-8333-333333333333', (SELECT id FROM users WHERE username = 'azakhardev'), 'EDIT', false),
+('b2222222-2222-4222-8222-222222222222', (SELECT id FROM users WHERE username = 'teacher_jane'), 'READ', true);
 
 -- Blocking Michael and Sarah from accessing the quiz
 INSERT INTO quiz_blocks (quiz_id, user_id) VALUES

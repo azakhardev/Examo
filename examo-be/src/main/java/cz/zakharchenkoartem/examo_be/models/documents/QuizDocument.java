@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Document(collection = "quizzes")
-public class Quiz {
+public class QuizDocument {
     @Id
     private String id;
 
@@ -21,11 +21,14 @@ public class Quiz {
 
     private Integer authorId;
 
+    private String author;
+
     private LocalDateTime updatedAt;
 
     private List<Question> questions;
 
-    public Quiz(String id, String title, String description, String link, List<String> categories, Integer authorId,
+    public QuizDocument(String id, String title, String description, String link, List<String> categories,
+            Integer authorId,
             LocalDateTime updatedAt, List<Question> questions) {
         this.id = id;
         this.title = title;
@@ -77,6 +80,14 @@ public class Quiz {
         this.categories = categories;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public Integer getAuthorId() {
         return authorId;
     }
@@ -124,7 +135,7 @@ public class Quiz {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Quiz other = (Quiz) obj;
+        QuizDocument other = (QuizDocument) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
