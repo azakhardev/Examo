@@ -49,11 +49,11 @@ public class QuizController {
     @GetMapping("")
     public ResponseEntity<List<QuizDocument>> getMyQuizzes(Principal principal,
             @RequestParam(required = false) String keyword, @RequestParam(required = false) Boolean isFavorite,
-            @RequestParam(required = false) String accessLevel, @RequestParam(required = false) Boolean isAuthor) {
+            @RequestParam(required = false) String visibility, @RequestParam(required = false) Boolean isAuthor) {
 
         Integer userId = Integer.valueOf(principal.getName());
 
-        List<QuizDocument> quizzes = quizService.getMyQuizzes(userId, keyword, isFavorite, accessLevel, isAuthor);
+        List<QuizDocument> quizzes = quizService.getMyQuizzes(userId, keyword, isFavorite, visibility, isAuthor);
 
         return ResponseEntity.ok(quizzes);
     }

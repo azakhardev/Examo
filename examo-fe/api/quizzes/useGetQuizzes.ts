@@ -7,19 +7,19 @@ type GetQuizzesParams = {
   keyword?: string;
   isFavorite?: boolean;
   isAuthor?: boolean;
-  accessLevel?: string;
+  visibility?: string;
 };
 
 export default function useGetQuizzes({
   keyword,
   isFavorite,
   isAuthor,
-  accessLevel,
+  visibility,
 }: GetQuizzesParams) {
   return useQuery<Quiz[], ApiError>({
     queryKey: [
       ...queryKeys.quizzes._,
-      { keyword, isFavorite, isAuthor, accessLevel },
+      { keyword, isFavorite, isAuthor, visibility },
     ],
 
     queryFn: async () => {
@@ -28,7 +28,7 @@ export default function useGetQuizzes({
           keyword: keyword,
           isFavorite: isFavorite,
           isAuthor: isAuthor,
-          accessLevel: accessLevel,
+          visibility: visibility,
         },
       });
 

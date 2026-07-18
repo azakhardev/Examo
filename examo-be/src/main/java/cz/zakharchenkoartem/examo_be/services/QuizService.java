@@ -1,6 +1,7 @@
 package cz.zakharchenkoartem.examo_be.services;
 
 import cz.zakharchenkoartem.examo_be.models.documents.QuizDocument;
+import cz.zakharchenkoartem.examo_be.models.dtos.QuizFavoriteProjection;
 import cz.zakharchenkoartem.examo_be.repostiories.mongo.QuizDocumentRepostiory;
 import cz.zakharchenkoartem.examo_be.repostiories.postgres.QuizEntityRepository;
 
@@ -9,7 +10,10 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class QuizService {
@@ -26,7 +30,7 @@ public class QuizService {
     }
 
     public List<String> getUserQuizzes(Integer userId) {
-        return quizEntityRepository.findByUserId(userId);
+        return quizEntityRepository.findIdsByUserId(userId);
     }
 
     public List<QuizDocument> search(String keyword) {
@@ -39,18 +43,22 @@ public class QuizService {
         return mongoTemplate.find(query, QuizDocument.class);
     }
 
-    // TODO: Fix author filtering (include author by default)
-    public List<QuizDocument> getMyQuizzes(Integer userId, String keyword, Boolean favorite, String accessLevel,
+    public List<QuizDocument> getMyQuizzes(Integer userId, String keyword, Boolean favorite, String visibility,
             Boolean isAuthor) {
-        List<String> allowedQuizIds = quizEntityRepository.findFilteredIdsByUserId(userId, accessLevel, favorite);
+        List<QuizFavoriteProjection> allowedShares = quizEntityRepository.findFilteredIdsByUserId(userId, visibility,
+                favorite, isAuthor);
 
-        if (allowedQuizIds == null || allowedQuizIds.isEmpty()) {
+        if (allowedShares == null || allowedShares.isEmpty()) {
             return List.of();
         }
 
-        Query query = new Query();
+        Map<String, Boolean> favoriteMap = allowedShares.stream()
+                .collect(Collectors.toMap(QuizFavoriteProjection::getQuizId, QuizFavoriteProjection::getFavorite));
 
-        query.addCriteria(Criteria.where("id").in(allowedQuizIds));
+        List<String> quizIds = new ArrayList<>(favoriteMap.keySet());
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("id").in(quizIds));
 
         if (keyword != null && !keyword.trim().isEmpty()) {
             query.addCriteria(Criteria.where("title").regex(keyword, "i"));
@@ -61,6 +69,11 @@ public class QuizService {
         }
 
         List<QuizDocument> quizzes = mongoTemplate.find(query, QuizDocument.class);
+
+        quizzes.forEach(quiz -> {
+            Boolean isFav = favoriteMap.getOrDefault(quiz.getId(), false);
+            quiz.setFavorite(isFav);
+        });
 
         return quizzes;
     }

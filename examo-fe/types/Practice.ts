@@ -1,3 +1,5 @@
+import { QuestionType } from "./Question";
+
 export type PracticeMode = "PRACTICE" | "RACE" | "FLASHCARDS";
 
 export type PracticeHistory = {
@@ -17,12 +19,7 @@ export type PracticeSetup = {
   mode: PracticeMode;
   showCorrectAnswers: boolean;
   questionTimeLimit: number;
-  questionsType:
-    | "ALL"
-    | "SINGLE_CHOICE"
-    | "MULTIPLE_CHOICE"
-    | "OPEN"
-    | "TRUE_FALSE";
+  questionsType: QuestionType | "ALL";
   questionsRangeStart: number;
   questionsRangeEnd: number;
   shuffle: boolean;

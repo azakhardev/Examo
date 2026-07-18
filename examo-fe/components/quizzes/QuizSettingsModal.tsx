@@ -61,11 +61,11 @@ export default function QuizSettingsModal({
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.optionButton} onPress={onClose}>
-                <Text style={styles.optionText}>Export CSV</Text>
+                <Text style={styles.optionText}>Download</Text>
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.optionButton} onPress={onClose}>
-                <Text style={styles.optionText}>Export JSON</Text>
+                <Text style={styles.optionText}>Export</Text>
               </TouchableOpacity>
 
               <TouchableOpacity

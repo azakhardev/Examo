@@ -10,6 +10,7 @@ import QrCodeModal from "@/components/manage-access/QrCodeModal";
 import { useLocalSearchParams } from "expo-router";
 import * as Clipboard from "expo-clipboard";
 import ScreenWrapper from "@/components/layout/ScreenWrapper";
+import { Visibility } from "@/types/Quiz";
 
 function ManageAccessScreen() {
   const { uuid }: { uuid: string } = useLocalSearchParams();
@@ -39,14 +40,9 @@ function ManageAccessScreen() {
   }
 
   function handleChangeGlobalAccess() {
-    const levels: ("PRIVATE" | "PUBLIC" | "RESTRICTED")[] = [
-      "PRIVATE",
-      "PUBLIC",
-      "RESTRICTED",
-    ];
+    const levels: Visibility[] = ["PRIVATE", "PUBLIC", "RESTRICTED"];
     const nextIndex =
-      (levels.indexOf(accessLevel as "PRIVATE" | "PUBLIC" | "RESTRICTED") + 1) %
-      levels.length;
+      (levels.indexOf(accessLevel as Visibility) + 1) % levels.length;
     setAccessLevel(levels[nextIndex]);
   }
 

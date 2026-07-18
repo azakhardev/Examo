@@ -5,7 +5,7 @@ import { Quiz } from "@/types/Quiz";
 
 export default function useSearch(keyword: string) {
   return useQuery<Quiz[], ApiError>({
-    queryKey: [...queryKeys.quizzes.search],
+    queryKey: [...queryKeys.quizzes.search, keyword],
     queryFn: async () => {
       const { data } = await api.get("/quizzes/search", {
         params: {

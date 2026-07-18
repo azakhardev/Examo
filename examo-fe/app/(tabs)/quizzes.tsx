@@ -1,5 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet, TouchableOpacity, FlatList } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  Text,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "@/constants/colors";
 import QuizCard from "@/components/quizzes/QuizCard";
@@ -10,23 +16,27 @@ import ScreenWrapper from "@/components/layout/ScreenWrapper";
 import QuizzesHeader from "@/components/layout/QuizzesHeader";
 import useGetQuizzes from "@/api/quizzes/useGetQuizzes";
 import Loader from "@/components/ui/Loader";
+import MyQuizzesFilter from "@/components/quizzes/MyQuizzesFilter";
+import { Visibility } from "@/types/Quiz";
+
+export type VisibilityFilter = Visibility | "ALL";
+
+export type QuizzesFilter = {
+  isAuthor?: boolean;
+  isFavorite?: boolean;
+  visibility: VisibilityFilter;
+};
 
 function QuizzesScreen() {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [debouncedQuery, setDebouncedQuery] = useState<string>("");
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [filter, setFilter] = useState<QuizzesFilter>({ visibility: "ALL" });
 
-  // 1. Debounce logika
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedQuery(searchQuery);
-    }, 500);
-
-    return () => clearTimeout(handler);
-  }, [searchQuery]);
-
-  //TODO: Set parameters through filter
   const { data, isLoading, isError, error } = useGetQuizzes({
-    keyword: debouncedQuery,
+    keyword: searchQuery,
+    isAuthor: filter.isAuthor ? true : undefined,
+    isFavorite: filter.isFavorite ? true : undefined,
+    visibility: filter.visibility === "ALL" ? undefined : filter.visibility,
   });
 
   if (isError) {
@@ -41,8 +51,10 @@ function QuizzesScreen() {
           onChangeText={(v) => setSearchQuery(v)}
           placeholder="Search your quizzes"
         />
-        {/* TODO: Open filters modal */}
-        <TouchableOpacity style={styles.filterButton}>
+        <TouchableOpacity
+          style={styles.filterButton}
+          onPress={() => setModalVisible(true)}
+        >
           <Ionicons name="filter" size={20} color={COLORS.textSecondary} />
         </TouchableOpacity>
       </View>
@@ -52,7 +64,20 @@ function QuizzesScreen() {
       ) : (
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={data}
+          data={data ?? []}
+          ListEmptyComponent={
+            !isLoading ? (
+              <Text
+                style={{
+                  textAlign: "center",
+                  marginTop: 20,
+                  color: COLORS.textSecondary,
+                }}
+              >
+                No quizzes found with these filters.
+              </Text>
+            ) : null
+          }
           renderItem={({ item }) => (
             <QuizCard
               key={item.id}
@@ -73,6 +98,13 @@ function QuizzesScreen() {
         icon="add"
         backgroundColor={COLORS.primary}
         onPress={() => router.push({ pathname: "/quizzes/create" })}
+      />
+
+      <MyQuizzesFilter
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        filter={filter}
+        onFilterChange={setFilter}
       />
     </ScreenWrapper>
   );

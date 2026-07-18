@@ -1,12 +1,19 @@
 import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, TextInput, TextInputProps, View } from "react-native";
 import COLORS from "@/constants/colors";
-import { forwardRef } from "react";
+import { forwardRef, useEffect, useState } from "react";
 
 interface SearchBarProps extends TextInputProps {}
 
 const SearchBar = forwardRef<TextInput, SearchBarProps>((props, ref) => {
-  const { style, ...restProps } = props;
+  const { style, onChangeText, value, ...restProps } = props;
+  const [searchValue, setSearchValue] = useState<string>(value ?? "");
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => onChangeText?.(searchValue), 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [value, onChangeText, searchValue]);
 
   return (
     <View style={styles.searchInputWrapper}>
@@ -16,6 +23,8 @@ const SearchBar = forwardRef<TextInput, SearchBarProps>((props, ref) => {
         ref={ref}
         style={[styles.searchInput, style]}
         placeholderTextColor={COLORS.textSecondary}
+        value={searchValue}
+        onChangeText={setSearchValue}
         {...restProps}
       />
     </View>

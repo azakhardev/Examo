@@ -11,7 +11,6 @@ CREATE TABLE "users" (
 CREATE TABLE "quizzes" (
   "id" uuid PRIMARY KEY,
   "name" varchar(256) NOT NULL,
-  "description" text,
   "author_id" integer NOT NULL,
   "visibility" varchar(50) DEFAULT 'PRIVATE',
   "created_at" timestamp DEFAULT (now())
@@ -22,11 +21,11 @@ CREATE TABLE "online_tests" (
   "quiz_id" uuid NOT NULL,
   "snapshot_id" uuid NOT NULL,
   "access_code" varchar(10) UNIQUE NOT NULL,
-  "title" varchar(256) NOT NULL DEFAULT "Missing title",
+  "title" varchar(256) NOT NULL DEFAULT ('Missing title'),
   "description" text default null,
   "start_at" timestamp NOT NULL,
   "end_at" timestamp NOT NULL,
-  "time_limit_minutes" integer NOT NUL
+  "time_limit_minutes" integer NOT NULL,
   "allow_review" boolean DEFAULT true
 );
 
@@ -34,7 +33,7 @@ CREATE TABLE "test_submissions" (
   "id" bigserial PRIMARY KEY,
   "test_id" bigint NOT NULL,
   "user_id" integer NOT NULL,
-  "submission_id" uuid PRIMARY KEY,
+  "submission_id" uuid NOT NULL,
   "submitted_at" timestamp NOT NULL DEFAULT (now()),
   "total_gained_points" float DEFAULT 0
 );
@@ -44,7 +43,7 @@ CREATE TABLE "practice_history" (
   "user_id" integer NOT NULL,
   "quiz_id" uuid NOT NULL,
   "mode" varchar(50) NOT NULL,
-  "started_at" timestamp NOT NULL DEFAULT (now())
+  "started_at" timestamp NOT NULL DEFAULT (now()),
   "completed_at" timestamp,
   "duration_minutes" integer,
   "total_questions" integer NOT NULL,
@@ -56,7 +55,7 @@ CREATE TABLE "quiz_shares" (
   "id" bigserial PRIMARY KEY,
   "quiz_id" uuid NOT NULL,
   "user_id" integer NOT NULL,
-  "access_level" varchar(50) DEFAULT 'READ'
+  "access_level" varchar(50) DEFAULT 'READ',
   "favorite" boolean DEFAULT false
 );
 

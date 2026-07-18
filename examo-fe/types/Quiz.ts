@@ -1,5 +1,7 @@
 import { type Question } from "./Question";
 
+export type Visibility = "PRIVATE" | "PUBLIC" | "RESTRICTED";
+
 export type Quiz = {
   id?: string;
   title?: string;

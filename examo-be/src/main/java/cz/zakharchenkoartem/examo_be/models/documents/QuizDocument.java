@@ -3,6 +3,8 @@ package cz.zakharchenkoartem.examo_be.models.documents;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import jakarta.persistence.Transient;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,6 +28,9 @@ public class QuizDocument {
     private LocalDateTime updatedAt;
 
     private List<Question> questions;
+
+    @Transient // Wont be saved into Mongo db
+    private boolean favorite;
 
     public QuizDocument(String id, String title, String description, String link, List<String> categories,
             Integer authorId,
@@ -110,6 +115,14 @@ public class QuizDocument {
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    public Boolean getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
     }
 
     @Override
