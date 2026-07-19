@@ -12,8 +12,10 @@ import cz.zakharchenkoartem.examo_be.models.documents.QuizDocument;
 import cz.zakharchenkoartem.examo_be.services.JwtService;
 import cz.zakharchenkoartem.examo_be.services.QuizService;
 import cz.zakharchenkoartem.examo_be.services.UserService;
+import jakarta.websocket.server.PathParam;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @RequestMapping("/quizzes")
@@ -29,6 +31,8 @@ public class QuizController {
         this.quizService = quizService;
     }
 
+    // TODO: Make non-detail controllers return only neccesary info to frontend (no
+    // questions, etc.)
     @GetMapping("/search")
     public ResponseEntity<List<QuizDocument>> search(@RequestParam String keyword) {
 
@@ -57,4 +61,13 @@ public class QuizController {
 
         return ResponseEntity.ok(quizzes);
     }
+
+    @GetMapping("/{uuid}")
+    public ResponseEntity<QuizDocument> getQuizDetail(@PathVariable String uuid) {
+
+        QuizDocument quiz = quizService.getQuizById(uuid);
+
+        return ResponseEntity.ok(quiz);
+    }
+
 }

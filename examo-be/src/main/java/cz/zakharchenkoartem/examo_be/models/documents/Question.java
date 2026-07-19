@@ -2,7 +2,10 @@ package cz.zakharchenkoartem.examo_be.models.documents;
 
 import java.util.List;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 public class Question {
+    @Field("id")
     private String id;
 
     private String type;

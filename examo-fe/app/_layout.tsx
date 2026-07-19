@@ -8,6 +8,8 @@ import { ThemeProvider, DarkTheme } from "@react-navigation/native";
 import EditQuizHeader from "@/components/layout/EditQuizHeader";
 import AuthProvider, { useAuth } from "@/components/providers/AuthProvider";
 import QueryProvider from "@/components/providers/QueryProvider";
+import Toast from "react-native-toast-message";
+import { toastConfig } from "@/components/providers/toastConfig";
 
 export default function RootLayout() {
   useEffect(() => {
@@ -32,6 +34,7 @@ export default function RootLayout() {
       <QueryProvider>
         <AuthProvider>
           <RootLayoutNavigator />
+          <Toast config={toastConfig} />
         </AuthProvider>
       </QueryProvider>
     </ThemeProvider>

@@ -51,7 +51,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     isSuccess,
     isError,
     isFetching,
-  } = useMe(isStoreLoaded && !!token);
+  } = useMe({ retry: false, enabled: isStoreLoaded && !!token });
 
   useEffect(() => {
     if (isSuccess && authData) {

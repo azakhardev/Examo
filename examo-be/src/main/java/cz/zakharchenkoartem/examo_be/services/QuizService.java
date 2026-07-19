@@ -1,5 +1,6 @@
 package cz.zakharchenkoartem.examo_be.services;
 
+import cz.zakharchenkoartem.examo_be.exceptions.NotFoundException;
 import cz.zakharchenkoartem.examo_be.models.documents.QuizDocument;
 import cz.zakharchenkoartem.examo_be.models.dtos.QuizFavoriteProjection;
 import cz.zakharchenkoartem.examo_be.repostiories.mongo.QuizDocumentRepostiory;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,6 +54,7 @@ public class QuizService {
             return List.of();
         }
 
+        // Maps the QuizFavoriteProjection to map
         Map<String, Boolean> favoriteMap = allowedShares.stream()
                 .collect(Collectors.toMap(QuizFavoriteProjection::getQuizId, QuizFavoriteProjection::getFavorite));
 
@@ -80,5 +83,15 @@ public class QuizService {
 
     public List<QuizDocument> getQuizzesByIds(List<String> ids) {
         return quizDocumentRepostiory.findByIdIn(ids);
+    }
+
+    public QuizDocument getQuizById(String id) {
+        Optional<QuizDocument> quiz = quizDocumentRepostiory.findById(id);
+
+        if (!quiz.isPresent()) {
+            throw new NotFoundException("Quiz with id " + id + " was not found");
+        }
+
+        return quiz.get();
     }
 }

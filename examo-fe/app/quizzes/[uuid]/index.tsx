@@ -14,6 +14,8 @@ import QuizSettingsModal from "@/components/quizzes/QuizSettingsModal";
 import QuizQuestionCard from "@/components/quizzes/QuizQuestionCard";
 import { QUIZ_1 } from "@/constants/mocks";
 import ScreenWrapper from "@/components/layout/ScreenWrapper";
+import useGetQuizDetail from "@/api/quizzes/useGetQuizDetail";
+import Loader from "@/components/ui/Loader";
 
 function QuizDetailScreen() {
   const { uuid }: { uuid: string } = useLocalSearchParams();
@@ -21,7 +23,7 @@ function QuizDetailScreen() {
   const [isSettingsVisible, setIsSettingsVisible] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const quiz = QUIZ_1;
+  const { data, isLoading, isError, error } = useGetQuizDetail(uuid);
 
   function handlePractice() {
     router.push({
@@ -45,52 +47,58 @@ function QuizDetailScreen() {
   return (
     <ScreenWrapper>
       <QuizDetailHeader
-        title="React Hooks Mastery"
+        title={data?.title ? data.title : "Loading..."}
         isFavorite={isFavorite}
         isEditing={false}
         onFavoriteToggle={handleToggleFavorite}
         onSettingsPress={() => setIsSettingsVisible(true)}
       />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.descriptionContainer}>
-          <Text style={styles.descriptionText}>{quiz.description}</Text>
-        </View>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        !isError && (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.descriptionContainer}>
+              <Text style={styles.descriptionText}>{data?.description}</Text>
+            </View>
 
-        <View style={styles.actionButtonsRow}>
-          <TouchableOpacity
-            style={[styles.actionButton, styles.practiceButton]}
-            onPress={handlePractice}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.practiceButtonText}>Practice</Text>
-          </TouchableOpacity>
+            <View style={styles.actionButtonsRow}>
+              <TouchableOpacity
+                style={[styles.actionButton, styles.practiceButton]}
+                onPress={handlePractice}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.practiceButtonText}>Practice</Text>
+              </TouchableOpacity>
 
-          <TouchableOpacity
-            style={[styles.actionButton, styles.testButton]}
-            onPress={handleStartTest}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.testButtonText}>Tests</Text>
-          </TouchableOpacity>
-        </View>
+              <TouchableOpacity
+                style={[styles.actionButton, styles.testButton]}
+                onPress={handleStartTest}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.testButtonText}>Tests</Text>
+              </TouchableOpacity>
+            </View>
 
-        <View style={styles.questionsHeaderRow}>
-          <Text style={styles.questionsHeaderTitle}>
-            Questions ({quiz.questions?.length})
-          </Text>
-        </View>
+            <View style={styles.questionsHeaderRow}>
+              <Text style={styles.questionsHeaderTitle}>
+                Questions ({data?.questions?.length})
+              </Text>
+            </View>
 
-        <View style={styles.questionsList}>
-          {quiz.questions?.map((q, i) => (
-            <QuizQuestionCard
-              key={q.id}
-              question={q}
-              isEditing={false}
-              order={i + 1}
-            />
-          ))}
-        </View>
-      </ScrollView>
+            <View style={styles.questionsList}>
+              {data?.questions?.map((q, i) => (
+                <QuizQuestionCard
+                  key={q.id}
+                  question={q}
+                  isEditing={false}
+                  order={i + 1}
+                />
+              ))}
+            </View>
+          </ScrollView>
+        )
+      )}
 
       <QuizSettingsModal
         uuid={uuid}

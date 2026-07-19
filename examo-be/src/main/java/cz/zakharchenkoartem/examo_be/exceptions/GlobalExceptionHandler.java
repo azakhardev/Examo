@@ -19,8 +19,7 @@ public class GlobalExceptionHandler {
                 HttpStatus.CONFLICT.value(),
                 "Conflict",
                 ex.getMessage(),
-                LocalDateTime.now()
-        );
+                LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
@@ -31,8 +30,7 @@ public class GlobalExceptionHandler {
                 HttpStatus.UNAUTHORIZED.value(),
                 "Unauthorized",
                 ex.getMessage(),
-                LocalDateTime.now()
-        );
+                LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
     }
 
@@ -42,25 +40,33 @@ public class GlobalExceptionHandler {
                 HttpStatus.BAD_REQUEST.value(),
                 "Bad Request",
                 ex.getMessage(),
-                LocalDateTime.now()
-        );
+                LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
-    //@Valid bean verification exception handler
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(NotFoundException ex) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                "Resource not found",
+                ex.getMessage(),
+                LocalDateTime.now());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    // @Valid bean verification exception handler
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidationErrors(MethodArgumentNotValidException ex) {        
-        //Groups every invalid message from @Valid bean error
+    public ResponseEntity<ErrorResponse> handleValidationErrors(MethodArgumentNotValidException ex) {
+        // Groups every invalid message from @Valid bean error
         String errorMessage = ex.getBindingResult().getFieldErrors().stream()
-            .map(error -> error.getField() + ": " + error.getDefaultMessage())
-            .collect(Collectors.joining(", "));
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                .collect(Collectors.joining(", "));
 
         ErrorResponse errorResponse = new ErrorResponse(
-            HttpStatus.BAD_REQUEST.value(),
-            "Validation Failed",
-            errorMessage,
-            LocalDateTime.now()
-        );
+                HttpStatus.BAD_REQUEST.value(),
+                "Validation Failed",
+                errorMessage,
+                LocalDateTime.now());
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
@@ -72,8 +78,7 @@ public class GlobalExceptionHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "Internal Server Error",
                 "An unexpected error occurred.",
-                LocalDateTime.now()
-        );
+                LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

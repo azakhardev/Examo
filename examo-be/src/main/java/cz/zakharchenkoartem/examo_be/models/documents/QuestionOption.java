@@ -1,6 +1,9 @@
 package cz.zakharchenkoartem.examo_be.models.documents;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 public class QuestionOption {
+    @Field("id")
     private String id;
 
     private String text;

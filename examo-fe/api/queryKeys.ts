@@ -15,5 +15,9 @@ export const queryKeys = {
     _: ["quizzes"],
     search: ["quizzes", "search"],
     recent: ["quizzes", "recent"],
+    detail: ["quizzes", "detail"],
+  },
+  users: {
+    profile: ["users", "profile"],
   },
 };

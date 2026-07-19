@@ -13,6 +13,7 @@ type FabProps = {
   backgroundColor?: string;
   iconColor?: string;
   style?: StyleProp<ViewStyle>;
+  disabled?: boolean;
 };
 
 export default function Fab({
@@ -21,12 +22,19 @@ export default function Fab({
   backgroundColor = COLORS.primary,
   iconColor = COLORS.background,
   style,
+  disabled = false,
 }: FabProps) {
   return (
     <TouchableOpacity
-      style={[styles.fab, { backgroundColor }, style]}
+      style={[
+        styles.fab,
+        { backgroundColor: disabled ? COLORS.textSecondary : backgroundColor },
+        disabled && styles.disabledFab,
+        style,
+      ]}
       activeOpacity={0.8}
       onPress={onPress}
+      disabled={disabled}
     >
       <Ionicons name={icon} size={32} color={iconColor} />
     </TouchableOpacity>
@@ -41,7 +49,6 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: COLORS.primary,
     justifyContent: "center",
     alignItems: "center",
     elevation: 5,
@@ -49,5 +56,10 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
+  },
+  disabledFab: {
+    opacity: 0.5,
+    elevation: 0,
+    shadowOpacity: 0,
   },
 });

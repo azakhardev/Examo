@@ -1,9 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 import api, { ApiError } from "@/api/api";
 import { queryKeys } from "../queryKeys";
 import { Quiz } from "@/types/Quiz";
 
-export default function useGetRecent(ids: string[]) {
+type Options = Omit<UseQueryOptions<Quiz[], ApiError>, "queryKey" | "queryFn">;
+
+export default function useGetRecent(ids: string[], options?: Options) {
   return useQuery<Quiz[], ApiError>({
     queryKey: [...queryKeys.quizzes.recent, ids],
     queryFn: async () => {
@@ -14,5 +16,6 @@ export default function useGetRecent(ids: string[]) {
       });
       return data;
     },
+    ...options,
   });
 }
