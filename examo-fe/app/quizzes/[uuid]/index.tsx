@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -12,18 +12,28 @@ import COLORS from "@/constants/colors";
 import QuizDetailHeader from "@/components/layout/QuizDetailHeader";
 import QuizSettingsModal from "@/components/quizzes/QuizSettingsModal";
 import QuizQuestionCard from "@/components/quizzes/QuizQuestionCard";
-import { QUIZ_1 } from "@/constants/mocks";
 import ScreenWrapper from "@/components/layout/ScreenWrapper";
 import useGetQuizDetail from "@/api/quizzes/useGetQuizDetail";
 import Loader from "@/components/ui/Loader";
+import useToggleFavorite from "@/api/quizzes/useToggleFavorite";
+import Toast from "react-native-toast-message";
+import { queryClient } from "@/components/providers/QueryProvider";
+import { queryKeys } from "@/api/queryKeys";
 
 function QuizDetailScreen() {
   const { uuid }: { uuid: string } = useLocalSearchParams();
 
   const [isSettingsVisible, setIsSettingsVisible] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
 
   const { data, isLoading, isError, error } = useGetQuizDetail(uuid);
+
+  const [isFavorite, setIsFavorite] = useState(data?.favorite ?? false);
+
+  const { mutateAsync } = useToggleFavorite(uuid);
+
+  useEffect(() => {
+    setIsFavorite(data?.favorite ?? false);
+  }, [data, setIsFavorite]);
 
   function handlePractice() {
     router.push({
@@ -39,9 +49,22 @@ function QuizDetailScreen() {
     });
   }
 
-  function handleToggleFavorite() {
+  async function handleToggleFavorite() {
     setIsFavorite((old) => !old);
-    console.log("Toggle favorite - send request", isFavorite);
+
+    await mutateAsync(undefined, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: queryKeys.quizzes._ });
+      },
+      onError: () => {
+        setIsFavorite((old) => !old);
+        Toast.show({
+          type: "error",
+          text1: "Failed to save",
+          text2: "Failed to add this quiz to your favorites.",
+        });
+      },
+    });
   }
 
   return (

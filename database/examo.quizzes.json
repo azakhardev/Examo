@@ -1,6 +1,6 @@
 [
   {
-    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "_id": "550e8400-e29b-41d4-a716-446655440000",
     "title": "Database Fundamentals",
     "description": "Preparation for the final exam.",
     "categories": ["SQL", "Database"],
@@ -31,7 +31,7 @@
     ]
   },
   {
-    "id": "111e8400-e29b-41d4-a716-446655441111",
+    "_id": "111e8400-e29b-41d4-a716-446655441111",
     "title": "Software Architecture Patterns",
     "description": "Advanced quiz covering microservices, monolithic designs, and fundamental design patterns.",
     "authorId": 2,

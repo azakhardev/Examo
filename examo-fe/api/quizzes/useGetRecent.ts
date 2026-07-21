@@ -11,7 +11,7 @@ export default function useGetRecent(ids: string[], options?: Options) {
     queryFn: async () => {
       const { data } = await api.get("/quizzes/recent", {
         params: {
-          ids: ids.join(","),
+          uuids: ids.join(","),
         },
       });
       return data;

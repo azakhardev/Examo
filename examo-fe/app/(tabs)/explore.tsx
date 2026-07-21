@@ -16,11 +16,11 @@ import Fab from "@/components/ui/Fab";
 const STORAGE_KEY = "recent_quiz_ids";
 const MAX_RECENT = 50;
 
+//TODO: Improve keyboard handling
 export default function ExploreScreen() {
   const [searchQuery, setSearchQuery] = useState("");
   const [recentIds, setRecentIds] = useState<string[]>([]);
 
-  //TODO: Call recents endpoint (create hook)
   useFocusEffect(
     React.useCallback(() => {
       loadRecentIds();

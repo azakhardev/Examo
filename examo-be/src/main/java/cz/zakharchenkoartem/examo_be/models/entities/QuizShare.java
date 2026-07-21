@@ -37,8 +37,16 @@ public class QuizShare {
         READ, EDIT
     }
 
-    // Default constructor required by JPA
     public QuizShare() {
+
+    }
+
+    public QuizShare(Long id, QuizEntity quiz, Integer userId, AccessLevel accessLevel, Boolean favorite) {
+        this.id = id;
+        this.quiz = quiz;
+        this.userId = userId;
+        this.accessLevel = accessLevel;
+        this.favorite = favorite;
     }
 
     // Getters and Setters

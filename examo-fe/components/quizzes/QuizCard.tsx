@@ -10,7 +10,7 @@ type QuizCardProps = {
 };
 
 export default function QuizCard({ quizz, onPress }: QuizCardProps) {
-  const uuid_array = quizz.id.split("-");
+  const uuid_array = quizz?.id?.split("-");
   return (
     <TouchableOpacity style={styles.card} activeOpacity={0.7} onPress={onPress}>
       <View style={styles.headerRow}>
@@ -32,7 +32,7 @@ export default function QuizCard({ quizz, onPress }: QuizCardProps) {
       </Text>
 
       <Text style={styles.uuid} numberOfLines={1}>
-        {uuid_array[0]}-{uuid_array.reverse()[0]}
+        {uuid_array?.[0]}-{uuid_array?.reverse()[0]}
       </Text>
     </TouchableOpacity>
   );

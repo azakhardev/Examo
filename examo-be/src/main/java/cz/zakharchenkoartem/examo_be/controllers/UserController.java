@@ -11,8 +11,8 @@ import cz.zakharchenkoartem.examo_be.models.entities.User;
 import cz.zakharchenkoartem.examo_be.services.UserService;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PutMapping;
 
 @Controller
 @RequestMapping("/users")
@@ -33,7 +33,7 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @PutMapping("/profile/update")
+    @PatchMapping("/profile/update")
     public ResponseEntity<User> updateProfileInfo(Principal principal, @RequestBody UpdateProfileBody udpatedProfile) {
         Integer userId = Integer.valueOf(principal.getName());
 

@@ -12,7 +12,7 @@ type UpdateProfileBody = {
 export default function useUpdateProfileInfo() {
   return useMutation<User, ApiError, UpdateProfileBody>({
     mutationFn: async (payload) => {
-      const response = await api.put<User>("/users/profile/update", payload);
+      const response = await api.patch<User>("/users/profile/update", payload);
       return response.data;
     },
   });
