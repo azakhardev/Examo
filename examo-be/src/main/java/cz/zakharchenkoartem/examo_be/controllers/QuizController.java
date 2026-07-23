@@ -15,6 +15,7 @@ import cz.zakharchenkoartem.examo_be.models.entities.QuizShare;
 import cz.zakharchenkoartem.examo_be.repostiories.postgres.QuizEntityRepository;
 import cz.zakharchenkoartem.examo_be.services.QuizService;
 import cz.zakharchenkoartem.examo_be.services.QuizSharesService;
+import cz.zakharchenkoartem.examo_be.services.TestService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,12 +28,14 @@ public class QuizController {
     private final QuizService quizService;
     private final QuizSharesService quizSharesService;
     private final QuizEntityRepository quizEntityRepository;
+    private final TestService testService;
 
     public QuizController(QuizService quizService,
-            QuizSharesService quizSharesService, QuizEntityRepository quizEntityRepository) {
+            QuizSharesService quizSharesService, QuizEntityRepository quizEntityRepository, TestService testService) {
         this.quizService = quizService;
         this.quizSharesService = quizSharesService;
         this.quizEntityRepository = quizEntityRepository;
+        this.testService = testService;
     }
 
     // TODO: Make non-detail controllers return only neccesary info to frontend (no
@@ -74,7 +77,7 @@ public class QuizController {
         return ResponseEntity.ok(quizzes);
     }
 
-    @GetMapping("")
+    @GetMapping()
     public ResponseEntity<List<QuizDocument>> getMyQuizzes(Principal principal,
             @RequestParam(required = false) String keyword, @RequestParam(required = false) Boolean isFavorite,
             @RequestParam(required = false) String visibility, @RequestParam(required = false) Boolean isAuthor) {
@@ -111,5 +114,17 @@ public class QuizController {
         Boolean isFavorite = quizSharesService.toggleFavorite(userId, uuid);
 
         return ResponseEntity.ok(isFavorite);
+    }
+
+    @GetMapping("/{uuid}/tests")
+    public String getQuizTests(Principal principal, @PathVariable String uuid,
+            @RequestParam(required = false) String type) {
+        // Get user id
+
+        // Check if user if author of quiz, if not, reject
+
+        // Get live or finished tests
+
+        return new String();
     }
 }

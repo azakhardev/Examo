@@ -26,6 +26,7 @@ CREATE TABLE "online_tests" (
   "start_at" timestamp NOT NULL,
   "end_at" timestamp NOT NULL,
   "time_limit_minutes" integer NOT NULL,
+  "max_points" integer NOT NULL,
   "allow_review" boolean DEFAULT true
 );
 

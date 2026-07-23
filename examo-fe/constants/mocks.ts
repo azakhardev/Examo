@@ -142,10 +142,10 @@ export const upcoming_test: Test = {
   description:
     "This is long ass description for the quiz1 just to fill in the space so I can see how it is rendered inside of the mobile phone",
   quiz: QUIZ_1,
-  access_code: "ROBO2026",
-  start_at: "22. 06. 2026 17:20",
-  end_at: "22. 06. 2026 18:20",
-  time_limit_minutes: 60,
+  accessCode: "ROBO2026",
+  startAt: "22. 06. 2026 17:20",
+  endAt: "22. 06. 2026 18:20",
+  timeLimitMinutes: 60,
 };
 
 export const history_test: Test = {
@@ -158,11 +158,11 @@ export const history_test: Test = {
     updated_at: "2026-06-20T12:00:00Z",
     favorite: false,
   },
-  access_code: "ASM2026",
-  start_at: "22. 06. 2026 17:20",
-  end_at: "22. 06. 2026 18:20",
-  time_limit_minutes: 60,
-  total_gained_points: 17,
+  accessCode: "ASM2026",
+  startAt: "22. 06. 2026 17:20",
+  endAt: "22. 06. 2026 18:20",
+  timeLimitMinutes: 60,
+  totalGainedPoints: 17,
   submitted_at: "22. 06. 2026 18:05",
 };
 

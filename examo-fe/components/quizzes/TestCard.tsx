@@ -22,12 +22,12 @@ export default function TestCard({ test, onPress, mode }: TestCardProps) {
           {mode === "results" ? (
             <>
               <Text style={styles.boldLabel}> Submissions: </Text>{" "}
-              {test.total_submissions}/{test.total_participants}{" "}
+              {test.totalSubmissions}/{test.totalParticipants}{" "}
             </>
           ) : (
             <>
               <Text style={styles.boldLabel}>Participants: </Text>
-              {test.total_participants || 0}
+              {test.totalParticipants || 0}
             </>
           )}
         </Text>
@@ -40,12 +40,12 @@ export default function TestCard({ test, onPress, mode }: TestCardProps) {
       <View style={styles.bottomRow}>
         <Text style={styles.smallText}>
           <Text style={styles.boldLabel}>Start: </Text>
-          {formatDateTime(new Date(test.start_at!))}
+          {formatDateTime(new Date(test.startAt!))}
         </Text>
 
         <Text style={styles.smallText}>
           <Text style={styles.boldLabel}>End: </Text>
-          {formatDateTime(new Date(test.end_at!))}
+          {formatDateTime(new Date(test.endAt!))}
         </Text>
       </View>
     </TouchableOpacity>

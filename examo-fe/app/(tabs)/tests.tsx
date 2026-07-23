@@ -1,10 +1,9 @@
 import TestsHeader from "@/components/layout/TestsHeader";
 import TestCard from "@/components/tests/TestCard";
-import COLORS from "@/constants/colors";
 import { history_test, upcoming_test } from "@/constants/mocks";
 import { Test } from "@/types/Test";
 import { useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList } from "react-native";
 import { router } from "expo-router";
 import ScreenWrapper from "@/components/layout/ScreenWrapper";
 import { useAuth } from "@/components/providers/AuthProvider";

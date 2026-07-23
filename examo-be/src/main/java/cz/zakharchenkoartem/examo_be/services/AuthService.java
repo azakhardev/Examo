@@ -2,8 +2,8 @@ package cz.zakharchenkoartem.examo_be.services;
 
 import cz.zakharchenkoartem.examo_be.exceptions.InvalidCredentialsException;
 import cz.zakharchenkoartem.examo_be.exceptions.ResourceAlreadyExistsException;
-import cz.zakharchenkoartem.examo_be.models.dtos.AuthResponse;
-import cz.zakharchenkoartem.examo_be.models.dtos.AuthUser;
+import cz.zakharchenkoartem.examo_be.models.dtos.auth.AuthResponse;
+import cz.zakharchenkoartem.examo_be.models.dtos.auth.AuthUser;
 import cz.zakharchenkoartem.examo_be.models.entities.User;
 import cz.zakharchenkoartem.examo_be.repostiories.postgres.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;

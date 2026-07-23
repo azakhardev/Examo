@@ -67,7 +67,7 @@ function JoinTest({ testId, onSubmit }: JoinTestProps) {
           style={styles.joinButton}
           onPress={handleJoinTest}
           disabled={
-            test.start_at === null || new Date(test.start_at ?? 0) > new Date()
+            test.startAt === null || new Date(test.startAt ?? 0) > new Date()
           }
           //disabled={isSubmitting}
           activeOpacity={0.8}

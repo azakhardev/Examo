@@ -3,8 +3,8 @@ package cz.zakharchenkoartem.examo_be.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cz.zakharchenkoartem.examo_be.models.dtos.AuthResponse;
-import cz.zakharchenkoartem.examo_be.models.dtos.LoginCredentials;
+import cz.zakharchenkoartem.examo_be.models.dtos.auth.AuthResponse;
+import cz.zakharchenkoartem.examo_be.models.dtos.auth.LoginCredentials;
 import cz.zakharchenkoartem.examo_be.services.AuthService;
 import jakarta.validation.Valid;
 

@@ -17,9 +17,9 @@ const mockFetchedTest: Test = {
   title: "My Test",
   description:
     "In this test we will test your knowledge about creating modern looking mobile apps with advanced UX.",
-  start_at: "2026-07-23T19:00:00Z",
-  end_at: "2026-07-24T19:00:00Z",
-  access_code: "356482",
+  startAt: "2026-07-23T19:00:00Z",
+  endAt: "2026-07-24T19:00:00Z",
+  accessCode: "356482",
 };
 
 function LiveTestScreen() {
@@ -38,17 +38,17 @@ function LiveTestScreen() {
 
   // --- 2. Live Countdown Timer ---
   useEffect(() => {
-    if (!test?.end_at) return;
+    if (!test?.endAt) return;
 
     // Initial set
-    setTimeLeft(formatTimeLeft(test.end_at));
+    setTimeLeft(formatTimeLeft(test.endAt));
 
     const timer = setInterval(() => {
-      setTimeLeft(formatTimeLeft(test.end_at!));
+      setTimeLeft(formatTimeLeft(test.endAt!));
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [test?.end_at]);
+  }, [test?.endAt]);
 
   function handleDelete() {
     //TODO: ALert and DELETE request to BE -> Redirect
@@ -91,7 +91,7 @@ function LiveTestScreen() {
         <LiveTestHeader
           test={test}
           timeLeft={timeLeft}
-          hasStarted={new Date(test.start_at!) <= new Date()}
+          hasStarted={new Date(test.startAt!) <= new Date()}
           onSettingsPress={() => setIsVisible(true)}
         />
 
@@ -99,7 +99,7 @@ function LiveTestScreen() {
 
         <View style={styles.accessCodeContainer}>
           <View style={styles.accessCodePill}>
-            <Text style={styles.accessCodeText}>{test.access_code}</Text>
+            <Text style={styles.accessCodeText}>{test.accessCode}</Text>
           </View>
           <Text style={styles.accessCodeLabel}>Access code</Text>
         </View>

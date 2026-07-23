@@ -2,16 +2,18 @@ import { Quiz } from "./Quiz";
 
 export type Test = {
   id: number;
-  author_id?: number;
+  authorId?: number;
+  authorName?: string;
   quiz?: Quiz;
   title?: string;
   description?: string;
-  access_code?: string;
-  start_at?: string;
-  end_at?: string;
-  time_limit_minutes?: number;
-  total_gained_points?: number;
+  accessCode?: string;
+  startAt?: string;
+  endAt?: string;
+  timeLimitMinutes?: number;
+  totalGainedPoints?: number;
   submitted_at?: string;
-  total_participants?: number;
-  total_submissions?: number;
+  totalParticipants?: number;
+  maxPoints?: number;
+  totalSubmissions?: number;
 };

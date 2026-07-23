@@ -12,13 +12,12 @@ export type Quiz = {
 
 type TestCardProps = {
   test: Test;
-  maxPoints?: number;
   onPress?: () => void;
 };
 
-export default function TestCard({ test, maxPoints, onPress }: TestCardProps) {
+export default function TestCard({ test, onPress }: TestCardProps) {
   const isHistory =
-    test.total_gained_points !== undefined || test.submitted_at !== undefined;
+    test.totalGainedPoints !== undefined || test.submitted_at !== undefined;
 
   return (
     <TouchableOpacity style={styles.card} activeOpacity={0.7} onPress={onPress}>
@@ -26,7 +25,7 @@ export default function TestCard({ test, maxPoints, onPress }: TestCardProps) {
         <View style={styles.lengthBadge}>
           <Text style={styles.smallText}>
             <Text style={styles.boldLabel}>Length: </Text>
-            {test.time_limit_minutes}m
+            {test.timeLimitMinutes}m
           </Text>
         </View>
       )}
@@ -38,24 +37,24 @@ export default function TestCard({ test, maxPoints, onPress }: TestCardProps) {
       {/* Autor */}
       <Text style={styles.authorText}>
         <Text style={styles.boldLabel}>Author: </Text>
-        {test.quiz?.author}
+        {test.authorName}
       </Text>
 
       <View style={styles.bottomRow}>
         <Text style={styles.smallText}>
           <Text style={styles.boldLabel}>Start: </Text>
-          {formatDateTime(new Date(test.start_at!))}
+          {formatDateTime(new Date(test.startAt!))}
         </Text>
 
         {isHistory ? (
           <Text style={styles.smallText}>
             <Text style={styles.boldLabel}>Points: </Text>
-            {test.total_gained_points}/{maxPoints ?? "?"}
+            {test.totalGainedPoints}/{test?.maxPoints ?? "?"}
           </Text>
         ) : (
           <Text style={styles.smallText}>
             <Text style={styles.boldLabel}>End: </Text>
-            {formatDateTime(new Date(test.end_at!))}
+            {formatDateTime(new Date(test.endAt!))}
           </Text>
         )}
       </View>

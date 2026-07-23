@@ -10,12 +10,12 @@ export type TestSubmission = {
 };
 
 export type TestSubmissionAnswer = {
-  id: string; // The Mongo document ID of this specific answer
+  id: string;
   question: Question;
   answer: { text: string; correct: boolean | null }[];
-  gained_points: number; // Points currently awarded
+  gained_points: number;
 };
 
 export type GradeSubmissionForm = {
-  points: Record<string, number>; // Maps answer.id -> gained_points
+  points: Record<string, number>;
 };

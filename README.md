@@ -178,3 +178,5 @@ _In PostgreSQL, the student_answers.question_id column maps directly to the inne
 ## Possible Improvements
 
 - Adding pagination
+- Autograder based on points criteria
+- Cleaner components & use of orval with openapi

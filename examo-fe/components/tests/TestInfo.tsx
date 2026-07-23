@@ -15,11 +15,11 @@ function TestInfo({ test }: LiveTestInfoProps) {
       <View style={styles.dateRow}>
         <Text style={styles.dateText}>
           <Text style={styles.boldText}>Start: </Text>
-          {formatDateTime(new Date(test.start_at!))}
+          {formatDateTime(new Date(test.startAt!))}
         </Text>
         <Text style={styles.dateText}>
           <Text style={styles.boldText}>End: </Text>
-          {formatDateTime(new Date(test.end_at!))}
+          {formatDateTime(new Date(test.endAt!))}
         </Text>
       </View>
     </>

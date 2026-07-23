@@ -5,7 +5,6 @@
 -- =================================================================================
 
 -- 1. USERS (1 Teacher, 1 Developer/Author, 8 Students)
--- Using auto-generated serial IDs.
 INSERT INTO users (username, name, surname, email, password) VALUES
 ('teacher_jane', 'Jane', 'Doe', 'jane.doe@university.edu', '$2a$10$ydtRmX4hMww/Lfha18VgFepJYdRBKoqm4mwXGTctkQMzoG6eQdPSS'),
 ('azakhardev', 'Artem', 'Zakharchenko', 'azakhardev@gmail.com', '$2a$10$ydtRmX4hMww/Lfha18VgFepJYdRBKoqm4mwXGTctkQMzoG6eQdPSS'),
@@ -47,22 +46,39 @@ INSERT INTO quiz_blocks (quiz_id, user_id) VALUES
 ('222e8400-e29b-41d4-a716-446655442222', (SELECT id FROM users WHERE username = 'michael_b')),
 ('222e8400-e29b-41d4-a716-446655442222', (SELECT id FROM users WHERE username = 'sarah_connor'));
 
--- 4. ONLINE TESTS (Live test instances launched by teachers)
--- Teacher Jane launches the Architecture test
-INSERT INTO online_tests (quiz_id, snapshot_id, description, access_code, start_at, end_at, time_limit_minutes) VALUES
-('111e8400-e29b-41d4-a716-446655441111', '333e8400-e29b-41d4-a716-446655443333', 'Test about modern arhcitecture with bit of geometry and something else. You have half an hour for the test.' ,'ARCH2026', '2026-06-20 10:00:00', '2026-06-20 12:00:00', 30);
+-- 4. ONLINE TESTS
+-- 4.1 Historical test for azakhardev (Authored by teacher_jane)
+INSERT INTO online_tests (quiz_id, snapshot_id, description, access_code, start_at, end_at, time_limit_minutes, max_points) VALUES
+('a1111111-1111-4111-8111-111111111111', '888e8400-e29b-41d4-a716-446655448888', 'Past test on React Hooks.', 'REACTADV', '2026-06-10 10:00:00', '2026-06-10 12:00:00', 30, 1);
 
--- Artem launches his React Native test for friends
-INSERT INTO online_tests (quiz_id, snapshot_id, description, access_code, start_at, end_at, time_limit_minutes) VALUES
-('222e8400-e29b-41d4-a716-446655442222', '444e8400-e29b-41d4-a716-446655444444', 'Welcome to my test about React. Do you want to test your knowledge?', 'REACT123', '2026-06-20 12:00:00', '2026-06-21 12:00:00', 15);
+-- 4.2 Historical test hosted by azakhardev (Taken by john_smith)
+INSERT INTO online_tests (quiz_id, snapshot_id, description, access_code, start_at, end_at, time_limit_minutes, max_points) VALUES
+('111e8400-e29b-41d4-a716-446655441111', '333e8400-e29b-41d4-a716-446655443333', 'Test about modern architecture.', 'ARCH2026', '2026-06-20 10:00:00', '2026-06-20 12:00:00', 30, 9);
 
--- 5. TEST SUBMISSIONS (Records of users who submitted the test)
+-- 4.3 Upcoming test for azakhardev (Authored by teacher_jane, scheduled for August 2026)
+INSERT INTO online_tests (quiz_id, snapshot_id, description, access_code, start_at, end_at, time_limit_minutes, max_points) VALUES
+('c3333333-3333-4333-8333-333333333333', '777e8400-e29b-41d4-a716-446655447777', 'Upcoming final exam on the Roman Empire.', 'ROME2026', '2026-08-15 08:00:00', '2026-08-15 10:00:00', 60, 1);
+
+-- 4.4 Ongoing test hosted by azakhardev (Ends tomorrow, emma_watson took it early)
+INSERT INTO online_tests (quiz_id, snapshot_id, description, access_code, start_at, end_at, time_limit_minutes, max_points) VALUES
+('222e8400-e29b-41d4-a716-446655442222', '444e8400-e29b-41d4-a716-446655444444', 'Welcome to my test about React Native.', 'REACT123', '2026-07-23 08:00:00', '2026-07-24 12:00:00', 15, 3);
+
+
+-- 5. TEST SUBMISSIONS 
+-- azakhardev takes REACTADV (Historical)
 INSERT INTO test_submissions (test_id, user_id, submission_id, submitted_at, total_gained_points) VALUES
-((SELECT id FROM online_tests WHERE access_code = 'ARCH2026'), (SELECT id FROM users WHERE username = 'azakhardev'), gen_random_uuid(), '2026-06-20 10:45:00', 7.0),
-((SELECT id FROM online_tests WHERE access_code = 'ARCH2026'), (SELECT id FROM users WHERE username = 'john_smith'), gen_random_uuid(), '2026-06-20 10:50:00', 2.5),
-((SELECT id FROM online_tests WHERE access_code = 'REACT123'), (SELECT id FROM users WHERE username = 'emma_watson'), gen_random_uuid(), '2026-06-20 13:10:00', 5.0);
+((SELECT id FROM online_tests WHERE access_code = 'REACTADV'), (SELECT id FROM users WHERE username = 'azakhardev'), 'aaa14a2e-4b47-41ab-9b34-8c8511671aaa', '2026-06-10 10:45:00', 1.0);
 
--- 6. PRACTICE HISTORY (Offline/Solo learning statistics)
+-- john_smith takes ARCH2026 (Historical - Hosted by azakhardev)
+INSERT INTO test_submissions (test_id, user_id, submission_id, submitted_at, total_gained_points) VALUES
+((SELECT id FROM online_tests WHERE access_code = 'ARCH2026'), (SELECT id FROM users WHERE username = 'john_smith'), 'f5b21c4d-9e68-45fc-a128-3c4d5e6f7a8b', '2026-06-20 10:50:00', 2.5);
+
+-- emma_watson takes REACT123 (Ongoing - Hosted by azakhardev)
+INSERT INTO test_submissions (test_id, user_id, submission_id, submitted_at, total_gained_points) VALUES
+((SELECT id FROM online_tests WHERE access_code = 'REACT123'), (SELECT id FROM users WHERE username = 'emma_watson'), 'e7c32d5e-0f79-46fd-b239-4d5e6f7a8b9c', '2026-07-23 09:10:00', 3.0);
+
+
+-- 6. PRACTICE HISTORY
 INSERT INTO practice_history (user_id, quiz_id, mode, started_at ,completed_at, duration_minutes, total_questions, total_answers, correct_answers) VALUES
 ((SELECT id FROM users WHERE username = 'azakhardev'), '111e8400-e29b-41d4-a716-446655441111', 'PRACTICE',NOW() - INTERVAL '1 hour', NOW() ,320, 4, 4, 3),
 ((SELECT id FROM users WHERE username = 'azakhardev'), '550e8400-e29b-41d4-a716-446655440000', 'FLASHCARDS',NOW() - INTERVAL '30 minute', NOW() ,120, 2, 2, 2);

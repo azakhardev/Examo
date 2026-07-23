@@ -1,27 +1,19 @@
 [
   {
-    "id": "999e8400-e29b-41d4-a716-446655449999",
-    "originalQuizId": "550e8400-e29b-41d4-a716-446655440000",
-    "snapshotDate": "2026-06-20T10:15:00",
+    "id": "888e8400-e29b-41d4-a716-446655448888",
+    "originalQuizId": "a1111111-1111-4111-8111-111111111111",
+    "snapshotDate": "2026-06-10T09:00:00Z",
     "questions": [
       {
         "id": "q1",
         "type": "SINGLE_CHOICE",
-        "questionText": "Which database is purely relational?",
+        "questionText": "What hook is used for caching an expensive calculation?",
         "options": [
-          { "id": "1", "text": "MongoDB", "isCorrect": false },
-          { "id": "2", "text": "PostgreSQL", "isCorrect": true },
-          { "id": "3", "text": "Redis", "isCorrect": false }
+          { "id": "1", "text": "useMemo", "isCorrect": true },
+          { "id": "2", "text": "useCallback", "isCorrect": false },
+          { "id": "3", "text": "useEffect", "isCorrect": false }
         ],
         "maxPoints": 1.0,
-        "negativePoints": 0.5
-      },
-      {
-        "id": "q2",
-        "type": "OPEN",
-        "questionText": "Which SQL command is used to delete a table?",
-        "options": [{ "id": "1", "text": "DROP TABLE", "isCorrect": true }],
-        "maxPoints": 2.0,
         "negativePoints": 0.0
       }
     ]
@@ -29,7 +21,7 @@
   {
     "id": "333e8400-e29b-41d4-a716-446655443333",
     "originalQuizId": "111e8400-e29b-41d4-a716-446655441111",
-    "snapshotDate": "2026-06-20T13:00:00",
+    "snapshotDate": "2026-06-20T09:00:00Z",
     "questions": [
       {
         "id": "q1",
@@ -89,6 +81,56 @@
         ],
         "maxPoints": 3.0,
         "negativePoints": 0.0
+      }
+    ]
+  },
+  {
+    "id": "777e8400-e29b-41d4-a716-446655447777",
+    "originalQuizId": "c3333333-3333-4333-8333-333333333333",
+    "snapshotDate": "2026-08-10T09:00:00Z",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "SINGLE_CHOICE",
+        "questionText": "Who was the first Roman Emperor?",
+        "options": [
+          { "id": "1", "text": "Julius Caesar", "isCorrect": false },
+          { "id": "2", "text": "Augustus", "isCorrect": true },
+          { "id": "3", "text": "Nero", "isCorrect": false }
+        ],
+        "maxPoints": 1.0,
+        "negativePoints": 0.0
+      }
+    ]
+  },
+  {
+    "id": "444e8400-e29b-41d4-a716-446655444444",
+    "originalQuizId": "222e8400-e29b-41d4-a716-446655442222",
+    "snapshotDate": "2026-07-20T09:00:00Z",
+    "questions": [
+      {
+        "id": "q1",
+        "type": "SINGLE_CHOICE",
+        "questionText": "Which component is used to display text in React Native?",
+        "options": [
+          { "id": "1", "text": "TextField", "isCorrect": false },
+          { "id": "2", "text": "Text", "isCorrect": true },
+          { "id": "3", "text": "Font", "isCorrect": false }
+        ],
+        "maxPoints": 1.0,
+        "negativePoints": 0.0
+      },
+      {
+        "id": "q2",
+        "type": "MULTIPLE_CHOICE",
+        "questionText": "Which of these are core navigation types in React Navigation?",
+        "options": [
+          { "id": "1", "text": "Stack", "isCorrect": true },
+          { "id": "2", "text": "Tab", "isCorrect": true },
+          { "id": "3", "text": "Grid", "isCorrect": false }
+        ],
+        "maxPoints": 2.0,
+        "negativePoints": 0.5
       }
     ]
   }

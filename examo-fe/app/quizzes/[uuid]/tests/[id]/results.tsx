@@ -19,8 +19,8 @@ const mockTest: Test = {
   title: "My old test",
   description:
     "In this test we will test your knowledge about creating modern looking mobile apps with advanced UX.",
-  start_at: "20. 05. 2026 18:00",
-  end_at: "2026-05-20T19:00:00Z",
+  startAt: "20. 05. 2026 18:00",
+  endAt: "2026-05-20T19:00:00Z",
 };
 
 export default function TestResultsScreen() {
