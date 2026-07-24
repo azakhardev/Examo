@@ -4,12 +4,15 @@ export const queryKeys = {
     me: ["auth", "me"] as const,
   },
   tests: {
-    all: ["tests"] as const,
-    detail: (id: number | string) => ["tests", "detail", id] as const,
-    history: (userId: number) => ["tests", "history", userId] as const,
+    _: ["tests"],
+    foreign: {
+      _: ["tests", "foreign"],
+      detail: ["tests", "foreign", "detail"],
+    },
+    owned: ["tests", "owned"],
   },
   practice: {
-    history: ["practice", "history"] as const,
+    history: ["practice", "history"],
   },
   quizzes: {
     _: ["quizzes"],

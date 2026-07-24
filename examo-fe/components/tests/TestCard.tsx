@@ -21,20 +21,21 @@ export default function TestCard({ test, onPress }: TestCardProps) {
 
   return (
     <TouchableOpacity style={styles.card} activeOpacity={0.7} onPress={onPress}>
-      {!isHistory && (
-        <View style={styles.lengthBadge}>
-          <Text style={styles.smallText}>
-            <Text style={styles.boldLabel}>Length: </Text>
-            {test.timeLimitMinutes}m
-          </Text>
-        </View>
-      )}
+      <View style={styles.headerRow}>
+        <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">
+          {test.title}
+        </Text>
 
-      <Text style={styles.title} numberOfLines={2}>
-        {test.quiz?.title}
-      </Text>
+        {!isHistory && (
+          <View style={styles.lengthBadge}>
+            <Text style={styles.smallText}>
+              <Text style={styles.boldLabel}>Length: </Text>
+              {test.timeLimitMinutes}m
+            </Text>
+          </View>
+        )}
+      </View>
 
-      {/* Autor */}
       <Text style={styles.authorText}>
         <Text style={styles.boldLabel}>Author: </Text>
         {test.authorName}
@@ -73,18 +74,23 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     position: "relative",
   },
+  headerRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    marginBottom: 4,
+    gap: 12,
+  },
   lengthBadge: {
-    position: "absolute",
-    top: 10,
-    right: 12,
+    marginTop: 2,
   },
   title: {
     color: COLORS.text,
     fontSize: 18,
     fontWeight: "bold",
-    marginTop: 10,
     paddingRight: 80,
     marginBottom: 4,
+    flex: 1,
   },
   authorText: {
     color: COLORS.textSecondary,

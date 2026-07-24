@@ -58,7 +58,7 @@ export default function ParticipateTestScreen() {
   return (
     <ScreenWrapper>
       {!isParticipant ? (
-        <JoinTest testId={id as string} onSubmit={onJoin} />
+        <JoinTest testId={Number(id)} onSubmit={onJoin} />
       ) : (
         <TestForm
           quiz={QUIZ_1}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,17 +8,21 @@ import {
   Alert,
 } from "react-native";
 import COLORS from "@/constants/colors";
-import ScreenWrapper from "@/components/layout/ScreenWrapper";
-import { upcoming_test } from "@/constants/mocks";
+import useGetForeignTestDetail from "@/api/tests/useGetForeignTestDetail";
+import ErrorView from "../ui/ErrorView";
+import Loader from "../ui/Loader";
 
 type JoinTestProps = {
-  testId: string;
+  testId: number;
   onSubmit: (code: string) => void;
 };
 
 function JoinTest({ testId, onSubmit }: JoinTestProps) {
-  const test = upcoming_test; //TODO: Fetch data
   const [code, setCode] = useState("");
+
+  const { data, isLoading, isError, error } = useGetForeignTestDetail(testId);
+
+  //TODO: Mutation hook
 
   const handleJoinTest = async () => {
     if (!code.trim()) {
@@ -30,20 +34,17 @@ function JoinTest({ testId, onSubmit }: JoinTestProps) {
     // TODO: Send to backend
   };
 
-  if (!test) {
-    return (
-      <ScreenWrapper>
-        <View></View>
-        {/* TODO: Add loader */}
-      </ScreenWrapper>
-    );
+  if (isError) {
+    return <ErrorView error={error} />;
   }
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>{test.title}</Text>
-        <Text style={styles.description}>{test.description}</Text>
+        <Text style={styles.title}>{data?.title}</Text>
+        <Text style={styles.description}>{data?.description}</Text>
       </View>
 
       <View style={styles.centerSection}>
@@ -67,7 +68,7 @@ function JoinTest({ testId, onSubmit }: JoinTestProps) {
           style={styles.joinButton}
           onPress={handleJoinTest}
           disabled={
-            test.startAt === null || new Date(test.startAt ?? 0) > new Date()
+            data?.startAt === null || new Date(data?.startAt ?? 0) > new Date()
           }
           //disabled={isSubmitting}
           activeOpacity={0.8}
