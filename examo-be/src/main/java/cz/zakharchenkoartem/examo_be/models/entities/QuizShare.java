@@ -23,8 +23,9 @@ public class QuizShare {
     @JoinColumn(name = "quiz_id", nullable = false)
     private QuizEntity quiz;
 
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "access_level", length = 50, columnDefinition = "varchar(50) default 'READ'")
@@ -39,14 +40,6 @@ public class QuizShare {
 
     public QuizShare() {
 
-    }
-
-    public QuizShare(Long id, QuizEntity quiz, Integer userId, AccessLevel accessLevel, Boolean favorite) {
-        this.id = id;
-        this.quiz = quiz;
-        this.userId = userId;
-        this.accessLevel = accessLevel;
-        this.favorite = favorite;
     }
 
     // Getters and Setters
@@ -66,12 +59,12 @@ public class QuizShare {
         this.quiz = quiz;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public AccessLevel getAccessLevel() {

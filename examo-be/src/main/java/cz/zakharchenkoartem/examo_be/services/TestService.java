@@ -41,7 +41,7 @@ public class TestService {
     }
 
     public TestDTO getForeignTestDetail(Integer userId, Long testId) {
-        Test test = testRepository.findById(testId).orElseThrow(() -> new NotFoundException("Test not found"));
+        Test test = this.getTest(testId);
 
         quizSharesService.getShare(userId, test.getQuizId().toString());
 
@@ -50,5 +50,11 @@ public class TestService {
                 .title(test.getTitle())
                 .description(test.getDescription())
                 .build();
+    }
+
+    public Test getTest(Long testId) {
+        Test test = testRepository.findById(testId).orElseThrow(() -> new NotFoundException("Test not found"));
+
+        return test;
     }
 }

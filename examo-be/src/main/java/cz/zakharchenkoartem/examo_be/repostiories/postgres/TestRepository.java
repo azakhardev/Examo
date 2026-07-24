@@ -18,10 +18,10 @@ public interface TestRepository extends JpaRepository<Test, Long> {
                        sub.submittedAt as submittedAt
                 FROM Test t
                 JOIN QuizEntity q ON t.quizId = q.id
-                JOIN User u ON q.authorId = u.id
+                JOIN q.author u
                 LEFT JOIN Submission sub ON t.id = sub.test.id AND sub.userId = :userId
-                WHERE (q.authorId = :userId OR q.id IN (SELECT qs.quiz.id FROM QuizShare qs WHERE qs.userId = :userId))
-                AND (:isAuthor = false AND q.authorId <> :userId OR :isAuthor = true)
+                WHERE (q.author.id = :userId OR q.id IN (SELECT qs.quiz.id FROM QuizShare qs WHERE qs.user.id = :userId))
+                AND (:isAuthor = false AND q.author.id <> :userId OR :isAuthor = true)
                 AND (:isHistory = true AND t.endAt < CURRENT_TIMESTAMP OR :isHistory = false AND t.endAt >= CURRENT_TIMESTAMP)
             """)
     List<TestProjection> findForeignTests(

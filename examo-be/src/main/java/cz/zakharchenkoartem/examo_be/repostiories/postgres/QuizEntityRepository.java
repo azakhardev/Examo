@@ -11,7 +11,7 @@ import cz.zakharchenkoartem.examo_be.models.dtos.QuizFavoriteProjection;
 import cz.zakharchenkoartem.examo_be.models.entities.QuizEntity;
 
 public interface QuizEntityRepository extends JpaRepository<QuizEntity, UUID> {
-      @Query("SELECT q.id FROM QuizEntity q LEFT JOIN q.shares s WHERE q.authorId = :userId OR s.userId = :userId")
+      @Query("SELECT q.id FROM QuizEntity q LEFT JOIN q.shares s WHERE q.author.id = :userId OR s.user.id = :userId")
       List<String> findIdsByUserId(Integer userId);
 
       @Query(value = """

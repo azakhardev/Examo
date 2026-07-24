@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import cz.zakharchenkoartem.examo_be.repostiories.postgres.QuizBlockRepository;
 
 @Service
-public class QuizBlocksService {
+public class QuizBlockService {
 
     private final QuizBlockRepository quizBlockRepository;
 
-    public QuizBlocksService(QuizBlockRepository quizBlockRepository) {
+    public QuizBlockService(QuizBlockRepository quizBlockRepository) {
         this.quizBlockRepository = quizBlockRepository;
     }
 

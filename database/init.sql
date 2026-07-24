@@ -30,13 +30,14 @@ CREATE TABLE "online_tests" (
   "allow_review" boolean DEFAULT true
 );
 
-CREATE TABLE "test_submissions" (
+CREATE TABLE "test_participants" (
   "id" bigserial PRIMARY KEY,
   "test_id" bigint NOT NULL,
   "user_id" integer NOT NULL,
-  "submission_id" uuid NOT NULL,
-  "submitted_at" timestamp NOT NULL DEFAULT (now()),
-  "total_gained_points" float DEFAULT 0
+  "joined_at" timestamp DEFAULT (now()),
+  "submission_id" uuid,
+  "submitted_at" timestamp,
+  "total_gained_points" float
 );
 
 CREATE TABLE "practice_history" (
@@ -71,9 +72,9 @@ ALTER TABLE "quizzes" ADD FOREIGN KEY ("author_id") REFERENCES "users" ("id") ON
 
 ALTER TABLE "online_tests" ADD FOREIGN KEY ("quiz_id") REFERENCES "quizzes" ("id") DEFERRABLE INITIALLY IMMEDIATE;
 
-ALTER TABLE "test_submissions" ADD FOREIGN KEY ("test_id") REFERENCES "online_tests" ("id") ON DELETE CASCADE DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE "test_participants" ADD FOREIGN KEY ("test_id") REFERENCES "online_tests" ("id") ON DELETE CASCADE DEFERRABLE INITIALLY IMMEDIATE;
 
-ALTER TABLE "test_submissions" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id") DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE "test_participants" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id") DEFERRABLE INITIALLY IMMEDIATE;
 
 ALTER TABLE "practice_history" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE DEFERRABLE INITIALLY IMMEDIATE;
 

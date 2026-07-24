@@ -66,15 +66,15 @@ INSERT INTO online_tests (quiz_id, snapshot_id, description, access_code, start_
 
 -- 5. TEST SUBMISSIONS 
 -- azakhardev takes REACTADV (Historical)
-INSERT INTO test_submissions (test_id, user_id, submission_id, submitted_at, total_gained_points) VALUES
+INSERT INTO test_participants (test_id, user_id, submission_id, submitted_at, total_gained_points) VALUES
 ((SELECT id FROM online_tests WHERE access_code = 'REACTADV'), (SELECT id FROM users WHERE username = 'azakhardev'), 'aaa14a2e-4b47-41ab-9b34-8c8511671aaa', '2026-06-10 10:45:00', 1.0);
 
 -- john_smith takes ARCH2026 (Historical - Hosted by azakhardev)
-INSERT INTO test_submissions (test_id, user_id, submission_id, submitted_at, total_gained_points) VALUES
+INSERT INTO test_participants (test_id, user_id, submission_id, submitted_at, total_gained_points) VALUES
 ((SELECT id FROM online_tests WHERE access_code = 'ARCH2026'), (SELECT id FROM users WHERE username = 'john_smith'), 'f5b21c4d-9e68-45fc-a128-3c4d5e6f7a8b', '2026-06-20 10:50:00', 2.5);
 
 -- emma_watson takes REACT123 (Ongoing - Hosted by azakhardev)
-INSERT INTO test_submissions (test_id, user_id, submission_id, submitted_at, total_gained_points) VALUES
+INSERT INTO test_participants (test_id, user_id, submission_id, submitted_at, total_gained_points) VALUES
 ((SELECT id FROM online_tests WHERE access_code = 'REACT123'), (SELECT id FROM users WHERE username = 'emma_watson'), 'e7c32d5e-0f79-46fd-b239-4d5e6f7a8b9c', '2026-07-23 09:10:00', 3.0);
 
 

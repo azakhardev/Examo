@@ -15,79 +15,7 @@ A full-stack, feature-rich mobile quiz application designed for both students an
 This database handles users, access management (sharing and blocking), test sessions, practice history and aggregated statistics.
 
 ```mermaid
-erDiagram
-    users ||--o{ quizzes : "authors"
-    users ||--o{ test_submissions : "submits"
-    users ||--o{ practice_history : "performs"
-    users ||--o{ quiz_shares : "granted_access"
-    users ||--o{ quiz_blocks : "denied_access"
 
-    quizzes ||--o{ online_tests : "instantiates"
-    quizzes ||--o{ practice_history : "tracks"
-    quizzes ||--o{ quiz_shares : "shared_with"
-    quizzes ||--o{ quiz_blocks : "blocked_users"
-
-    online_tests ||--o{ test_submissions : "contains"
-    test_submissions ||--o{ student_answers : "has_answers"
-
-    users {
-        int id PK
-        string username
-        string name
-        string surname
-        string email
-        string password
-        timestamp created_at
-    }
-    quizzes {
-        uuid id PK
-        string name
-        string description
-        int author_id FK
-        string visibility "PRIVATE, PUBLIC, RESTRICTED"
-        timestamp created_at
-    }
-    quiz_shares {
-        bigint id PK
-        uuid quiz_id FK
-        int user_id FK
-        string access_level "READ, EDIT"
-    }
-    quiz_blocks {
-        bigint id PK
-        uuid quiz_id FK
-        int user_id FK
-        timestamp blocked_at
-    }
-    online_tests {
-        bigint id PK
-        uuid quiz_id FK
-        uuid snapshot_id "MongoDB reference"
-        string access_code
-        timestamp start_at
-        timestamp end_at
-        int time_limit_minutes
-        boolean allow_review
-    }
-    test_submissions {
-        bigint id PK
-        bigint test_id FK
-        int user_id FK
-        uuid submission_id FK
-        timestamp submitted_at
-        float total_gained_points
-    }
-    practice_history {
-        bigint id PK
-        int user_id FK
-        uuid quiz_id FK
-        string mode "PRACTICE, RACE, FLASHCARDS"
-        timestamp completed_at
-        int duration_seconds
-        int total_questions
-        int total_answers
-        int correct_answers
-    }
 ```
 
 ### 🍃 MongoDB Collections (NoSQL Document Structure)

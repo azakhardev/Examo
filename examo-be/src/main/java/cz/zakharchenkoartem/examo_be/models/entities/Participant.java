@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "test_submissions")
-public class Submission {
+@Table(name = "test_participants")
+public class Participant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,19 +16,24 @@ public class Submission {
     @JoinColumn(name = "test_id", nullable = false)
     private Test test;
 
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @Column(name = "submission_id", nullable = false)
+    @Column(name = "joined_at", nullable = false, updatable = false)
+    private LocalDateTime joinedAt = LocalDateTime.now();
+
+    @Column(name = "submission_id")
     private UUID submissionId;
 
-    @Column(name = "submitted_at", nullable = false, insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT NOW()")
+    @Column(name = "submitted_at")
     private LocalDateTime submittedAt;
 
-    @Column(name = "total_gained_points", columnDefinition = "FLOAT DEFAULT 0")
-    private Double totalGainedPoints = 0.0;
+    @Column(name = "total_gained_points")
+    private Double totalGainedPoints;
 
-    public Submission() {
+    // Default constructor required by JPA
+    public Participant() {
     }
 
     // Getters and Setters
@@ -48,12 +53,20 @@ public class Submission {
         this.test = test;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public LocalDateTime getJoinedAt() {
+        return joinedAt;
+    }
+
+    public void setJoinedAt(LocalDateTime joinedAt) {
+        this.joinedAt = joinedAt;
     }
 
     public UUID getSubmissionId() {
