@@ -6,32 +6,55 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import COLORS from "@/constants/colors";
 import useGetForeignTestDetail from "@/api/tests/useGetForeignTestDetail";
 import ErrorView from "../ui/ErrorView";
 import Loader from "../ui/Loader";
+import useJoinTest from "@/api/tests/useJoinTest";
+import Toast from "react-native-toast-message";
+import { queryClient } from "../providers/QueryProvider";
+import { queryKeys } from "@/api/queryKeys";
 
 type JoinTestProps = {
   testId: number;
-  onSubmit: (code: string) => void;
 };
 
-function JoinTest({ testId, onSubmit }: JoinTestProps) {
+function JoinTest({ testId }: JoinTestProps) {
   const [code, setCode] = useState("");
 
   const { data, isLoading, isError, error } = useGetForeignTestDetail(testId);
-
-  //TODO: Mutation hook
+  const { mutate, isPending } = useJoinTest(testId);
 
   const handleJoinTest = async () => {
     if (!code.trim()) {
       Alert.alert("Error", "Please enter the access code.");
       return;
     }
-
-    onSubmit(code);
-    // TODO: Send to backend
+    mutate(
+      { accessCode: code },
+      {
+        onSuccess: (response) => {
+          Toast.show({
+            type: "success",
+            text1: "Joined successfully",
+            text2: "Good luck in your test!",
+          });
+          //TODO: Refetch data
+          queryClient.invalidateQueries({
+            queryKey: [...queryKeys.tests.session, testId],
+          });
+        },
+        onError: (error) => {
+          Toast.show({
+            type: "error",
+            text1: "Failed to join",
+            text2: error.message,
+          });
+        },
+      },
+    );
   };
 
   if (isError) {
@@ -68,17 +91,17 @@ function JoinTest({ testId, onSubmit }: JoinTestProps) {
           style={styles.joinButton}
           onPress={handleJoinTest}
           disabled={
-            data?.startAt === null || new Date(data?.startAt ?? 0) > new Date()
+            data?.startAt === null ||
+            new Date(data?.startAt ?? 0) > new Date() ||
+            isPending
           }
-          //disabled={isSubmitting}
           activeOpacity={0.8}
         >
-          {/* {isSubmitting ? (
+          {isPending ? (
             <ActivityIndicator color={COLORS.background} />
           ) : (
             <Text style={styles.joinButtonText}>JOIN TEST</Text>
-          )} */}
-          <Text style={styles.joinButtonText}>JOIN TEST</Text>
+          )}
         </TouchableOpacity>
       </View>
     </View>

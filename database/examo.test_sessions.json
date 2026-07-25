@@ -1,0 +1,37 @@
+{
+  "_id": "550e8400-e29b-41d4-a716-446655449999",
+  "testId": 4,
+  "userId": 2,
+  "title": "Missing title",
+  "status": "IN_PROGRESS",
+  "startedAt": "2026-07-25T12:05:00Z",
+  "expiresAt": "2026-07-25T12:35:00Z",
+  "hardDeadline": "2026-07-25T14:00:00Z",
+  "questions": [
+    {
+      "id": "q2",
+      "type": "MULTIPLE_CHOICE",
+      "questionText": "Which of these are core navigation types in React Navigation?",
+      "options": [
+        {
+          "id": "1",
+          "text": "Stack"
+        },
+        {
+          "id": "2",
+          "text": "Tab"
+        },
+        {
+          "id": "3",
+          "text": "Grid"
+        }
+      ],
+      "maxPoints": 2,
+      "negativePoints": 0.5,
+      "imageUrl": "image.jpg"
+    }
+  ],
+  "answers": {
+    "q2": ["1", "2"]
+  }
+}

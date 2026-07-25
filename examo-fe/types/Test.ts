@@ -1,3 +1,4 @@
+import { Question } from "./Question";
 import { Quiz } from "./Quiz";
 
 export type Test = {
@@ -16,4 +17,16 @@ export type Test = {
   totalParticipants?: number;
   maxPoints?: number;
   totalSubmissions?: number;
+};
+
+export type TestSession = {
+  id: string;
+  userId: number;
+  testId: number;
+  title: string;
+  status: string;
+  startedAt: string;
+  expiresAt?: string;
+  hardDeadline?: string;
+  questions?: Question[];
 };

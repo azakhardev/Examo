@@ -36,6 +36,9 @@ public class Test {
     @Column(name = "time_limit_minutes", nullable = false)
     private Integer timeLimitMinutes;
 
+    @Column(name = "questions_count", nullable = false)
+    private Integer questionsCount;
+
     @Column(name = "max_points", nullable = false)
     private Integer maxPoints;
 
@@ -116,6 +119,14 @@ public class Test {
 
     public void setTimeLimitMinutes(Integer timeLimitMinutes) {
         this.timeLimitMinutes = timeLimitMinutes;
+    }
+
+    public Integer getQuestionsCount() {
+        return questionsCount;
+    }
+
+    public void setQuestionsCount(Integer questionsCount) {
+        this.questionsCount = questionsCount;
     }
 
     public Integer getMaxPoints() {

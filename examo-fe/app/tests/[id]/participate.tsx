@@ -1,47 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLocalSearchParams, useNavigation } from "expo-router";
+import { usePreventRemove } from "@react-navigation/native";
 import ScreenWrapper from "@/components/layout/ScreenWrapper";
 import JoinTest from "@/components/tests/JoinTest";
 import TestForm, { SubmittedAnswer } from "@/components/tests/TestForm";
-import { QUIZ_1 } from "@/constants/mocks";
+
 import { Alert } from "react-native";
+import useGetTestSession from "@/api/tests/useGetTestSession";
+import Loader from "@/components/ui/Loader";
+import ErrorView from "@/components/ui/ErrorView";
 
 export default function ParticipateTestScreen() {
   const { id } = useLocalSearchParams();
-
-  const [isParticipant, setIsParticipant] = useState<boolean>(false); //TODO: Request to backend
-
   const navigation = useNavigation();
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("beforeRemove", (e) => {
-      if (isParticipant) {
-        e.preventDefault();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-        Alert.alert(
-          "Leave Test?",
-          "Are you sure you want to leave? Your progress will be lost and you will receive 0 points.",
-          [
-            { text: "Stay", style: "cancel", onPress: () => {} },
-            {
-              text: "Leave",
-              style: "destructive",
-              onPress: () => navigation.dispatch(e.data.action),
-            },
-          ],
-        );
-      }
-    });
+  const { data, isLoading, isError, error } = useGetTestSession(Number(id));
 
-    return unsubscribe;
-  }, [navigation, isParticipant]);
+  const shouldPreventLeaving = data?.isParticipating === true && !isSubmitting;
 
-  function onJoin(accessCode: string) {
-    //TODO: Call backend with the code
-    setIsParticipant(true);
-  }
+  console.log(data);
+
+  usePreventRemove(shouldPreventLeaving, (e) => {
+    Alert.alert(
+      "Leave Test?",
+      "Are you sure you want to leave? Your progress will be lost and you will receive 0 points.",
+      [
+        { text: "Stay", style: "cancel", onPress: () => {} },
+        {
+          text: "Leave",
+          style: "destructive",
+          onPress: () => navigation.dispatch(e.data.action), // Allows them to leave
+        },
+      ],
+    );
+  });
 
   function handleTestSubmit(answersArray: SubmittedAnswer[]) {
+    setIsSubmitting(true);
+
     const payload = {
       testId: Number(id),
       answers: answersArray,
@@ -52,19 +50,22 @@ export default function ParticipateTestScreen() {
       JSON.stringify(payload, null, 2),
     );
 
-    // TODO: POST payload to backend, then redirect to a success/results screen
+    // TODO: POST payload to backend
+    // After success: router.replace("/tests/success");
+  }
+
+  if (isError) {
+    return <ErrorView error={error} />;
   }
 
   return (
     <ScreenWrapper>
-      {!isParticipant ? (
-        <JoinTest testId={Number(id)} onSubmit={onJoin} />
+      {isLoading ? (
+        <Loader />
+      ) : !data?.isParticipating ? (
+        <JoinTest testId={Number(id)} />
       ) : (
-        <TestForm
-          quiz={QUIZ_1}
-          onSubmit={handleTestSubmit}
-          timeLimitMinutes={60}
-        />
+        <TestForm session={data.test} onSubmit={handleTestSubmit} />
       )}
     </ScreenWrapper>
   );

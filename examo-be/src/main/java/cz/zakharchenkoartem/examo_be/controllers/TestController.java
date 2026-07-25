@@ -1,5 +1,6 @@
 package cz.zakharchenkoartem.examo_be.controllers;
 
+import cz.zakharchenkoartem.examo_be.repostiories.postgres.ParticipantRepository;
 import java.security.Principal;
 import java.util.List;
 
@@ -8,8 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cz.zakharchenkoartem.examo_be.exceptions.AccessDeniedException;
+import cz.zakharchenkoartem.examo_be.models.documents.TestSession;
 import cz.zakharchenkoartem.examo_be.models.dtos.tests.JoinTestBody;
 import cz.zakharchenkoartem.examo_be.models.dtos.tests.TestDTO;
+import cz.zakharchenkoartem.examo_be.models.dtos.tests.TestSessionResponse;
 import cz.zakharchenkoartem.examo_be.models.entities.Test;
 import cz.zakharchenkoartem.examo_be.services.ParticipantService;
 import cz.zakharchenkoartem.examo_be.services.QuizSharesService;
@@ -23,15 +26,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/tests")
 public class TestController {
+    private final ParticipantRepository participantRepository;
     private final TestService testService;
     private final QuizSharesService quizSharesService;
     private final ParticipantService participantService;
 
     public TestController(TestService testService, QuizSharesService quizSharesService,
-            ParticipantService participantService) {
+            ParticipantService participantService, ParticipantRepository participantRepository) {
         this.testService = testService;
         this.quizSharesService = quizSharesService;
         this.participantService = participantService;
+        this.participantRepository = participantRepository;
 
     }
 
@@ -83,10 +88,33 @@ public class TestController {
 
         participantService.createParticipation(userId, id);
 
+        // TODO: Create test session for current participation and save to mongo
+
         return ResponseEntity.ok(true);
     }
 
-    // TODO: Get test questions - algorithm that creates unuique test and saves it
-    // in memory/mongo?
+    @GetMapping("/{id}/session")
+    public ResponseEntity<TestSessionResponse> getTestSession(Principal principal, @PathVariable Long id) {
+        Integer userId = Integer.valueOf(principal.getName());
 
+        TestSession session = testService.getTestSession(id, userId);
+        if (session != null) {
+            return ResponseEntity.ok(
+                    TestSessionResponse.builder()
+                            .isParticipating(true)
+                            .test(session)
+                            .build());
+        }
+
+        return ResponseEntity.ok(
+                TestSessionResponse.builder()
+                        .isParticipating(false)
+                        .test(null)
+                        .build());
+
+    }
+
+    // TODO: Create test - check if can be created with currect criteria
+
+    // TODO: Print test endpoint
 }

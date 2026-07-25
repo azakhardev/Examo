@@ -10,6 +10,7 @@ export const queryKeys = {
       detail: ["tests", "foreign", "detail"],
     },
     owned: ["tests", "owned"],
+    session: ["tests", "session"],
   },
   practice: {
     history: ["practice", "history"],

@@ -12,6 +12,7 @@ import COLORS from "@/constants/colors";
 import { Quiz } from "@/types/Quiz";
 import { formatTime } from "@/utils";
 import QuestionCard from "./QuestionCard";
+import { TestSession } from "@/types/Test";
 
 // --- Types for the Backend Payload ---
 export type TestSubmission = {
@@ -30,21 +31,22 @@ export type SubmittedAnswer = {
 export type TestAnswers = Record<string, string | string[]>;
 
 type TestFormProps = {
-  quiz: Quiz;
+  session: TestSession;
   onSubmit: (answers: SubmittedAnswer[]) => void;
-  timeLimitMinutes?: number;
 };
 
-export default function TestForm({
-  quiz,
-  onSubmit,
-  timeLimitMinutes = 60,
-}: TestFormProps) {
+export default function TestForm({ session, onSubmit }: TestFormProps) {
   const { control, handleSubmit } = useForm<TestAnswers>({
     defaultValues: {},
   });
 
-  const [timeLeft, setTimeLeft] = useState(timeLimitMinutes * 60);
+  const [timeLeft, setTimeLeft] = useState(() => {
+    if (!session.expiresAt) return 0;
+    const expiresMs = new Date(session.expiresAt).getTime();
+    const nowMs = Date.now();
+    const diffSeconds = Math.floor((expiresMs - nowMs) / 1000);
+    return diffSeconds > 0 ? diffSeconds : 0;
+  });
 
   const handleFinish = useCallback(
     (formData: TestAnswers) => {
@@ -61,7 +63,7 @@ export default function TestForm({
                 formData,
               ).map(([questionId, rawAnswer]) => {
                 // Find the original question to know its type
-                const question = quiz.questions?.find(
+                const question = session.questions?.find(
                   (q) => q.id === questionId,
                 );
 
@@ -97,7 +99,7 @@ export default function TestForm({
         ],
       );
     },
-    [onSubmit, quiz.questions],
+    [onSubmit, session.questions],
   );
 
   useEffect(() => {
@@ -113,7 +115,7 @@ export default function TestForm({
   const renderHeader = () => (
     <View style={styles.header}>
       <Text style={styles.title} numberOfLines={1}>
-        {quiz.title}
+        {session.title}
       </Text>
       <Text style={styles.timerText}>{formatTime(timeLeft)}</Text>
     </View>
@@ -135,7 +137,7 @@ export default function TestForm({
     <View style={styles.container}>
       {renderHeader()}
       <FlatList
-        data={quiz.questions}
+        data={session.questions}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}

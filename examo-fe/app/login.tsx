@@ -15,6 +15,7 @@ import { useForm, Controller } from "react-hook-form";
 import COLORS from "@/constants/colors";
 import { useAuth } from "@/components/providers/AuthProvider";
 import useLogin from "@/api/auth/useLogin";
+import Toast from "react-native-toast-message";
 
 type LoginForm = {
   email: string;
@@ -39,7 +40,11 @@ function Login() {
         login(response.token, response.user);
       },
       onError: (error) => {
-        Alert.alert("Login Failed", error.message);
+        Toast.show({
+          type: "error",
+          text1: "Login Failed",
+          text2: error.message,
+        });
       },
     });
   };
