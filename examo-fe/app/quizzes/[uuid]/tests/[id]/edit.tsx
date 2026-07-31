@@ -4,21 +4,21 @@ import { Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { useForm } from "react-hook-form";
 import COLORS from "@/constants/colors";
 import ScreenWrapper from "@/components/layout/ScreenWrapper";
-import { TestFormSchema } from "@/types/CreateTest";
+import { CreateTestPayload } from "@/types/CreateTest";
 import CreateTestForm from "@/components/tests/CreateTestForm";
 import { upcoming_test } from "@/constants/mocks";
 
 export default function EditTestScreen() {
   const test = upcoming_test; //TODO: Fetch test
 
-  const { control, handleSubmit, watch } = useForm<TestFormSchema>({
+  const { control, handleSubmit, watch } = useForm<CreateTestPayload>({
     defaultValues: test,
   });
 
   const currentTitle = watch("title");
   const currentDescription = watch("description");
 
-  const handleSaveChanges = (data: TestFormSchema) => {
+  const handleSaveChanges = (data: CreateTestPayload) => {
     console.log("Saving updated info about test to backend:", {
       ...data,
       description: currentDescription,

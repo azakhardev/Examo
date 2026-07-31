@@ -12,7 +12,6 @@ public record CreateTestPayload(
         @NotNull(message = "Time limit is required") @Min(value = 1, message = "Time limit must be at least 1 minute") Integer timeLimit,
         @NotNull(message = "Max points is required") @Positive(message = "Max points must be greater than zero") Integer maxPoints,
         @NotNull(message = "Allow review flag is required") Boolean allowReview,
-        @NotNull(message = "User ID is required") @Positive(message = "Invalid User ID") Integer userId,
         @NotBlank(message = "Quiz ID is required") String quizId) {
 
 }

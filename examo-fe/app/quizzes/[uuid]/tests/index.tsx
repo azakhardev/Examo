@@ -94,6 +94,7 @@ function QuizTestsScreen() {
           showsVerticalScrollIndicator={false}
         />
 
+        {/* TODO: Hide for non authors */}
         <Fab
           icon="play"
           style={{ right: 0 }}

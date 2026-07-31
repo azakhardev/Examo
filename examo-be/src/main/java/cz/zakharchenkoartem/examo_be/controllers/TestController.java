@@ -129,7 +129,7 @@ public class TestController {
 
         QuizDocument quiz = quizService.getQuizById(payload.quizId());
 
-        if (!userId.equals(payload.userId())) {
+        if (!userId.equals(quiz.getAuthorId())) {
             throw new AccessDeniedException("You cant create test for this quiz");
         }
 

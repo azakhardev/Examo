@@ -1,11 +1,17 @@
 import COLORS from "@/constants/colors";
-import { TestFormSchema } from "@/types/CreateTest";
+import { CreateTestPayload } from "@/types/CreateTest";
 import { Ionicons } from "@expo/vector-icons";
 import { Control, Controller } from "react-hook-form";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 
 type CreateTestFormProps = {
-  control: Control<TestFormSchema>;
+  control: Control<CreateTestPayload>;
 };
 
 function CreateTestForm({ control }: CreateTestFormProps) {
@@ -88,6 +94,22 @@ function CreateTestForm({ control }: CreateTestFormProps) {
           </View>
         )}
       />
+      <Text style={styles.label}>Questions Count</Text>
+      <Controller
+        control={control}
+        name="questionsCount"
+        render={({ field: { onChange, value } }) => (
+          <View style={styles.iconInputContainer}>
+            <TextInput
+              style={styles.flexInput}
+              keyboardType="numeric"
+              value={value?.toString()}
+              onChangeText={(val) => onChange(parseInt(val) || 0)}
+            />
+            <Text style={styles.unitText}>questions</Text>
+          </View>
+        )}
+      />
 
       <Text style={styles.label}>Time Limit</Text>
       <Controller
@@ -103,6 +125,49 @@ function CreateTestForm({ control }: CreateTestFormProps) {
             />
             <Text style={styles.unitText}>min</Text>
           </View>
+        )}
+      />
+
+      <Text style={styles.label}>Max points</Text>
+      <Controller
+        control={control}
+        name="maxPoints"
+        render={({ field: { onChange, value } }) => (
+          <View style={styles.iconInputContainer}>
+            <TextInput
+              style={styles.flexInput}
+              keyboardType="numeric"
+              value={value?.toString()}
+              onChangeText={(val) => onChange(parseInt(val) || 0)}
+            />
+            <Text style={styles.unitText}>points</Text>
+          </View>
+        )}
+      />
+
+      <Controller
+        control={control}
+        name="allowReview"
+        render={({ field: { onChange, value } }) => (
+          <TouchableOpacity
+            style={styles.checkboxContainer}
+            onPress={() => onChange(!value)}
+            activeOpacity={0.7}
+          >
+            <Ionicons
+              name={value ? "checkbox" : "square"}
+              size={22}
+              color={value ? COLORS.text : COLORS.stroke}
+            />
+            <Text
+              style={[
+                styles.checkboxText,
+                value && styles.checkboxTextSelected,
+              ]}
+            >
+              Allow review
+            </Text>
+          </TouchableOpacity>
         )}
       />
     </View>
@@ -140,4 +205,18 @@ const styles = StyleSheet.create({
   },
   flexInput: { flex: 1, color: COLORS.text, paddingVertical: 12 },
   unitText: { color: COLORS.textSecondary, fontSize: 14 },
+  checkboxContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 12,
+  },
+  checkboxText: {
+    color: COLORS.textSecondary,
+    fontSize: 16,
+    marginLeft: 12,
+  },
+  checkboxTextSelected: {
+    color: COLORS.text,
+    fontWeight: "700",
+  },
 });
