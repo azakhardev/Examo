@@ -2,19 +2,23 @@ package cz.zakharchenkoartem.examo_be.services;
 
 import cz.zakharchenkoartem.examo_be.exceptions.NotFoundException;
 import cz.zakharchenkoartem.examo_be.models.documents.QuizDocument;
+import cz.zakharchenkoartem.examo_be.models.documents.QuizSnapshot;
 import cz.zakharchenkoartem.examo_be.models.dtos.QuizFavoriteProjection;
 import cz.zakharchenkoartem.examo_be.models.entities.QuizEntity;
 import cz.zakharchenkoartem.examo_be.models.entities.QuizShare;
 import cz.zakharchenkoartem.examo_be.models.entities.QuizEntity.Visibility;
 import cz.zakharchenkoartem.examo_be.repostiories.mongo.QuizDocumentRepostiory;
+import cz.zakharchenkoartem.examo_be.repostiories.mongo.QuizSnapshotRepository;
 import cz.zakharchenkoartem.examo_be.repostiories.postgres.QuizEntityRepository;
 import cz.zakharchenkoartem.examo_be.repostiories.postgres.QuizShareRepository;
+import jakarta.transaction.Transactional;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,13 +33,16 @@ public class QuizService {
     private final QuizDocumentRepostiory quizDocumentRepostiory;
     private final QuizEntityRepository quizEntityRepository;
     private final QuizShareRepository quizShareRepository;
+    private final QuizSnapshotRepository quizSnapshotRepository;
 
     public QuizService(MongoTemplate mongoTemplate, QuizDocumentRepostiory quizDocumentRepostiory,
-            QuizEntityRepository quizEntityRepository, QuizShareRepository quizShareRepository) {
+            QuizEntityRepository quizEntityRepository, QuizShareRepository quizShareRepository,
+            QuizSnapshotRepository quizSnapshotRepository) {
         this.mongoTemplate = mongoTemplate;
         this.quizDocumentRepostiory = quizDocumentRepostiory;
         this.quizEntityRepository = quizEntityRepository;
         this.quizShareRepository = quizShareRepository;
+        this.quizSnapshotRepository = quizSnapshotRepository;
     }
 
     public List<String> getUserQuizzes(Integer userId) {
@@ -122,4 +129,17 @@ public class QuizService {
         return quiz.get().getVisibility();
     }
 
+    public QuizSnapshot saveSnapshot(QuizDocument quiz) {
+        QuizSnapshot snapshot = new QuizSnapshot();
+
+        snapshot.setOriginalQuizId(quiz.getId());
+        snapshot.setSnapshotDate(Instant.now());
+        snapshot.setQuestions(quiz.getQuestions());
+
+        return quizSnapshotRepository.save(snapshot);
+    }
+
+    public void deleteSnapshot(String snapshotId) {
+        quizSnapshotRepository.deleteById(snapshotId);
+    }
 }

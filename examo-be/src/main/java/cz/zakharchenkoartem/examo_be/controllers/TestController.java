@@ -1,6 +1,7 @@
 package cz.zakharchenkoartem.examo_be.controllers;
 
 import cz.zakharchenkoartem.examo_be.repostiories.postgres.ParticipantRepository;
+import cz.zakharchenkoartem.examo_be.services.QuizService;
 import java.security.Principal;
 import java.util.List;
 
@@ -9,7 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cz.zakharchenkoartem.examo_be.exceptions.AccessDeniedException;
+import cz.zakharchenkoartem.examo_be.exceptions.BadRequestException;
+import cz.zakharchenkoartem.examo_be.models.documents.QuizDocument;
 import cz.zakharchenkoartem.examo_be.models.documents.TestSession;
+import cz.zakharchenkoartem.examo_be.models.dtos.tests.CreateTestPayload;
 import cz.zakharchenkoartem.examo_be.models.dtos.tests.JoinTestBody;
 import cz.zakharchenkoartem.examo_be.models.dtos.tests.TestDTO;
 import cz.zakharchenkoartem.examo_be.models.dtos.tests.TestSessionResponse;
@@ -17,6 +21,8 @@ import cz.zakharchenkoartem.examo_be.models.entities.Test;
 import cz.zakharchenkoartem.examo_be.services.ParticipantService;
 import cz.zakharchenkoartem.examo_be.services.QuizSharesService;
 import cz.zakharchenkoartem.examo_be.services.TestService;
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,17 +32,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/tests")
 public class TestController {
+    private final QuizService quizService;
     private final ParticipantRepository participantRepository;
     private final TestService testService;
     private final QuizSharesService quizSharesService;
     private final ParticipantService participantService;
 
     public TestController(TestService testService, QuizSharesService quizSharesService,
-            ParticipantService participantService, ParticipantRepository participantRepository) {
+            ParticipantService participantService, ParticipantRepository participantRepository,
+            QuizService quizService) {
         this.testService = testService;
         this.quizSharesService = quizSharesService;
         this.participantService = participantService;
         this.participantRepository = participantRepository;
+        this.quizService = quizService;
 
     }
 
@@ -114,7 +123,31 @@ public class TestController {
 
     }
 
-    // TODO: Create test - check if can be created with currect criteria
+    @PostMapping("/create")
+    public ResponseEntity<Test> postMethodName(Principal principal, @Valid @RequestBody CreateTestPayload payload) {
+        Integer userId = Integer.valueOf(principal.getName());
+
+        QuizDocument quiz = quizService.getQuizById(payload.quizId());
+
+        if (!userId.equals(payload.userId())) {
+            throw new AccessDeniedException("You cant create test for this quiz");
+        }
+
+        if (!testService.canCreateTest(quiz, payload.questionsCount(), payload.maxPoints())) {
+            throw new BadRequestException("You cant create test with selected points and question count.");
+        }
+
+        String snapshotId = quizService.saveSnapshot(quiz).getId();
+
+        try {
+            Test test = testService.createTest(payload, snapshotId);
+            return ResponseEntity.ok(test);
+
+        } catch (Exception ex) {
+            quizService.deleteSnapshot(snapshotId);
+            throw ex;
+        }
+    }
 
     // TODO: Print test endpoint
 }
