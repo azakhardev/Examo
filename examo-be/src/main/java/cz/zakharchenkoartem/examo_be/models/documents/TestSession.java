@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Id;
+import org.springframework.data.annotation.Id;
 
 @Document(collection = "test_sessions")
 public class TestSession {

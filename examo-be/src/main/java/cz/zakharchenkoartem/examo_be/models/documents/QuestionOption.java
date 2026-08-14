@@ -2,12 +2,19 @@ package cz.zakharchenkoartem.examo_be.models.documents;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import cz.zakharchenkoartem.examo_be.models.Views;
+
 public class QuestionOption {
     @Field("id")
+    @JsonView(Views.Student.class)
     private String id;
 
+    @JsonView(Views.Student.class)
     private String text;
 
+    @JsonView(Views.Admin.class)
     private Boolean isCorrect;
 
     public QuestionOption(String id, String text, Boolean isCorrect) {

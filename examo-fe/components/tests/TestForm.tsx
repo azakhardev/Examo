@@ -9,33 +9,24 @@ import {
 } from "react-native";
 import { useForm } from "react-hook-form";
 import COLORS from "@/constants/colors";
-import { Quiz } from "@/types/Quiz";
 import { formatTime } from "@/utils";
 import QuestionCard from "./QuestionCard";
 import { TestSession } from "@/types/Test";
-
-// --- Types for the Backend Payload ---
-export type TestSubmission = {
-  testId: number;
-  answers: SubmittedAnswer[];
-};
-
-export type SubmittedAnswer = {
-  questionId: string;
-  answer: {
-    optionIds?: string[]; // Used for SINGLE, MULTIPLE, and TRUE_FALSE
-    text?: string; // Used strictly for OPEN questions
-  };
-};
+import { SubmittedAnswer } from "@/api/tests/useSubmitTest";
 
 export type TestAnswers = Record<string, string | string[]>;
 
 type TestFormProps = {
   session: TestSession;
   onSubmit: (answers: SubmittedAnswer[]) => void;
+  isSubmitting?: boolean;
 };
 
-export default function TestForm({ session, onSubmit }: TestFormProps) {
+export default function TestForm({
+  session,
+  onSubmit,
+  isSubmitting,
+}: TestFormProps) {
   const { control, handleSubmit } = useForm<TestAnswers>({
     defaultValues: {},
   });
@@ -81,7 +72,10 @@ export default function TestForm({ session, onSubmit }: TestFormProps) {
                   const isSkipped = rawAnswer.includes("skip");
                   return {
                     questionId,
-                    answer: { optionIds: isSkipped ? [] : rawAnswer },
+                    answer: {
+                      optionIds: isSkipped ? [] : rawAnswer,
+                      skipped: isSkipped,
+                    },
                   };
                 }
 
@@ -127,6 +121,7 @@ export default function TestForm({ session, onSubmit }: TestFormProps) {
         style={styles.submitButton}
         onPress={handleSubmit(handleFinish)}
         activeOpacity={0.8}
+        disabled={isSubmitting}
       >
         <Text style={styles.submitButtonText}>SUBMIT</Text>
       </TouchableOpacity>

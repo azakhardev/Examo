@@ -44,4 +44,8 @@ public class ParticipantService {
                 });
 
     }
+
+    public Participant save(Participant participant) {
+        return participantRepository.save(participant);
+    }
 }

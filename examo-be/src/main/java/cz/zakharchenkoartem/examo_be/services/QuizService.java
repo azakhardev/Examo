@@ -129,6 +129,11 @@ public class QuizService {
         return quiz.get().getVisibility();
     }
 
+    public QuizSnapshot getSnapshot(String id) {
+        return quizSnapshotRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("SNapshot with this ID does not exist"));
+    }
+
     public QuizSnapshot saveSnapshot(QuizDocument quiz) {
         QuizSnapshot snapshot = new QuizSnapshot();
 

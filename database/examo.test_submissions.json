@@ -1,16 +1,18 @@
 [
   {
     "_id": "aaa14a2e-4b47-41ab-9b34-8c8511671aaa",
-    "test_id": 1,
-    "user_id": 2,
-    "username": "azakhardev",
+    "testId": 1,
+    "userId": 2,
+    "author": "azakhardev",
     "title": "Advanced React Patterns",
-    "total_points_gained": 1,
-    "submitted_at": "2026-06-10T10:45:00Z",
+    "totalPointsGained": 1,
+    "start": "2026-06-10T10:00:00Z",
+    "submittedAt": "2026-06-10T10:45:00Z",
+    "end": "2026-06-10T11:00:00Z",
     "answers": [
       {
         "id": "ans_aza_q1_adv",
-        "gained_points": 1,
+        "gainedPoints": 1,
         "question": {
           "id": "q1",
           "type": "SINGLE_CHOICE",
@@ -29,16 +31,18 @@
   },
   {
     "_id": "f5b21c4d-9e68-45fc-a128-3c4d5e6f7a8b",
-    "test_id": 2,
-    "user_id": 3,
-    "username": "john_smith",
+    "testId": 2,
+    "userId": 3,
+    "author": "john_smith",
     "title": "Software Architecture Patterns",
-    "total_points_gained": 2.5,
-    "submitted_at": "2026-06-20T10:50:00Z",
+    "totalPointsGained": 2.5,
+    "start": "2026-06-10T10:00:00Z",
+    "submittedAt": "2026-06-10T10:45:00Z",
+    "end": "2026-06-10T11:00:00Z",
     "answers": [
       {
         "id": "ans_js_q1",
-        "gained_points": -0.5,
+        "gainedPoints": -0.5,
         "question": {
           "id": "q1",
           "type": "SINGLE_CHOICE",
@@ -56,7 +60,7 @@
       },
       {
         "id": "ans_js_q2",
-        "gained_points": 2,
+        "gainedPoints": 2,
         "question": {
           "id": "q2",
           "type": "MULTIPLE_CHOICE",
@@ -86,7 +90,7 @@
       },
       {
         "id": "ans_js_q3",
-        "gained_points": 1,
+        "gainedPoints": 1,
         "question": {
           "id": "q3",
           "type": "TRUE_FALSE",
@@ -102,7 +106,7 @@
       },
       {
         "id": "ans_js_q4",
-        "gained_points": 0,
+        "gainedPoints": 0,
         "question": {
           "id": "q4",
           "type": "OPEN",
@@ -123,16 +127,18 @@
   },
   {
     "_id": "e7c32d5e-0f79-46fd-b239-4d5e6f7a8b9c",
-    "test_id": 4,
-    "user_id": 4,
-    "username": "emma_watson",
+    "testId": 4,
+    "userId": 4,
+    "author": "emma_watson",
     "title": "React Native Basics",
-    "total_points_gained": 3,
-    "submitted_at": "2026-07-23T09:10:00Z",
+    "totalPointsGained": 3,
+    "start": "2026-06-10T10:00:00Z",
+    "submittedAt": "2026-06-10T10:45:00Z",
+    "end": "2026-06-10T11:00:00Z",
     "answers": [
       {
         "id": "ans_ew_q1",
-        "gained_points": 1,
+        "gainedPoints": 1,
         "question": {
           "id": "q1",
           "type": "SINGLE_CHOICE",
@@ -149,7 +155,7 @@
       },
       {
         "id": "ans_ew_q2",
-        "gained_points": 2,
+        "gainedPoints": 2,
         "question": {
           "id": "q2",
           "type": "MULTIPLE_CHOICE",
