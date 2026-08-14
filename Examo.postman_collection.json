@@ -1,0 +1,484 @@
+{
+  "info": {
+    "_postman_id": "84d0b9b3-9127-4ce4-b0c5-d2c32273123f",
+    "name": "Examo",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "26300897"
+  },
+  "item": [
+    {
+      "name": "Quizzes",
+      "item": [
+        {
+          "name": "Recents",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{server}}/quizzes/recent?uuids={{ids}}",
+              "host": [
+                "{{server}}"
+              ],
+              "path": [
+                "quizzes",
+                "recent"
+              ],
+              "query": [
+                {
+                  "key": "uuids",
+                  "value": "{{ids}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Quizzes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{server}}/quizzes",
+              "host": [
+                "{{server}}"
+              ],
+              "path": [
+                "quizzes"
+              ],
+              "query": [
+                {
+                  "key": "keyword",
+                  "value": "History",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "isAuthor",
+                  "value": "true",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "isFavorite",
+                  "value": "true",
+                  "disabled": true
+                },
+                {
+                  "key": "visibility",
+                  "value": "PUBLIC",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{server}}/quizzes/search?keyword=database",
+              "host": [
+                "{{server}}"
+              ],
+              "path": [
+                "quizzes",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "keyword",
+                  "value": "database"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{server}}/quizzes/{{uuid}}",
+              "host": [
+                "{{server}}"
+              ],
+              "path": [
+                "quizzes",
+                "{{uuid}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Toggle Favorite",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{server}}/quizzes/favorite/{{uuid}}",
+              "host": [
+                "{{server}}"
+              ],
+              "path": [
+                "quizzes",
+                "favorite",
+                "{{uuid}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "nl",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{   \r\n  \"email\": \"azakhardev@gmail.com\",\r\n  \"password\": \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{server}}/auth/login",
+              "host": [
+                "{{server}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{server}}/auth/me",
+              "host": [
+                "{{server}}"
+              ],
+              "path": [
+                "auth",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{server}}/users/profile",
+              "host": [
+                "{{server}}"
+              ],
+              "path": [
+                "users",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"azakhardev\",\r\n    \"name\": \"Artemos\",\r\n    \"surname\": \"Zakharchenko\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{server}}/users/profile/update",
+              "host": [
+                "{{server}}"
+              ],
+              "path": [
+                "users",
+                "profile",
+                "update"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tests",
+      "item": [
+        {
+          "name": "Student Tests",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{server}}/tests/student",
+              "host": [
+                "{{server}}"
+              ],
+              "path": [
+                "tests",
+                "student"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "history",
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Student Test Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{server}}/tests/student/{{testId}}",
+              "host": [
+                "{{server}}"
+              ],
+              "path": [
+                "tests",
+                "student",
+                "{{testId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Join test",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"accessCode\": \"ROME2026\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{server}}/tests/{{id}}/join",
+              "host": [
+                "{{server}}"
+              ],
+              "path": [
+                "tests",
+                "{{id}}",
+                "join"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Test Session",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{server}}/tests/{{id}}",
+              "host": [
+                "{{server}}"
+              ],
+              "path": [
+                "tests",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Test",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"Database Fundamentals - Final Exam\",\r\n  \"description\": \"Midterm evaluation covering SQL and relational databases.\",\r\n  \"startTime\": \"2026-08-01T10:00:00\",\r\n  \"endTime\": \"2026-08-01T12:00:00\",\r\n  \"questionsCount\": 2,\r\n  \"timeLimit\": 45,\r\n  \"maxPoints\": 3,\r\n  \"allowReview\": true,\r\n  \"quizId\": \"550e8400-e29b-41d4-a716-446655440000\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{server}}/tests/create",
+              "host": [
+                "{{server}}"
+              ],
+              "path": [
+                "tests",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Submit Test",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[\r\n  {\r\n    \"questionId\": \"q2\",\r\n    \"answer\": {\r\n      \"optionIds\": [\r\n        \"2\"\r\n      ],\r\n      \"skipped\": false\r\n    }\r\n  }\r\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{server}}/tests/{{id}}/submit",
+              "host": [
+                "{{server}}"
+              ],
+              "path": [
+                "tests",
+                "{{id}}",
+                "submit"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

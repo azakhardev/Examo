@@ -13,18 +13,6 @@
 - [ ] Header nav buttons
 - [ ] Validation rules on form submissions
 
-#### Features
-
-- [ ] Quiz Creating & Editing
-- [ ] Offline mode (my tests & practice) ❌
-- [ ] Manage quizz access ❌
-- [ ] Export/Import
-- [ ] Test pages -
-- [ ] Test participation & Results view
-- [ ] Practice quiz ❌
-- [ ] Create & Watch test
-- [ ] OAuth
-
 ### Improvements
 
 - Shared styling units (gaps, margins, paddings...)

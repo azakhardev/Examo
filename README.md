@@ -1,5 +1,8 @@
 # 📱 EXAMO
 
+> ![INFO] Project Status: Abandoned
+> This project is currently abandoned due to a lack of motivation and highly complex logic. I could have used more AI, but then this project would have lacked any meaning for me as a learning experience.At the very least, I was able to try mobile development in React Native and successfully work with a NoSQL database in combination with a standard SQL database. Unfortunately, I didn't get my hands on OAuth, PDF creation, QR Code creation, File manipulation, offline mode and WebSockets. Maybe I'll come back to this later (equipped with AI agents). The final roadblock I encountered was with the test creation and submission logic, which required complex algorithms and dealing with messy database data.
+
 A full-stack, feature-rich mobile quiz application designed for both students and teachers. Built as a monorepo combining a cross-platform mobile frontend with a backend.
 
 ## 🛠️ Tech Stack & Architecture
@@ -108,3 +111,43 @@ _In PostgreSQL, the student_answers.question_id column maps directly to the inne
 - Adding pagination
 - Autograder based on points criteria
 - Cleaner components & use of orval with openapi
+
+## ⏱️ Development Log
+
+**Total Time Invested: ~66.25 hours**
+
+<details>
+<summary>Click to view the day-by-day progress</summary>
+
+| Date      | Time Spent | Focus / Milestone                                         |
+| :-------- | :--------- | :-------------------------------------------------------- |
+| **19.6.** | 3h         | Project initialization & DB schema                        |
+| **20.6.** | 2.5h       | Error handling & Login                                    |
+| **21.6.** | 3h         | Figma prototyping & MongoDB setup                         |
+| **22.6.** | 2h         | Figma prototyping & library research                      |
+| **23.6.** | 3.5h       | Figma prototyping & basic layout implementation           |
+| **25.6.** | 1h         | Detail page                                               |
+| **26.6.** | 2h         | Figma prototyping & Profile Page                          |
+| **27.6.** | 3h         | Figma prototyping & Quiz Detail Page                      |
+| **28.6.** | 45m        | Figma - Access management                                 |
+| **30.6.** | 1.25h      | Figma - Quiz test                                         |
+| **1.7.**  | 5h         | Manage Access Screen, Figma, Edit Screen & Layout         |
+| **2.7.**  | 3.5h       | Edit Quiz (React Hook Form)                               |
+| **3.7.**  | 2h         | Quiz test screen & live test screen                       |
+| **5.7.**  | 2.25h      | Practice screen, Test Results & Create test               |
+| **7.7.**  | 1.5h       | Join Test & Participate During Test                       |
+| **8.7.**  | 2.5h       | Authentication provider, review screen & edit test screen |
+| **10.7.** | 1.5h       | Practice Screen (WIP)                                     |
+| **11.7.** | 1h         | Practice Screen (Finished)                                |
+| **12.7.** | 2h         | Login page & fetch setup                                  |
+| **17.7.** | 2.5h       | Quizzes API endpoints                                     |
+| **18.7.** | 2h         | Frontend/Backend Filtering, datafix ("no AI" day)         |
+| **19.7.** | 2h         | Profile endpoints & Quiz Detail                           |
+| **21.7.** | 3.5h       | Data Access management & Favorite toggle                  |
+| **23.7.** | 3h         | Foreign tests listing & Detail page                       |
+| **24.7.** | 1.75h      | Foreign tests data fetch + Join endpoint                  |
+| **25.7.** | 1.75h      | Test Sessions implementation                              |
+| **31.7.** | 1.5h       | Generate Test endpoint                                    |
+| **14.8.** | 5h         | Submit Test endpoint & Create Unique Test Entity          |
+
+</details>
