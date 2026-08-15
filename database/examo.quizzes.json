@@ -149,7 +149,9 @@
           { "id": "1", "text": "useMemo", "isCorrect": true },
           { "id": "2", "text": "useCallback", "isCorrect": false },
           { "id": "3", "text": "useEffect", "isCorrect": false }
-        ]
+        ],
+        "maxPoints": 1.0,
+        "negativePoints": 0.0
       }
     ]
   },
@@ -169,18 +171,11 @@
           { "id": "1", "text": "Julius Caesar", "isCorrect": false },
           { "id": "2", "text": "Augustus", "isCorrect": true },
           { "id": "3", "text": "Nero", "isCorrect": false }
-        ]
+        ],
+        "maxPoints": 1.0,
+        "negativePoints": 0.0
       }
     ]
-  },
-  {
-    "_id": "e5555555-5555-4555-8555-555555555555",
-    "title": "Space Exploration & Astronomy",
-    "description": "To infinity and beyond!",
-    "authorId": 1,
-    "author": "teacher_jane",
-    "categories": ["Science", "Space"],
-    "questions": []
   },
   {
     "_id": "b2222222-2222-4222-8222-222222222222",
@@ -199,7 +194,9 @@
           { "id": "2", "text": "Spain", "isCorrect": false },
           { "id": "3", "text": "Chile", "isCorrect": true },
           { "id": "4", "text": "Nigeria", "isCorrect": false }
-        ]
+        ],
+        "maxPoints": 1.0,
+        "negativePoints": 0.0
       }
     ]
   },
@@ -220,7 +217,9 @@
           { "id": "2", "text": "Liver", "isCorrect": false },
           { "id": "3", "text": "Skin", "isCorrect": true },
           { "id": "4", "text": "Brain", "isCorrect": false }
-        ]
+        ],
+        "maxPoints": 1.0,
+        "negativePoints": 0.0
       }
     ]
   },

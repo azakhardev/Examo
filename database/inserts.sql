@@ -48,21 +48,24 @@ INSERT INTO quiz_blocks (quiz_id, user_id) VALUES
 
 -- 4. ONLINE TESTS
 -- 4.1 Historical test for azakhardev (Authored by teacher_jane)
-INSERT INTO online_tests (quiz_id, snapshot_id, description, access_code, start_at, end_at, time_limit_minutes, questions_count, max_points) VALUES
-('a1111111-1111-4111-8111-111111111111', '888e8400-e29b-41d4-a716-446655448888', 'Past test on React Hooks.', 'REACTADV', '2026-06-10 10:00:00', '2026-06-10 12:00:00', 30, 10, 1);
+INSERT INTO online_tests (quiz_id, snapshot_id, title, description, access_code, start_at, end_at, time_limit_minutes, questions_count, max_points) VALUES
+('a1111111-1111-4111-8111-111111111111', '888e8400-e29b-41d4-a716-446655448888', 'Advanced React Hooks Evaluation', 'Past test on React Hooks.', 'REACTADV', '2026-06-10 10:00:00', '2026-06-10 12:00:00', 30, 10, 1);
 
 -- 4.2 Historical test hosted by azakhardev (Taken by john_smith)
-INSERT INTO online_tests (quiz_id, snapshot_id, description, access_code, start_at, end_at, time_limit_minutes, questions_count, max_points) VALUES
-('111e8400-e29b-41d4-a716-446655441111', '333e8400-e29b-41d4-a716-446655443333', 'Test about modern architecture.', 'ARCH2026', '2026-06-20 10:00:00', '2026-06-20 12:00:00', 30, 10, 9);
+INSERT INTO online_tests (quiz_id, snapshot_id, title, description, access_code, start_at, end_at, time_limit_minutes, questions_count, max_points) VALUES
+('111e8400-e29b-41d4-a716-446655441111', '333e8400-e29b-41d4-a716-446655443333', 'Modern Architecture Midterm', 'Test about modern architecture.', 'ARCH2026', '2026-06-20 10:00:00', '2026-06-20 12:00:00', 30, 10, 9);
 
 -- 4.3 Upcoming test for azakhardev (Authored by teacher_jane, scheduled for August 2026)
-INSERT INTO online_tests (quiz_id, snapshot_id, description, access_code, start_at, end_at, time_limit_minutes, questions_count, max_points) VALUES
-('c3333333-3333-4333-8333-333333333333', '777e8400-e29b-41d4-a716-446655447777', 'Upcoming final exam on the Roman Empire.', 'ROME2026', '2026-08-15 08:00:00', '2026-08-15 10:00:00', 60, 10, 1);
+INSERT INTO online_tests (quiz_id, snapshot_id, title, description, access_code, start_at, end_at, time_limit_minutes, questions_count, max_points) VALUES
+('c3333333-3333-4333-8333-333333333333', '777e8400-e29b-41d4-a716-446655447777', 'Roman Empire Final Exam', 'Upcoming final exam on the Roman Empire.', 'ROME2026', '2026-08-15 08:00:00', '2026-08-15 10:00:00', 60, 10, 1);
 
 -- 4.4 Ongoing test hosted by azakhardev (Ends tomorrow, emma_watson took it early)
-INSERT INTO online_tests (quiz_id, snapshot_id, description, access_code, start_at, end_at, time_limit_minutes, questions_count, max_points) VALUES
-('222e8400-e29b-41d4-a716-446655442222', '444e8400-e29b-41d4-a716-446655444444', 'Welcome to my test about React Native.', 'REACT123', '2026-07-23 08:00:00', '2026-07-24 12:00:00', 15, 10, 3);
+INSERT INTO online_tests (quiz_id, snapshot_id, title, description, access_code, start_at, end_at, time_limit_minutes, questions_count, max_points) VALUES
+('222e8400-e29b-41d4-a716-446655442222', '444e8400-e29b-41d4-a716-446655444444', 'React Native Basics - Pop Quiz', 'Welcome to my test about React Native.', 'REACT123', '2026-07-23 08:00:00', '2026-07-24 12:00:00', 15, 10, 3);
 
+-- 4.5 Active test for azakhardev (Authored by teacher_jane, dynamically available)
+INSERT INTO online_tests (quiz_id, snapshot_id, title, description, access_code, start_at, end_at, time_limit_minutes, questions_count, max_points, allow_review) VALUES
+('a1111111-1111-4111-8111-111111111111', '999a8400-e29b-41d4-a716-446655449999', 'Advanced React Patterns - Final Exam', 'Midterm evaluation covering React hooks.', 'REACTNOW', NOW() - INTERVAL '1 hour', NOW() + INTERVAL '7 days', 45, 1, 1, true);
 
 -- 5. TEST SUBMISSIONS 
 -- azakhardev takes REACTADV (Historical)

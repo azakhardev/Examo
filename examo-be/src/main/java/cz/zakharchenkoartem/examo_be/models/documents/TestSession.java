@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,7 +15,7 @@ import org.springframework.data.annotation.Id;
 @Document(collection = "test_sessions")
 public class TestSession {
     @Id
-    private String id;
+    private String id = UUID.randomUUID().toString();;
 
     private Long testId;
     private Integer userId;

@@ -156,8 +156,12 @@ public class TestController {
     }
 
     // TODO: Print test endpoint
+    // @GetMapping("/{id}/print")
+    // public String getMethodName(@RequestParam String param, @PathVariable Long
+    // id) {
+    // return new String();
+    // }
 
-    // TODO: Submit test answers
     @PostMapping("/{id}/submit")
     public ResponseEntity<Double> submitTest(
             Principal principal,
@@ -177,7 +181,9 @@ public class TestController {
         // 2. Evaluate answers, save to Mongo, update Postgres, and handle transactions
         Double gainedPoints = testService.evaluateAndSaveSubmission(id, userId, answers);
 
-        testService.deleteTestSession(sesion);
+        if (sesion != null) {
+            testService.deleteTestSession(sesion);
+        }
 
         // 3. Return the final score
         return ResponseEntity.ok(gainedPoints);
