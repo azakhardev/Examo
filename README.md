@@ -2,8 +2,8 @@
 
 > [!NOTE]
 > **Project Status: Abandoned**
-> 
-> This project is currently abandoned due to a lack of motivation and highly complex logic. I could have used more AI, but then this project would have lacked any meaning for me as a learning experience.At the very least, I was able to try mobile development in React Native and successfully work with a NoSQL database in combination with a standard SQL database. Unfortunately, I didn't get my hands on OAuth, PDF creation, QR Code creation, File manipulation, offline mode and WebSockets. Maybe I'll come back to this later (equipped with AI agents). The final roadblock I encountered was with the test creation and submission logic, which required complex algorithms and dealing with messy database data.
+>
+> This project is currently abandoned due to a lack of motivation and highly complex logic. I could have used more AI, but then this project would have lacked any meaning for me as a learning experience. At the very least, I was able to try mobile development in React Native and successfully work with a NoSQL database in combination with a standard SQL database. Unfortunately, I didn't get my hands on PDF creation, QR Code scanning/creation, File manipulation, offline mode and WebSockets. Maybe I'll come back to this later (equipped with AI agents). The final roadblock I encountered was with the test creation and submission logic, which required complex algorithms and dealing with messy database data.
 
 A full-stack, feature-rich mobile quiz application designed for both students and teachers. Built as a monorepo combining a cross-platform mobile frontend with a backend.
 
@@ -12,15 +12,18 @@ A full-stack, feature-rich mobile quiz application designed for both students an
 This project was designed with a highly scalable, modern architectural vision. While paused, the intended stack reflects a robust enterprise-grade application:
 
 ### 🟢 Implemented Core Stack
+
 - **Frontend:** React Native + Expo (TypeScript, TanStack Query, Expo Router, MMKV)
 - **Backend:** Spring Boot (Java, Spring Security, JWT)
 - **Relational Database:** PostgreSQL (For structured data: user accounts, authentication, exam history, analytics, and complex relationship mapping).
 - **NoSQL Database:** MongoDB (For schema-less quiz layouts, flexible question types, and immutable test snapshots).
+- **OAuth2 Integration:** Seamless social authentication (Google login) alongside standard JWT.
 
 ### 🎯 Planned Technologies (The Full Vision)
+
 These technologies were scoped and planned to complete the application's feature set:
+
 - **WebSockets:** Real-time synchronization for live "Race Mode" quizzes and instant teacher-to-student test broadcasting.
-- **OAuth2 Integration:** Seamless social authentication (Google/Apple login) alongside standard JWT.
 - **PDF Generation:** Automated server-side export of quizzes into formatted PDF documents for offline, printable classroom tests.
 - **QR Code Generation & Scanning:** Allowing students to instantly join a live test session by scanning a dynamically generated code on the teacher's screen.
 - **File Manipulation & Offline Mode:** Leveraging `expo-file-system` to download JSON/XML test templates locally, allowing students to study and practice completely offline.
@@ -39,10 +42,12 @@ erDiagram
         varchar name
         varchar surname
         varchar email UK "not null"
-        varchar password "not null"
+        varchar password
+        varchar auth_provider "default LOCAL"
+        varchar google_id UK
         timestamp created_at
     }
-    
+
     quizzes {
         uuid id PK "Mongo Document ID"
         varchar name "not null"
@@ -50,7 +55,7 @@ erDiagram
         varchar visibility "default PRIVATE"
         timestamp created_at
     }
-    
+
     online_tests {
         bigserial id PK
         uuid quiz_id FK "not null"
@@ -65,7 +70,7 @@ erDiagram
         integer max_points "not null"
         boolean allowed_review "default true"
     }
-    
+
     test_participants {
         bigserial id PK
         bigint test_id FK "not null"
@@ -75,7 +80,7 @@ erDiagram
         timestamp submitted_at
         float total_gained_points
     }
-    
+
     practice_history {
         bigserial id PK
         integer user_id FK "not null"
@@ -88,7 +93,7 @@ erDiagram
         integer total_answers
         integer correct_answers
     }
-    
+
     quiz_shares {
         bigserial id PK
         uuid quiz_id FK "not null"
@@ -96,7 +101,7 @@ erDiagram
         varchar access_level "default READ"
         boolean favorite "default false"
     }
-    
+
     quiz_blocks {
         bigserial id PK
         uuid quiz_id FK "not null"
@@ -245,5 +250,6 @@ _In PostgreSQL, the student_answers.question_id column maps directly to the inne
 | **25.7.** | 1.75h      | Test Sessions implementation                              |
 | **31.7.** | 1.5h       | Generate Test endpoint                                    |
 | **14.8.** | 5h         | Submit Test endpoint & Create Unique Test Entity          |
+| **18.8.** | 2.5h       | Google OAuth (Works in web only)                          |
 
 </details>

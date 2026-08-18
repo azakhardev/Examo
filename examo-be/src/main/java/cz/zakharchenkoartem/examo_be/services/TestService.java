@@ -196,7 +196,7 @@ public class TestService {
         return code.toString();
     }
 
-    @Transactional // Spring now manages both Postgres and Mongo automatically!
+    @Transactional
     public Double evaluateAndSaveSubmission(Long testId, Integer userId, List<AnswersPayload> answers) {
         TestSubmissionDocument submission = evaluateTestSubmission(testId, userId, answers);
 

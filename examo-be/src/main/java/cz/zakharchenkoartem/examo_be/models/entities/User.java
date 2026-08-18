@@ -31,12 +31,18 @@ public class User {
     @Column(nullable = false, unique = true, length = 512)
     private String email;
 
-    @Column(nullable = false, length = 512)
+    @Column(length = 512)
     @JsonIgnore
     private String password;
 
     @Column(name = "created_at", insertable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @Column(name = "auth_provider")
+    private String authProvider = "LOCAL";
+
+    @Column(name = "google_id", unique = true)
+    private String googleId;
 
     public User() {
 
@@ -96,6 +102,22 @@ public class User {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getAuthProvider() {
+        return authProvider;
+    }
+
+    public void setAuthProvider(String authProvider) {
+        this.authProvider = authProvider;
+    }
+
+    public String getGoogleId() {
+        return googleId;
+    }
+
+    public void setGoogleId(String googleId) {
+        this.googleId = googleId;
     }
 
     @Override

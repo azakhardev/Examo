@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Text, FlatList } from "react-native";
-import * as SecureStore from "expo-secure-store";
+import { storage } from "@/utils";
 import { router, useFocusEffect } from "expo-router";
 
 import COLORS from "@/constants/colors";
@@ -34,17 +34,17 @@ export default function ExploreScreen() {
     useGetRecent(recentIds);
 
   const loadRecentIds = async () => {
-    const data = await SecureStore.getItemAsync(STORAGE_KEY);
+    const data = await storage.getItem(STORAGE_KEY);
     if (data) setRecentIds(JSON.parse(data));
   };
 
   const saveToRecent = async (id: string) => {
-    let ids = await SecureStore.getItemAsync(STORAGE_KEY);
+    let ids = await storage.getItem(STORAGE_KEY);
     let parsed: string[] = ids ? JSON.parse(ids) : [];
 
     parsed = [id, ...parsed.filter((i) => i !== id)].slice(0, MAX_RECENT);
 
-    await SecureStore.setItemAsync(STORAGE_KEY, JSON.stringify(parsed));
+    await storage.setItem(STORAGE_KEY, JSON.stringify(parsed));
     setRecentIds(parsed);
   };
 

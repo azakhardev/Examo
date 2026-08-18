@@ -9,10 +9,18 @@ import cz.zakharchenkoartem.examo_be.repostiories.postgres.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
+import java.util.Collections;
 import java.util.Optional;
 
 @Service
 public class AuthService {
+
+    // TODO: Add to env
+    private static final String GOOGLE_CLIENT_ID = "XXXXXXX.apps.googleusercontent.com";
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -73,5 +81,47 @@ public class AuthService {
         }
 
         return new AuthResponse(token, new AuthUser(user.getId(), user.getUsername(), user.getEmail()));
+    }
+
+    public AuthResponse verifyGoogleTokenAndLogin(String idTokenString) {
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
+                .setAudience(Collections.singletonList(GOOGLE_CLIENT_ID))
+                .build();
+
+        // Verify the token signature with Google
+        GoogleIdToken idToken;
+        try {
+            idToken = verifier.verify(idTokenString);
+        } catch (Exception e) {
+            throw new InvalidCredentialsException("Failed to verify Google ID token: " + e.getMessage());
+        }
+
+        if (idToken == null) {
+            throw new InvalidCredentialsException("Invalid or expired Google ID token.");
+        }
+
+        // Extract user data from the verified token
+        GoogleIdToken.Payload payload = idToken.getPayload();
+        String email = payload.getEmail();
+        String googleUserId = payload.getSubject();
+        String name = (String) payload.get("given_name");
+        String surname = (String) payload.get("family_name");
+
+        // Check if the user exists in db, if not save it
+        User user = userRepository.findByEmail(email).orElseGet(() -> {
+            User newUser = new User();
+            newUser.setEmail(email);
+            newUser.setName(name);
+            newUser.setSurname(surname);
+            newUser.setAuthProvider("GOOGLE");
+            newUser.setGoogleId(googleUserId);
+            newUser.setUsername(email.split("@")[0]);
+
+            return userRepository.save(newUser);
+        });
+
+        String jwtToken = jwtService.generateToken(user);
+
+        return new AuthResponse(jwtToken, new AuthUser(user.getId(), user.getUsername(), user.getEmail()));
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cz.zakharchenkoartem.examo_be.models.dtos.auth.AuthResponse;
+import cz.zakharchenkoartem.examo_be.models.dtos.auth.GoogleLoginRequest;
 import cz.zakharchenkoartem.examo_be.models.dtos.auth.LoginCredentials;
 import cz.zakharchenkoartem.examo_be.services.AuthService;
 import jakarta.validation.Valid;
@@ -46,4 +47,12 @@ public class AuthController {
 
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/google")
+    public ResponseEntity<AuthResponse> googleLogin(@RequestBody GoogleLoginRequest request) {
+        AuthResponse response = authService.verifyGoogleTokenAndLogin(request.token());
+        return ResponseEntity.ok(response);
+
+    }
+
 }

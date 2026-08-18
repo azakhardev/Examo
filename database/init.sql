@@ -4,7 +4,9 @@ CREATE TABLE "users" (
   "name" varchar(256),
   "surname" varchar(256),
   "email" varchar(512) UNIQUE NOT NULL,
-  "password" varchar(512) NOT NULL,
+  "password" varchar(512),
+  "auth_provider" varchar(50) DEFAULT 'LOCAL',
+  "google_id" varchar(255) UNIQUE,
   "created_at" timestamp DEFAULT (now())
 );
 

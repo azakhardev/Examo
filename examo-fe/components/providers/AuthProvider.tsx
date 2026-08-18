@@ -5,7 +5,7 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
-import * as SecureStore from "expo-secure-store";
+import { storage } from "@/utils";
 import useMe from "@/api/auth/useMe";
 import { AuthUser } from "@/types/AuthResponse";
 import { router } from "expo-router";
@@ -32,7 +32,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const loadAuthData = async () => {
       try {
-        const storedToken = await SecureStore.getItemAsync(TOKEN_KEY);
+        const storedToken = await storage.getItem(TOKEN_KEY);
         if (storedToken) {
           setToken(storedToken);
         }
@@ -66,16 +66,16 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const isReady = isStoreLoaded && !isFetching;
 
   async function login(newToken: string, user: AuthUser) {
-    await SecureStore.setItemAsync(TOKEN_KEY, newToken);
-    await SecureStore.setItemAsync(USER_ID_KEY, user.userId.toString());
+    await storage.setItem(TOKEN_KEY, newToken);
+    await storage.setItem(USER_ID_KEY, user.userId.toString());
 
     setToken(newToken);
     setUser(user);
   }
 
   async function logout() {
-    await SecureStore.deleteItemAsync(TOKEN_KEY);
-    await SecureStore.deleteItemAsync(USER_ID_KEY);
+    await storage.removeItem(TOKEN_KEY);
+    await storage.removeItem(USER_ID_KEY);
 
     setToken(undefined);
     setUser(undefined);

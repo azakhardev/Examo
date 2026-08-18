@@ -1,6 +1,6 @@
 // lib/api.ts
 import axios, { AxiosError } from "axios";
-import * as SecureStore from "expo-secure-store";
+import { storage } from "@/utils";
 
 export interface BackendErrorResponse {
   status: number;
@@ -36,7 +36,7 @@ const api = axios.create({
 api.interceptors.request.use(
   async (config) => {
     //Inject JWT Token
-    const token = await SecureStore.getItemAsync("examo_jwt_token");
+    const token = await storage.getItem("examo_jwt_token");
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }

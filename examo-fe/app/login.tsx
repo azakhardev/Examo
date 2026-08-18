@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
-  Alert,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
@@ -16,6 +15,14 @@ import COLORS from "@/constants/colors";
 import { useAuth } from "@/components/providers/AuthProvider";
 import useLogin from "@/api/auth/useLogin";
 import Toast from "react-native-toast-message";
+import * as AuthSession from "expo-auth-session";
+import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
+import { useEffect } from "react";
+import useOAuth from "@/api/auth/useOAuth";
+
+// Allows the web browser to close automatically after a successful login
+WebBrowser.maybeCompleteAuthSession();
 
 type LoginForm = {
   email: string;
@@ -25,6 +32,35 @@ type LoginForm = {
 function Login() {
   const { login } = useAuth();
   const { mutate, isPending } = useLogin();
+  const { mutate: mutateGoogle, isPending: isPendingGoogle } = useOAuth();
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    clientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
+    webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
+    responseType: "id_token",
+  });
+
+  useEffect(() => {
+    if (response?.type === "success") {
+      const { id_token } = response.params;
+
+      console.log("Successfully retrieved Google ID Token!", id_token);
+
+      mutateGoogle(
+        { token: id_token },
+        {
+          onSuccess: (res) => login(res.token, res.user),
+          onError: (error) => {
+            Toast.show({
+              type: "error",
+              text1: "Login Failed",
+              text2: error.message,
+            });
+          },
+        },
+      );
+    }
+  }, [login, mutateGoogle, response]);
 
   const {
     control,
@@ -116,13 +152,27 @@ function Login() {
             <TouchableOpacity
               style={styles.loginButton}
               onPress={handleSubmit(onSubmit)}
-              disabled={isPending}
+              disabled={isPending || isPendingGoogle}
             >
               {isPending ? (
                 <ActivityIndicator color={COLORS.background} />
               ) : (
                 <Text style={styles.loginButtonText}>LOGIN</Text>
               )}
+            </TouchableOpacity>
+
+            <View style={styles.dividerContainer}>
+              <View style={styles.divider} />
+              <Text style={styles.dividerText}>OR</Text>
+              <View style={styles.divider} />
+            </View>
+
+            <TouchableOpacity
+              style={styles.googleButton}
+              disabled={isPending || isPendingGoogle}
+              onPress={() => promptAsync()}
+            >
+              <Text style={styles.googleButtonText}>Sign in with Google</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -189,6 +239,34 @@ const styles = StyleSheet.create({
   },
   loginButtonText: {
     color: COLORS.background,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  dividerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 24,
+  },
+  divider: {
+    flex: 1,
+    height: 1,
+    backgroundColor: COLORS.stroke,
+  },
+  dividerText: {
+    marginHorizontal: 16,
+    color: COLORS.textSecondary,
+    fontWeight: "bold",
+  },
+  googleButton: {
+    backgroundColor: COLORS.input,
+    borderColor: COLORS.stroke,
+    borderWidth: 1,
+    paddingVertical: 16,
+    borderRadius: 24,
+    alignItems: "center",
+  },
+  googleButtonText: {
+    color: COLORS.text,
     fontSize: 16,
     fontWeight: "bold",
   },

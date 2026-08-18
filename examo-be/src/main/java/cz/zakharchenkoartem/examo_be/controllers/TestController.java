@@ -58,7 +58,6 @@ public class TestController {
     @GetMapping("/student")
     public ResponseEntity<List<TestDTO>> getForeignTests(Principal principal,
             @RequestParam(required = false) String type) {
-        // returns upcoming or historical
         Integer userId = Integer.valueOf(principal.getName());
 
         List<TestDTO> tests = testService.getForeignTests(userId, type);
