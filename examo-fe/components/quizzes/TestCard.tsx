@@ -12,7 +12,7 @@ type TestCardProps = {
 
 export default function TestCard({ test, onPress, mode }: TestCardProps) {
   // Use description as title if available, fallback to quiz title
-  const displayTitle = test.description || test.quiz?.title || "My test";
+  const displayTitle = test.title || "Unnamed test";
 
   return (
     <TouchableOpacity style={styles.card} activeOpacity={0.7} onPress={onPress}>

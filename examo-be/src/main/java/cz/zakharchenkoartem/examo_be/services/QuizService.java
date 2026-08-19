@@ -118,6 +118,11 @@ public class QuizService {
         return quiz.get();
     }
 
+    public QuizEntity getQuizByUuid(String uuid) {
+        return quizEntityRepository.findById(UUID.fromString(uuid))
+                .orElseThrow(() -> new NotFoundException("Quiz with this UUID does not exist"));
+    }
+
     public Visibility getQuizVisibility(String id) {
 
         Optional<QuizEntity> quiz = quizEntityRepository.findById(UUID.fromString(id));

@@ -20,6 +20,7 @@ export const queryKeys = {
     search: ["quizzes", "search"],
     recent: ["quizzes", "recent"],
     detail: ["quizzes", "detail"],
+    tests: ["quizzes", "tests"],
   },
   users: {
     profile: ["users", "profile"],

@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   progressBarBackground: {
     flex: 1,
     height: 10,
-    backgroundColor: COLORS.input,
+    backgroundColor: COLORS.stroke,
     borderRadius: 5,
     overflow: "hidden",
   },

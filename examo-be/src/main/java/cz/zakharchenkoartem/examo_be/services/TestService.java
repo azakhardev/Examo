@@ -73,6 +73,13 @@ public class TestService {
 
     }
 
+    public List<Test> getQuizTests(String uuid, String type) {
+
+        Boolean isLive = "live".equalsIgnoreCase(type);
+
+        return testRepository.findQuizTests(UUID.fromString(uuid), isLive);
+    }
+
     public TestDTO getForeignTestDetail(Integer userId, Long testId) {
         Test test = this.getTest(testId);
 

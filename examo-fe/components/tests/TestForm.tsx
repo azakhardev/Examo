@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
   View,
   Text,
@@ -20,16 +20,21 @@ type TestFormProps = {
   session: TestSession;
   onSubmit: (answers: SubmittedAnswer[]) => void;
   isSubmitting?: boolean;
+  onProgressUpdate?: (answersCount: number) => void;
 };
 
 export default function TestForm({
   session,
   onSubmit,
   isSubmitting,
+  onProgressUpdate,
 }: TestFormProps) {
-  const { control, handleSubmit } = useForm<TestAnswers>({
+  const { control, handleSubmit, watch } = useForm<TestAnswers>({
     defaultValues: {},
   });
+
+  const currentAnswers = watch();
+  const prevCountRef = useRef(-1);
 
   const [timeLeft, setTimeLeft] = useState(() => {
     if (!session.expiresAt) return 0;
@@ -38,6 +43,23 @@ export default function TestForm({
     const diffSeconds = Math.floor((expiresMs - nowMs) / 1000);
     return diffSeconds > 0 ? diffSeconds : 0;
   });
+
+  useEffect(() => {
+    if (!onProgressUpdate) return;
+
+    // Count how many keys in the form data have an actual value
+    const answeredCount = Object.values(currentAnswers).filter((answer) => {
+      if (Array.isArray(answer)) {
+        return answer.length > 0; // Check if multiple choice array is not empty
+      }
+      return answer !== undefined && answer !== ""; // Check if string is not empty
+    }).length;
+
+    if (answeredCount !== prevCountRef.current) {
+      onProgressUpdate(answeredCount);
+      prevCountRef.current = answeredCount;
+    }
+  }, [currentAnswers, onProgressUpdate]);
 
   const handleFinish = useCallback(
     (formData: TestAnswers) => {

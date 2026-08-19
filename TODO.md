@@ -6,5 +6,5 @@
 - [ ] Export/Import
 - [ ] ~~Test participation~~ & Results view
 - [ ] Practice quiz
-- [ ] ~~Create~~ & Watch test
-- [ ] OAuth
+- [x] Create & Watch test
+- [x] OAuth

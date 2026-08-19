@@ -9,9 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import cz.zakharchenkoartem.examo_be.exceptions.ForbiddenException;
 import cz.zakharchenkoartem.examo_be.models.documents.QuizDocument;
 import cz.zakharchenkoartem.examo_be.models.entities.QuizEntity;
 import cz.zakharchenkoartem.examo_be.models.entities.QuizShare;
+import cz.zakharchenkoartem.examo_be.models.entities.Test;
 import cz.zakharchenkoartem.examo_be.repostiories.postgres.QuizEntityRepository;
 import cz.zakharchenkoartem.examo_be.services.QuizService;
 import cz.zakharchenkoartem.examo_be.services.QuizSharesService;
@@ -117,14 +119,35 @@ public class QuizController {
     }
 
     @GetMapping("/{uuid}/tests")
-    public String getQuizTests(Principal principal, @PathVariable String uuid,
+    public ResponseEntity<List<Test>> getQuizTests(Principal principal, @PathVariable String uuid,
             @RequestParam(required = false) String type) {
-        // Get user id
+        Integer userId = Integer.valueOf(principal.getName());
 
-        // Check if user if author of quiz, if not, reject
+        QuizEntity quiz = quizService.getQuizByUuid(uuid);
 
-        // Get live or finished tests
+        if (!quiz.getAuthor().getId().equals(userId)) {
+            throw new ForbiddenException("Access denied, you are not an author of this quiz.");
+        }
 
-        return new String();
+        List<Test> tests = testService.getQuizTests(uuid, type);
+
+        return ResponseEntity.ok(tests);
+    }
+
+    @GetMapping("/{uuid}/tests/{testId}")
+    public ResponseEntity<Test> getQuizTestDetail(Principal principal, @PathVariable String uuid,
+            @PathVariable Long testId,
+            @RequestParam(required = false) String type) {
+        Integer userId = Integer.valueOf(principal.getName());
+
+        QuizEntity quiz = quizService.getQuizByUuid(uuid);
+
+        if (!quiz.getAuthor().getId().equals(userId)) {
+            throw new ForbiddenException("Access denied, you are not an author of this quiz.");
+        }
+
+        Test test = testService.getTest(testId);
+
+        return ResponseEntity.ok(test);
     }
 }

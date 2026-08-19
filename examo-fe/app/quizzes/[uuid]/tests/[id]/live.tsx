@@ -2,41 +2,34 @@ import { View, Text, StyleSheet, FlatList } from "react-native";
 import COLORS from "@/constants/colors";
 import ScreenWrapper from "@/components/layout/ScreenWrapper";
 import { useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ParticipantProgress } from "@/types/ParticipantProgress";
-import { Test } from "@/types/Test";
 import { formatTimeLeft } from "@/utils";
 import ParticipantProgressBar from "@/components/tests/ParticipantProgressBar";
 import LiveTestHeader from "@/components/layout/LiveTestHeader";
 import TestInfo from "@/components/tests/TestInfo";
-import { PARTICIPANTS } from "@/constants/mocks";
 import TestSettingsModal from "@/components/tests/TestSettingsModal";
+import { Client } from "@stomp/stompjs";
+import { useAuth } from "@/components/providers/AuthProvider";
+import Loader from "@/components/ui/Loader";
+import useGetQuizTestDetail from "@/api/quizzes/useGetQuizTestDetail";
 
-const mockFetchedTest: Test = {
-  id: 1,
-  title: "My Test",
-  description:
-    "In this test we will test your knowledge about creating modern looking mobile apps with advanced UX.",
-  startAt: "2026-07-23T19:00:00Z",
-  endAt: "2026-07-24T19:00:00Z",
-  accessCode: "356482",
-};
+//TODO: Replace with .env
+const BASE_URL = "192.168.0.61:8080";
 
 function LiveTestScreen() {
   const { id, uuid } = useLocalSearchParams();
+  const { token } = useAuth();
 
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
-  const test = {
-    ...mockFetchedTest,
-    id: Number(id),
-  };
+  const { data: test } = useGetQuizTestDetail(uuid as string, Number(id));
 
-  const [participants, setParticipants] =
-    useState<ParticipantProgress[]>(PARTICIPANTS);
+  const [participants, setParticipants] = useState<ParticipantProgress[]>([]);
   const [timeLeft, setTimeLeft] = useState<string>("00:00:00");
+  const stompClient = useRef<Client | null>(null);
 
-  // --- 2. Live Countdown Timer ---
+  // --- Live Countdown Timer ---
   useEffect(() => {
     if (!test?.endAt) return;
 
@@ -54,36 +47,53 @@ function LiveTestScreen() {
     //TODO: ALert and DELETE request to BE -> Redirect
     console.log("DELETE CLICKED");
   }
-  // --- 3. WebSocket Connection ---
-  //useEffect(() => {
-  //if (!test) return;
 
-  // Example WebSocket integration pseudo-code:
-  // const ws = new WebSocket(`wss://your-api.com/tests/${testInfo.id}/live`);
-  //
-  // ws.onmessage = (event) => {
-  //   const data = JSON.parse(event.data);
-  //   if (data.type === 'PROGRESS_UPDATE') {
-  //     setParticipants(prev => {
-  //       const existing = prev.findIndex(p => p.user.id === data.payload.user.id);
-  //       if (existing >= 0) {
-  //         const updated = [...prev];
-  //         updated[existing] = data.payload;
-  //         return updated;
-  //       }
-  //       return [...prev, data.payload];
-  //     });
-  //   }
-  // };
-  // return () => ws.close();
-  //  }, [test]);
+  // --- WebSocket Setup ---
+  useEffect(() => {
+    const client = new Client({
+      brokerURL: `ws://${BASE_URL}/ws`,
+      connectHeaders: { Authorization: `Bearer ${token}` },
+      onConnect: () => {
+        console.log("STOMP: Connected successfully!");
 
-  if (!test)
-    return (
-      <ScreenWrapper>
-        <Text style={{ color: "white" }}>Loading...</Text>
-      </ScreenWrapper>
-    );
+        // Subscribe to the specific test's topic
+        const destination = `/topic/tests/${id}/progress`;
+
+        client.subscribe(destination, (message) => {
+          const updatedProgress: ParticipantProgress = JSON.parse(message.body);
+
+          // Update the state array dynamically
+          setParticipants((prevParticipants) => {
+            const existingIndex = prevParticipants.findIndex(
+              (p) => p.user.id === updatedProgress.user.id,
+            );
+
+            if (existingIndex >= 0) {
+              const newList = [...prevParticipants];
+              newList[existingIndex] = updatedProgress;
+              return newList;
+            }
+
+            return [...prevParticipants, updatedProgress];
+          });
+        });
+      },
+      onDisconnect: () => {
+        console.log("STOMP: Disconnected");
+      },
+    });
+
+    client.activate();
+    stompClient.current = client;
+
+    return () => {
+      if (client.active) {
+        client.deactivate();
+      }
+    };
+  }, [id, token]);
+
+  if (!test) return <Loader />;
 
   return (
     <ScreenWrapper>

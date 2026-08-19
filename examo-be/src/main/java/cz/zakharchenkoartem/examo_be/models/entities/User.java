@@ -38,9 +38,11 @@ public class User {
     @Column(name = "created_at", insertable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @JsonIgnore
     @Column(name = "auth_provider")
     private String authProvider = "LOCAL";
 
+    @JsonIgnore
     @Column(name = "google_id", unique = true)
     private String googleId;
 

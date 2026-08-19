@@ -23,6 +23,7 @@ export class ApiError extends Error {
   }
 }
 
+//TODO: Replace in env
 const BASE_URL = "http://192.168.0.61:8080";
 
 const api = axios.create({

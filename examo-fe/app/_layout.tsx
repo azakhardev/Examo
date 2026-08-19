@@ -1,3 +1,4 @@
+import "text-encoding";
 import { Stack, useRouter, useSegments } from "expo-router";
 import COLORS from "@/constants/colors";
 import { StatusBar } from "expo-status-bar";

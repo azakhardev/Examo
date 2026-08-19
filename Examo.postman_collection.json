@@ -22,13 +22,8 @@
             ],
             "url": {
               "raw": "{{server}}/quizzes/recent?uuids={{ids}}",
-              "host": [
-                "{{server}}"
-              ],
-              "path": [
-                "quizzes",
-                "recent"
-              ],
+              "host": ["{{server}}"],
+              "path": ["quizzes", "recent"],
               "query": [
                 {
                   "key": "uuids",
@@ -52,12 +47,8 @@
             ],
             "url": {
               "raw": "{{server}}/quizzes",
-              "host": [
-                "{{server}}"
-              ],
-              "path": [
-                "quizzes"
-              ],
+              "host": ["{{server}}"],
+              "path": ["quizzes"],
               "query": [
                 {
                   "key": "keyword",
@@ -99,13 +90,8 @@
             ],
             "url": {
               "raw": "{{server}}/quizzes/search?keyword=database",
-              "host": [
-                "{{server}}"
-              ],
-              "path": [
-                "quizzes",
-                "search"
-              ],
+              "host": ["{{server}}"],
+              "path": ["quizzes", "search"],
               "query": [
                 {
                   "key": "keyword",
@@ -129,13 +115,8 @@
             ],
             "url": {
               "raw": "{{server}}/quizzes/{{uuid}}",
-              "host": [
-                "{{server}}"
-              ],
-              "path": [
-                "quizzes",
-                "{{uuid}}"
-              ]
+              "host": ["{{server}}"],
+              "path": ["quizzes", "{{uuid}}"]
             }
           },
           "response": []
@@ -153,14 +134,59 @@
             ],
             "url": {
               "raw": "{{server}}/quizzes/favorite/{{uuid}}",
-              "host": [
-                "{{server}}"
-              ],
-              "path": [
-                "quizzes",
-                "favorite",
-                "{{uuid}}"
+              "host": ["{{server}}"],
+              "path": ["quizzes", "favorite", "{{uuid}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Quiz Tests",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{   \r\n    \"token\": \"afdasfdasdf\"\r\n}"
+            },
+            "url": {
+              "raw": "{{server}}/quizzes/{{uuid}}/tests?type=live",
+              "host": ["{{server}}"],
+              "path": ["quizzes", "{{uuid}}", "tests"],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "live"
+                }
               ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Quiz Test Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{server}}/quizzes/{{uuid}}/tests/{{testId}}",
+              "host": ["{{server}}"],
+              "path": ["quizzes", "{{uuid}}", "tests", "{{testId}}"]
             }
           },
           "response": []
@@ -193,13 +219,8 @@
             },
             "url": {
               "raw": "{{server}}/auth/login",
-              "host": [
-                "{{server}}"
-              ],
-              "path": [
-                "auth",
-                "login"
-              ]
+              "host": ["{{server}}"],
+              "path": ["auth", "login"]
             }
           },
           "response": []
@@ -217,13 +238,30 @@
             ],
             "url": {
               "raw": "{{server}}/auth/me",
-              "host": [
-                "{{server}}"
-              ],
-              "path": [
-                "auth",
-                "me"
-              ]
+              "host": ["{{server}}"],
+              "path": ["auth", "me"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Google",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{   \r\n    \"token\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{server}}/auth/google",
+              "host": ["{{server}}"],
+              "path": ["auth", "google"]
             }
           },
           "response": []
@@ -246,13 +284,8 @@
             ],
             "url": {
               "raw": "{{server}}/users/profile",
-              "host": [
-                "{{server}}"
-              ],
-              "path": [
-                "users",
-                "profile"
-              ]
+              "host": ["{{server}}"],
+              "path": ["users", "profile"]
             }
           },
           "response": []
@@ -279,14 +312,8 @@
             },
             "url": {
               "raw": "{{server}}/users/profile/update",
-              "host": [
-                "{{server}}"
-              ],
-              "path": [
-                "users",
-                "profile",
-                "update"
-              ]
+              "host": ["{{server}}"],
+              "path": ["users", "profile", "update"]
             }
           },
           "response": []
@@ -309,13 +336,8 @@
             ],
             "url": {
               "raw": "{{server}}/tests/student",
-              "host": [
-                "{{server}}"
-              ],
-              "path": [
-                "tests",
-                "student"
-              ],
+              "host": ["{{server}}"],
+              "path": ["tests", "student"],
               "query": [
                 {
                   "key": "type",
@@ -341,14 +363,8 @@
             ],
             "url": {
               "raw": "{{server}}/tests/student/{{testId}}",
-              "host": [
-                "{{server}}"
-              ],
-              "path": [
-                "tests",
-                "student",
-                "{{testId}}"
-              ]
+              "host": ["{{server}}"],
+              "path": ["tests", "student", "{{testId}}"]
             }
           },
           "response": []
@@ -375,14 +391,8 @@
             },
             "url": {
               "raw": "{{server}}/tests/{{id}}/join",
-              "host": [
-                "{{server}}"
-              ],
-              "path": [
-                "tests",
-                "{{id}}",
-                "join"
-              ]
+              "host": ["{{server}}"],
+              "path": ["tests", "{{id}}", "join"]
             }
           },
           "response": []
@@ -400,13 +410,8 @@
             ],
             "url": {
               "raw": "{{server}}/tests/{{id}}",
-              "host": [
-                "{{server}}"
-              ],
-              "path": [
-                "tests",
-                "{{id}}"
-              ]
+              "host": ["{{server}}"],
+              "path": ["tests", "{{id}}"]
             }
           },
           "response": []
@@ -424,7 +429,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"title\": \"Database Fundamentals - Final Exam\",\r\n  \"description\": \"Midterm evaluation covering SQL and relational databases.\",\r\n  \"startTime\": \"2026-08-01T10:00:00\",\r\n  \"endTime\": \"2026-08-01T12:00:00\",\r\n  \"questionsCount\": 2,\r\n  \"timeLimit\": 45,\r\n  \"maxPoints\": 3,\r\n  \"allowReview\": true,\r\n  \"quizId\": \"550e8400-e29b-41d4-a716-446655440000\"\r\n}",
+              "raw": "{\r\n  \"title\": \"Advanced React Patterns - Final Exam\",\r\n  \"description\": \"Test covering advanced React hooks.\",\r\n  \"startTime\": \"2026-08-15T11:00:00\",\r\n  \"endTime\": \"2027-08-01T12:00:00\",\r\n  \"questionsCount\": 1,\r\n  \"timeLimit\": 45,\r\n  \"maxPoints\": 1,\r\n  \"allowReview\": true,\r\n  \"quizId\": \"a1111111-1111-4111-8111-111111111111\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -433,13 +438,8 @@
             },
             "url": {
               "raw": "{{server}}/tests/create",
-              "host": [
-                "{{server}}"
-              ],
-              "path": [
-                "tests",
-                "create"
-              ]
+              "host": ["{{server}}"],
+              "path": ["tests", "create"]
             }
           },
           "response": []
@@ -466,14 +466,8 @@
             },
             "url": {
               "raw": "{{server}}/tests/{{id}}/submit",
-              "host": [
-                "{{server}}"
-              ],
-              "path": [
-                "tests",
-                "{{id}}",
-                "submit"
-              ]
+              "host": ["{{server}}"],
+              "path": ["tests", "{{id}}", "submit"]
             }
           },
           "response": []

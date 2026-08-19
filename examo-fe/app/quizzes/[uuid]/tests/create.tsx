@@ -11,6 +11,8 @@ import CreateTestForm from "@/components/tests/CreateTestForm";
 import useCreateTest from "@/api/tests/useCreateTest";
 import { useLocalSearchParams } from "expo-router";
 import Toast from "react-native-toast-message";
+import { queryClient } from "@/components/providers/QueryProvider";
+import { queryKeys } from "@/api/queryKeys";
 
 export default function CreateTestScreen() {
   const { uuid } = useLocalSearchParams();
@@ -53,6 +55,7 @@ export default function CreateTestScreen() {
           });
           resetField("startTime");
           resetField("endTime");
+          queryClient.resetQueries({ queryKey: queryKeys.quizzes.tests });
         },
         onError: (e) => {
           Toast.show({

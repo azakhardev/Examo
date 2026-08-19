@@ -1,11 +1,22 @@
 # 📱 EXAMO
 
+A full-stack, feature-rich mobile quiz application designed for both students and teachers. Quizzes can be created directly within the app or uploaded and exported via JSON, XML, or CSV formats. Users can select a set of questions to practice normally, use a race mode with a question timer, or shuffle questions. Additional features include flagging specific questions to practice exclusively, displaying correct answers underneath for better learning, and linking user accounts to store created questions and share them so others can try the tests.
+
+**Comprehensive Testing Systems:**
+
+- **Online Tests:** Teachers can schedule live timed exams with start/end windows. Students join via access codes, and submissions are automatically graded and securely archived for 30 days for review and download.
+- **Paper Tests (PDF Generation)**: Teachers can generate printable offline tests by specifying question counts, page layouts, and custom headers. Each printed test includes a unique identifier to prevent mix-ups.
+
+**Advanced Sharing System:**
+
+- Quizzes can be instantly shared and accessed via QR codes (with built-in camera scanning support) or direct deep links that automatically open the app and load the specific quiz set.
+
+_Built as a monorepo combining a cross-platform mobile frontend with a backend._
+
 > [!NOTE]
 > **Project Status: Abandoned**
 >
-> This project is currently abandoned due to a lack of motivation and highly complex logic. I could have used more AI, but then this project would have lacked any meaning for me as a learning experience. At the very least, I was able to try mobile development in React Native and successfully work with a NoSQL database in combination with a standard SQL database. Unfortunately, I didn't get my hands on PDF creation, QR Code scanning/creation, File manipulation, offline mode and WebSockets. Maybe I'll come back to this later (equipped with AI agents). The final roadblock I encountered was with the test creation and submission logic, which required complex algorithms and dealing with messy database data.
-
-A full-stack, feature-rich mobile quiz application designed for both students and teachers. Built as a monorepo combining a cross-platform mobile frontend with a backend.
+> This project is currently abandoned due to a lack of motivation and highly complex logic. I could have used more AI, but then this project would have lacked any meaning for me as a learning experience. At the very least, I was able to try mobile development in React Native and successfully work with a NoSQL database in combination with a standard SQL database. Unfortunately, I didn't get my hands on PDF creation, QR Code scanning/creation, File manipulation and offline mode. Maybe I'll come back to this later (equipped with AI agents). The final roadblock I encountered was with the test creation and submission logic, which required complex algorithms and dealing with messy database data.
 
 ## 🛠️ Tech Stack & Architecture
 
@@ -18,12 +29,12 @@ This project was designed with a highly scalable, modern architectural vision. W
 - **Relational Database:** PostgreSQL (For structured data: user accounts, authentication, exam history, analytics, and complex relationship mapping).
 - **NoSQL Database:** MongoDB (For schema-less quiz layouts, flexible question types, and immutable test snapshots).
 - **OAuth2 Integration:** Seamless social authentication (Google login) alongside standard JWT.
+- **WebSockets:** Real-time synchronization for teacher-to-student test broadcasting.
 
 ### 🎯 Planned Technologies (The Full Vision)
 
 These technologies were scoped and planned to complete the application's feature set:
 
-- **WebSockets:** Real-time synchronization for live "Race Mode" quizzes and instant teacher-to-student test broadcasting.
 - **PDF Generation:** Automated server-side export of quizzes into formatted PDF documents for offline, printable classroom tests.
 - **QR Code Generation & Scanning:** Allowing students to instantly join a live test session by scanning a dynamically generated code on the teacher's screen.
 - **File Manipulation & Offline Mode:** Leveraging `expo-file-system` to download JSON/XML test templates locally, allowing students to study and practice completely offline.
@@ -215,7 +226,7 @@ _In PostgreSQL, the student_answers.question_id column maps directly to the inne
 
 ## ⏱️ Development Log
 
-**Total Time Invested: ~66.25 hours**
+**Total Time Invested: ~67.75 hours**
 
 <details>
 <summary>Click to view the day-by-day progress</summary>

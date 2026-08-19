@@ -5,56 +5,30 @@ import { useState } from "react";
 import Tabs from "@/components/ui/Tabs";
 import TestCard from "@/components/quizzes/TestCard";
 import Fab from "@/components/ui/Fab";
-import { Test } from "@/types/Test";
 import { router, useLocalSearchParams } from "expo-router";
 import QuizTestsHeader from "@/components/layout/QuizTestsHeader";
-import { QUIZ_1 } from "@/constants/mocks";
-
-// Mock data for demonstration
-const MOCK_TESTS: Test[] = [
-  {
-    id: 1,
-    quiz: { id: "1", title: "Quiz" } as any,
-    title: "My test",
-    description: "My test description",
-    startAt: "22-06-2026T20:17:30Z",
-    endAt: "22-06-2026T20:18:30Z",
-    totalParticipants: 30,
-    totalSubmissions: 25,
-  },
-  {
-    id: 2,
-    quiz: { id: "2", title: "Quiz 2" } as any,
-    title: "My test 2",
-    description: "My test 2 description",
-    startAt: "22-06-2026T20:18:05Z",
-    endAt: "22-06-2026T20:19:05Z",
-    totalParticipants: 0,
-    totalSubmissions: 0,
-  },
-  {
-    id: 3,
-    quiz: { id: "3", title: "Quiz 3" } as any,
-    title: "My test 3",
-    description: "My test 3 description",
-    startAt: "22-06-2026T20:19:00Z",
-    endAt: "22-06-2026T20:20:00Z",
-    totalParticipants: 12,
-    totalSubmissions: 10,
-  },
-];
+import useGetQuizDetail from "@/api/quizzes/useGetQuizDetail";
+import Loader from "@/components/ui/Loader";
+import useGetQuizTests from "@/api/quizzes/useGetQuizTests";
 
 function QuizTestsScreen() {
   const { uuid } = useLocalSearchParams();
   const [activeTab, setActiveTab] = useState<"live" | "results">("live");
 
-  const quiz = QUIZ_1; //TODO: Fetch quiz
-  const displayedTests = MOCK_TESTS; //TODO: Fetch tests
+  const { data: quiz, isLoading: isQuizLoading } = useGetQuizDetail(
+    uuid as string,
+  );
+
+  const { data: displayedTests } = useGetQuizTests(uuid as string, activeTab);
+
+  if (isQuizLoading) {
+    return <Loader />;
+  }
 
   return (
     <ScreenWrapper>
       <View style={styles.container}>
-        <QuizTestsHeader quizName={quiz.title} />
+        <QuizTestsHeader quizName={quiz?.title} />
 
         {/* Tabs Component */}
         <View style={styles.tabsContainer}>
@@ -68,6 +42,7 @@ function QuizTestsScreen() {
           />
         </View>
 
+        {/* TODO: Add tests loader  */}
         <FlatList
           data={displayedTests}
           keyExtractor={(item) => item.id.toString()}

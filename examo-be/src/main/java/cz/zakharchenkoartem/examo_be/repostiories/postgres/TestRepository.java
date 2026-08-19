@@ -1,6 +1,7 @@
 package cz.zakharchenkoartem.examo_be.repostiories.postgres;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -32,4 +33,14 @@ public interface TestRepository extends JpaRepository<Test, Long> {
             @Param("userId") Integer userId,
             @Param("isHistory") Boolean isHistory,
             @Param("isAuthor") Boolean isAuthor);
+
+    @Query("""
+                SELECT t FROM Test t
+                WHERE t.quizId = :uuid
+                AND (
+                    (:isLive = true AND t.endAt > CURRENT_TIMESTAMP) OR
+                    (:isLive = false AND t.endAt <= CURRENT_TIMESTAMP)
+                )
+            """)
+    List<Test> findQuizTests(@Param("uuid") UUID uuid, @Param("isLive") Boolean isLive);
 }
