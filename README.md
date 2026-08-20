@@ -226,7 +226,7 @@ _In PostgreSQL, the student_answers.question_id column maps directly to the inne
 
 ## ⏱️ Development Log
 
-**Total Time Invested: ~67.75 hours**
+**Total Time Invested: ~71 hours**
 
 <details>
 <summary>Click to view the day-by-day progress</summary>
@@ -262,5 +262,7 @@ _In PostgreSQL, the student_answers.question_id column maps directly to the inne
 | **31.7.** | 1.5h       | Generate Test endpoint                                    |
 | **14.8.** | 5h         | Submit Test endpoint & Create Unique Test Entity          |
 | **18.8.** | 2.5h       | Google OAuth (Works in web only)                          |
+| **19.8.** | 3h         | WebSockets                                                |
+| **20.8.** | 2h         | Create & Edit Quiz                                        |
 
 </details>
