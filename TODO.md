@@ -1,6 +1,6 @@
 ### Features
 
-- [ ] Quiz Creating & Editing
+- [x] Quiz Creating & Editing
 - [ ] Offline mode (my tests & practice)
 - [ ] Manage quizz access
 - [ ] Export/Import

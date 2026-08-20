@@ -1,6 +1,7 @@
 package cz.zakharchenkoartem.examo_be.controllers;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,14 +15,19 @@ import cz.zakharchenkoartem.examo_be.models.documents.QuizDocument;
 import cz.zakharchenkoartem.examo_be.models.entities.QuizEntity;
 import cz.zakharchenkoartem.examo_be.models.entities.QuizShare;
 import cz.zakharchenkoartem.examo_be.models.entities.Test;
+import cz.zakharchenkoartem.examo_be.models.entities.User;
+import cz.zakharchenkoartem.examo_be.models.entities.QuizEntity.Visibility;
 import cz.zakharchenkoartem.examo_be.repostiories.postgres.QuizEntityRepository;
 import cz.zakharchenkoartem.examo_be.services.QuizService;
 import cz.zakharchenkoartem.examo_be.services.QuizSharesService;
 import cz.zakharchenkoartem.examo_be.services.TestService;
+import cz.zakharchenkoartem.examo_be.services.UserService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/quizzes")
@@ -31,13 +37,16 @@ public class QuizController {
     private final QuizSharesService quizSharesService;
     private final QuizEntityRepository quizEntityRepository;
     private final TestService testService;
+    private final UserService userService;
 
     public QuizController(QuizService quizService,
-            QuizSharesService quizSharesService, QuizEntityRepository quizEntityRepository, TestService testService) {
+            QuizSharesService quizSharesService, QuizEntityRepository quizEntityRepository, TestService testService,
+            UserService userService) {
         this.quizService = quizService;
         this.quizSharesService = quizSharesService;
         this.quizEntityRepository = quizEntityRepository;
         this.testService = testService;
+        this.userService = userService;
     }
 
     // TODO: Make non-detail controllers return only neccesary info to frontend (no
@@ -123,7 +132,7 @@ public class QuizController {
             @RequestParam(required = false) String type) {
         Integer userId = Integer.valueOf(principal.getName());
 
-        QuizEntity quiz = quizService.getQuizByUuid(uuid);
+        QuizEntity quiz = quizService.getQuizEntityById(uuid);
 
         if (!quiz.getAuthor().getId().equals(userId)) {
             throw new ForbiddenException("Access denied, you are not an author of this quiz.");
@@ -140,7 +149,7 @@ public class QuizController {
             @RequestParam(required = false) String type) {
         Integer userId = Integer.valueOf(principal.getName());
 
-        QuizEntity quiz = quizService.getQuizByUuid(uuid);
+        QuizEntity quiz = quizService.getQuizEntityById(uuid);
 
         if (!quiz.getAuthor().getId().equals(userId)) {
             throw new ForbiddenException("Access denied, you are not an author of this quiz.");
@@ -150,4 +159,57 @@ public class QuizController {
 
         return ResponseEntity.ok(test);
     }
+
+    @PostMapping("/create")
+    public ResponseEntity<QuizDocument> createQuiz(Principal principal, @RequestBody QuizDocument quizPayload) {
+
+        Integer authorId = Integer.valueOf(principal.getName());
+
+        User author = userService.getUser(authorId);
+
+        quizPayload.setId(UUID.randomUUID().toString());
+        quizPayload.setAuthorId(author.getId());
+        quizPayload.setAuthor(author.getUsername());
+        quizPayload.setUpdatedAt(LocalDateTime.now());
+
+        QuizDocument savedQuiz = quizService.saveQuizDocument(quizPayload);
+
+        try {
+            QuizEntity pgQuiz = new QuizEntity();
+            pgQuiz.setId(UUID.fromString(savedQuiz.getId()));
+            pgQuiz.setName(savedQuiz.getTitle());
+            pgQuiz.setAuthor(author);
+            pgQuiz.setVisibility(Visibility.PRIVATE);
+
+            QuizShare authorShare = new QuizShare();
+            authorShare.setQuiz(pgQuiz);
+            authorShare.setUser(author);
+            authorShare.setAccessLevel(QuizShare.AccessLevel.EDIT);
+            authorShare.setFavorite(false);
+
+            pgQuiz.getShares().add(authorShare);
+
+            quizEntityRepository.save(pgQuiz);
+        } catch (Exception e) {
+            quizService.deleteQuizDocument(savedQuiz.getId());
+
+            throw new RuntimeException(e);
+        }
+
+        return ResponseEntity.ok(savedQuiz);
+    }
+
+    @PutMapping("/{uuid}/edit")
+    public ResponseEntity<QuizDocument> editQuiz(
+            Principal principal,
+            @PathVariable String uuid,
+            @RequestBody QuizDocument quizPayload) {
+
+        Integer authorId = Integer.valueOf(principal.getName());
+
+        QuizDocument updatedQuiz = quizService.updateQuiz(uuid, quizPayload, authorId);
+
+        return ResponseEntity.ok(updatedQuiz);
+    }
+
 }

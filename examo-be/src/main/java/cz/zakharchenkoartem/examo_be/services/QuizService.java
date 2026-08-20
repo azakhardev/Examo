@@ -1,11 +1,11 @@
 package cz.zakharchenkoartem.examo_be.services;
 
+import cz.zakharchenkoartem.examo_be.exceptions.AccessDeniedException;
 import cz.zakharchenkoartem.examo_be.exceptions.NotFoundException;
 import cz.zakharchenkoartem.examo_be.models.documents.QuizDocument;
 import cz.zakharchenkoartem.examo_be.models.documents.QuizSnapshot;
 import cz.zakharchenkoartem.examo_be.models.dtos.QuizFavoriteProjection;
 import cz.zakharchenkoartem.examo_be.models.entities.QuizEntity;
-import cz.zakharchenkoartem.examo_be.models.entities.QuizShare;
 import cz.zakharchenkoartem.examo_be.models.entities.QuizEntity.Visibility;
 import cz.zakharchenkoartem.examo_be.repostiories.mongo.QuizDocumentRepostiory;
 import cz.zakharchenkoartem.examo_be.repostiories.mongo.QuizSnapshotRepository;
@@ -19,6 +19,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,6 @@ public class QuizService {
     private final MongoTemplate mongoTemplate;
     private final QuizDocumentRepostiory quizDocumentRepostiory;
     private final QuizEntityRepository quizEntityRepository;
-    private final QuizShareRepository quizShareRepository;
     private final QuizSnapshotRepository quizSnapshotRepository;
 
     public QuizService(MongoTemplate mongoTemplate, QuizDocumentRepostiory quizDocumentRepostiory,
@@ -41,7 +41,6 @@ public class QuizService {
         this.mongoTemplate = mongoTemplate;
         this.quizDocumentRepostiory = quizDocumentRepostiory;
         this.quizEntityRepository = quizEntityRepository;
-        this.quizShareRepository = quizShareRepository;
         this.quizSnapshotRepository = quizSnapshotRepository;
     }
 
@@ -118,7 +117,7 @@ public class QuizService {
         return quiz.get();
     }
 
-    public QuizEntity getQuizByUuid(String uuid) {
+    public QuizEntity getQuizEntityById(String uuid) {
         return quizEntityRepository.findById(UUID.fromString(uuid))
                 .orElseThrow(() -> new NotFoundException("Quiz with this UUID does not exist"));
     }
@@ -151,5 +150,33 @@ public class QuizService {
 
     public void deleteSnapshot(String snapshotId) {
         quizSnapshotRepository.deleteById(snapshotId);
+    }
+
+    public QuizDocument saveQuizDocument(QuizDocument quiz) {
+        return quizDocumentRepostiory.save(quiz);
+    }
+
+    public void deleteQuizDocument(String quizId) {
+        quizDocumentRepostiory.deleteById(quizId);
+    }
+
+    @Transactional
+    public QuizDocument updateQuiz(String uuid, QuizDocument quizPayload, Integer authorId) {
+
+        QuizEntity pgQuiz = this.getQuizEntityById(uuid);
+
+        if (!pgQuiz.getAuthor().getId().equals(authorId)) {
+            throw new AccessDeniedException("You do not have permission to edit this quiz.");
+        }
+
+        pgQuiz.setName(quizPayload.getTitle());
+        quizEntityRepository.save(pgQuiz);
+
+        quizPayload.setId(uuid);
+        quizPayload.setAuthorId(authorId);
+        quizPayload.setAuthor(pgQuiz.getAuthor().getUsername());
+        quizPayload.setUpdatedAt(LocalDateTime.now());
+
+        return quizDocumentRepostiory.save(quizPayload);
     }
 }

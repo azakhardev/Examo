@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  ScrollView,
   Modal,
   FlatList,
 } from "react-native";
@@ -20,9 +19,16 @@ import QuestionEditor from "@/components/quizzes/QuestionEditor";
 type QuizEditorProps = {
   quiz: Quiz;
   setQuiz: React.Dispatch<React.SetStateAction<Quiz>>;
+  onSubmit: (quiz: Quiz) => void;
+  isSubmitting?: boolean;
 };
 
-function QuizEditor({ quiz, setQuiz }: QuizEditorProps) {
+function QuizEditor({
+  quiz,
+  setQuiz,
+  onSubmit,
+  isSubmitting,
+}: QuizEditorProps) {
   const [isQuestionModalVisible, setQuestionModalVisible] = useState(false);
   const [editingQuestion, setEditingQuestion] = useState<Question | null>(null);
 
@@ -40,7 +46,7 @@ function QuizEditor({ quiz, setQuiz }: QuizEditorProps) {
   }
 
   function handleEditQuestion(question: Question) {
-    setEditingQuestion({ ...question }); // Create a copy for editing
+    setEditingQuestion({ ...question });
     setQuestionModalVisible(true);
   }
 
@@ -74,7 +80,7 @@ function QuizEditor({ quiz, setQuiz }: QuizEditorProps) {
 
   function handleSaveQuiz() {
     console.log("Saving quiz to backend...", quiz);
-    // TODO: Send data to backend here using an API client
+    onSubmit(quiz);
   }
 
   function handleTitleChange(text: string) {
@@ -126,7 +132,7 @@ function QuizEditor({ quiz, setQuiz }: QuizEditorProps) {
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
-        ListHeaderComponent={renderListHeader}
+        ListHeaderComponent={renderListHeader()}
         renderItem={({ item, index }) => (
           <QuizQuestionCard
             question={item}
@@ -138,11 +144,13 @@ function QuizEditor({ quiz, setQuiz }: QuizEditorProps) {
         )}
       />
 
+      {/* TODO: Disable on submitting */}
       <Fab
         icon="save-outline"
         backgroundColor={COLORS.success}
         iconColor={COLORS.background}
         onPress={handleSaveQuiz}
+        disabled={isSubmitting}
         style={{ right: 0 }}
       />
 

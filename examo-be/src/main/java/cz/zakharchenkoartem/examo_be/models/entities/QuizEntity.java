@@ -5,26 +5,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Persistable;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PostLoad;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
+//!!Persistable is needed to be able to save new Entity with filled ID (needed when creating QuizDocument) - must implement isNew function
+// It could be implemented without it and without the @GeneratedValue(strategy = GenerationType.UUID) annotation above the id, but performance would be worse - spring would have to perform the select to search for object with that id, and after not finding it, it would insert it
 @Entity
 @Table(name = "quizzes")
-public class QuizEntity {
+public class QuizEntity implements Persistable<UUID> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false, length = 256)
@@ -52,7 +56,22 @@ public class QuizEntity {
     public QuizEntity() {
     }
 
-    // Getters and Setters
+    // Function that must be implemented as part of Persistable interface
+    @Transient
+    private boolean isNew = true;
+
+    @Override
+    public boolean isNew() {
+        return isNew;
+    }
+
+    @PrePersist
+    @PostLoad
+    void markNotNew() {
+        this.isNew = false;
+    }
+
+    @Override
     public UUID getId() {
         return id;
     }
@@ -73,7 +92,7 @@ public class QuizEntity {
         return author;
     }
 
-    public void setAuthorId(User author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 

@@ -190,6 +190,62 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Create Quiz",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"React Native Fundamentals\",\r\n  \"link\": \"https://examo.com/react-native\",\r\n  \"description\": \"A test quiz to verify the POST endpoint.\",\r\n  \"categories\": [\"React Native\", \"Mobile Dev\", \"JavaScript\"],\r\n  \"questions\": [\r\n    {\r\n      \"id\": \"q1\",\r\n      \"type\": \"SINGLE_CHOICE\",\r\n      \"questionText\": \"Which JS engine does React Native use by default?\",\r\n      \"options\": [\r\n        { \"id\": \"1\", \"text\": \"V8\", \"isCorrect\": false },\r\n        { \"id\": \"2\", \"text\": \"Hermes\", \"isCorrect\": true },\r\n        { \"id\": \"3\", \"text\": \"SpiderMonkey\", \"isCorrect\": false }\r\n      ],\r\n      \"maxPoints\": 1.0,\r\n      \"negativePoints\": 0.0\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{server}}/quizzes/create",
+              "host": ["{{server}}"],
+              "path": ["quizzes", "create"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Quiz",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"React Native Fundamentals - EDITED\",\r\n  \"link\": \"https://example.com/react-native-edited\",\r\n  \"description\": \"I updated this description via the PUT endpoint.\",\r\n  \"categories\": [\"React Native\", \"Mobile Dev\", \"JavaScript\", \"Updated\"],\r\n  \"questions\": [\r\n    {\r\n      \"id\": \"q1\",\r\n      \"type\": \"SINGLE_CHOICE\",\r\n      \"questionText\": \"Which JS engine does React Native use by default?\",\r\n      \"options\": [\r\n        { \"id\": \"1\", \"text\": \"V8\", \"isCorrect\": false },\r\n        { \"id\": \"2\", \"text\": \"Hermes\", \"isCorrect\": true },\r\n        { \"id\": \"3\", \"text\": \"SpiderMonkey\", \"isCorrect\": false }\r\n      ],\r\n      \"maxPoints\": 2.0,\r\n      \"negativePoints\": 0.5\r\n    },\r\n    {\r\n      \"id\": \"q2\",\r\n      \"type\": \"OPEN\",\r\n      \"questionText\": \"What hook is used to run side effects?\",\r\n      \"options\": [\r\n        { \"id\": \"1\", \"text\": \"useEffect\", \"isCorrect\": true }\r\n      ],\r\n      \"maxPoints\": 1.5,\r\n      \"negativePoints\": 0.0\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{server}}/quizzes/{{uuid}}/edit",
+              "host": ["{{server}}"],
+              "path": ["quizzes", "{{uuid}}", "edit"]
+            }
+          },
+          "response": []
         }
       ]
     },
