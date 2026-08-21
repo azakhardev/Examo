@@ -50,7 +50,6 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     data: authData,
     isSuccess,
     isError,
-    isFetching,
   } = useMe({ retry: false, enabled: isStoreLoaded && !!token });
 
   useEffect(() => {
@@ -63,7 +62,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [isSuccess, isError, authData]);
 
-  const isReady = isStoreLoaded && !isFetching;
+  const hasToken = !!token;
+  const isReady = isStoreLoaded && (!hasToken || isSuccess || isError);
 
   async function login(newToken: string, user: AuthUser) {
     await storage.setItem(TOKEN_KEY, newToken);

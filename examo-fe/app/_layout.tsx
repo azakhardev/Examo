@@ -71,9 +71,10 @@ function RootLayoutNavigator() {
 
       <Stack.Screen name="login" options={{ animation: "fade" }} />
 
-      <Stack.Screen name="quizzes/[uuid]" options={{ headerShown: false }} />
-
-      <Stack.Screen name="tests/[id]" />
+      <Stack.Screen
+        name="quizzes/[uuid]/index"
+        options={{ headerShown: false }}
+      />
 
       <Stack.Screen
         name="quizzes/[uuid]/edit"
@@ -87,7 +88,15 @@ function RootLayoutNavigator() {
       />
 
       <Stack.Screen
-        name="quizzes/[uuid]/tests/index.tsx"
+        name="quizzes/[uuid]/join/[hash]"
+        options={{
+          headerShown: false,
+          animation: "fade",
+        }}
+      />
+
+      <Stack.Screen
+        name="quizzes/[uuid]/tests/index"
         options={{
           presentation: "fullScreenModal",
           title: "Start Test",
@@ -98,7 +107,7 @@ function RootLayoutNavigator() {
       />
 
       <Stack.Screen
-        name="quizzes/[uuid]/manage-access.tsx"
+        name="quizzes/[uuid]/manage-access"
         options={{
           presentation: "fullScreenModal",
           title: "Manage access",
@@ -108,10 +117,33 @@ function RootLayoutNavigator() {
       />
 
       <Stack.Screen
-        name="quizzes/[uuid]/practice.tsx"
+        name="quizzes/[uuid]/practice/index"
         options={{
           presentation: "fullScreenModal",
           title: "Practice",
+          headerShown: false,
+          animation: "fade",
+        }}
+      />
+
+      <Stack.Screen
+        name="quizzes/[uuid]/practice/[id]"
+        options={{
+          presentation: "fullScreenModal",
+          title: "Practice",
+          headerShown: false,
+          animation: "fade",
+        }}
+      />
+
+      <Stack.Screen name="tests/[id]/[userId]" />
+      <Stack.Screen name="tests/[id]/participate" />
+      <Stack.Screen name="tests/[id]/success" />
+
+      <Stack.Screen
+        name="scan"
+        options={{
+          presentation: "fullScreenModal",
           headerShown: false,
           animation: "fade",
         }}

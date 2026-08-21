@@ -3,6 +3,7 @@
     "_id": "550e8400-e29b-41d4-a716-446655440000",
     "title": "Database Fundamentals",
     "description": "Preparation for the final exam.",
+    "shareHash": "c9a29d67-4e12-4299-87a1-123456789abc",
     "categories": ["SQL", "Database"],
     "authorId": 2,
     "author": "azakhardev",
@@ -34,6 +35,7 @@
     "_id": "111e8400-e29b-41d4-a716-446655441111",
     "title": "Software Architecture Patterns",
     "description": "Advanced quiz covering microservices, monolithic designs, and fundamental design patterns.",
+    "shareHash": "7b3f8211-9a42-4c88-b234-abcdef123456",
     "authorId": 2,
     "author": "azakhardev",
     "updatedAt": "2026-06-20T12:00:00",
@@ -103,6 +105,7 @@
     "_id": "222e8400-e29b-41d4-a716-446655442222",
     "title": "React Native Basics",
     "description": "Fundamental concepts of React Native development, including components, state, and navigation.",
+    "shareHash": "4d5e6f7a-8b9c-0d1e-2f3a-4b5c6d7e8f9a",
     "authorId": 2,
     "author": "azakhardev",
     "categories": ["Programming", "Mobile Development"],
@@ -137,6 +140,7 @@
     "_id": "a1111111-1111-4111-8111-111111111111",
     "title": "Advanced React Patterns",
     "description": "Deep dive into React context, refs, and higher order components.",
+    "shareHash": "1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d",
     "authorId": 1,
     "author": "teacher_jane",
     "categories": ["Programming", "Web Development"],
@@ -156,31 +160,10 @@
     ]
   },
   {
-    "_id": "c3333333-3333-4333-8333-333333333333",
-    "title": "History of the Roman Empire",
-    "description": "Test your knowledge of emperors, battles, and ancient politics.",
-    "authorId": 1,
-    "author": "teacher_jane",
-    "categories": ["History"],
-    "questions": [
-      {
-        "id": "q1",
-        "type": "SINGLE_CHOICE",
-        "questionText": "Who was the first Roman Emperor?",
-        "options": [
-          { "id": "1", "text": "Julius Caesar", "isCorrect": false },
-          { "id": "2", "text": "Augustus", "isCorrect": true },
-          { "id": "3", "text": "Nero", "isCorrect": false }
-        ],
-        "maxPoints": 1.0,
-        "negativePoints": 0.0
-      }
-    ]
-  },
-  {
     "_id": "b2222222-2222-4222-8222-222222222222",
     "title": "World Geography Basics",
     "description": "Can you name the capitals and longest rivers?",
+    "shareHash": "3a4b5c6d-7e8f-9a0b-1c2d-3e4f5a6b7c8d",
     "authorId": 2,
     "author": "azakhardev",
     "categories": ["Geography", "Trivia"],
@@ -201,9 +184,33 @@
     ]
   },
   {
+    "_id": "c3333333-3333-4333-8333-333333333333",
+    "title": "History of the Roman Empire",
+    "description": "Test your knowledge of emperors, battles, and ancient politics.",
+    "shareHash": "f9e8d7c6-b5a4-9f8e-7d6c-5b4a3f2e1d0c",
+    "authorId": 1,
+    "author": "teacher_jane",
+    "categories": ["History"],
+    "questions": [
+      {
+        "id": "q1",
+        "type": "SINGLE_CHOICE",
+        "questionText": "Who was the first Roman Emperor?",
+        "options": [
+          { "id": "1", "text": "Julius Caesar", "isCorrect": false },
+          { "id": "2", "text": "Augustus", "isCorrect": true },
+          { "id": "3", "text": "Nero", "isCorrect": false }
+        ],
+        "maxPoints": 1.0,
+        "negativePoints": 0.0
+      }
+    ]
+  },
+  {
     "_id": "d4444444-4444-4444-8444-444444444444",
     "title": "Biology and Human Anatomy",
     "description": "A quick test on the human body.",
+    "shareHash": "9f8e7d6c-5b4a-3f2e-1d0c-f9e8d7c6b5a4",
     "authorId": 2,
     "author": "azakhardev",
     "categories": ["Science", "Biology"],
@@ -224,9 +231,33 @@
     ]
   },
   {
+    "_id": "e5555555-5555-4555-8555-555555555555",
+    "title": "Space Exploration & Astronomy",
+    "description": "A deep dive into cosmos, planets, and space missions.",
+    "shareHash": "8c7b6a5f-4e3d-2c1b-0a9f-8e7d6c5b4a3f",
+    "authorId": 1,
+    "author": "teacher_jane",
+    "categories": ["Science", "Astronomy"],
+    "questions": [
+      {
+        "id": "q1",
+        "type": "SINGLE_CHOICE",
+        "questionText": "Which planet is known as the Red Planet?",
+        "options": [
+          { "id": "1", "text": "Venus", "isCorrect": false },
+          { "id": "2", "text": "Mars", "isCorrect": true },
+          { "id": "3", "text": "Jupiter", "isCorrect": false }
+        ],
+        "maxPoints": 1.0,
+        "negativePoints": 0.0
+      }
+    ]
+  },
+  {
     "_id": "f6666666-6666-4666-8666-666666666666",
     "title": "Modern Java and Spring Boot",
     "description": "Test your backend developer skills.",
+    "shareHash": "2e3f4a5b-6c7d-8e9f-0a1b-2c3d4e5f6a7b",
     "authorId": 2,
     "author": "azakhardev",
     "categories": ["Programming", "Backend"],

@@ -204,7 +204,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"title\": \"React Native Fundamentals\",\r\n  \"link\": \"https://examo.com/react-native\",\r\n  \"description\": \"A test quiz to verify the POST endpoint.\",\r\n  \"categories\": [\"React Native\", \"Mobile Dev\", \"JavaScript\"],\r\n  \"questions\": [\r\n    {\r\n      \"id\": \"q1\",\r\n      \"type\": \"SINGLE_CHOICE\",\r\n      \"questionText\": \"Which JS engine does React Native use by default?\",\r\n      \"options\": [\r\n        { \"id\": \"1\", \"text\": \"V8\", \"isCorrect\": false },\r\n        { \"id\": \"2\", \"text\": \"Hermes\", \"isCorrect\": true },\r\n        { \"id\": \"3\", \"text\": \"SpiderMonkey\", \"isCorrect\": false }\r\n      ],\r\n      \"maxPoints\": 1.0,\r\n      \"negativePoints\": 0.0\r\n    }\r\n  ]\r\n}",
+              "raw": "{\r\n  \"title\": \"Some random quiz\",\r\n  \"shareHash\": \"bla-bla-bla\",\r\n  \"description\": \"A test quiz to verify the POST endpoint.\",\r\n  \"categories\": [\"React Native\", \"Mobile Dev\", \"JavaScript\"],\r\n  \"questions\": [\r\n    {\r\n      \"id\": \"q1\",\r\n      \"type\": \"SINGLE_CHOICE\",\r\n      \"questionText\": \"Which JS engine does React Native use by default?\",\r\n      \"options\": [\r\n        { \"id\": \"1\", \"text\": \"V8\", \"isCorrect\": false },\r\n        { \"id\": \"2\", \"text\": \"Hermes\", \"isCorrect\": true },\r\n        { \"id\": \"3\", \"text\": \"SpiderMonkey\", \"isCorrect\": false }\r\n      ],\r\n      \"maxPoints\": 1.0,\r\n      \"negativePoints\": 0.0\r\n    }\r\n  ]\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -243,6 +243,72 @@
               "raw": "{{server}}/quizzes/{{uuid}}/edit",
               "host": ["{{server}}"],
               "path": ["quizzes", "{{uuid}}", "edit"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Share Hash",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{server}}/quizzes/{{uuid}}/shareHash",
+              "host": ["{{server}}"],
+              "path": ["quizzes", "{{uuid}}", "shareHash"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Regenerate Hash",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{server}}/quizzes/{{uuid}}/regenerateHash",
+              "host": ["{{server}}"],
+              "path": ["quizzes", "{{uuid}}", "regenerateHash"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Join Quiz",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"shareHash\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{server}}/quizzes/{{uuid}}/join",
+              "host": ["{{server}}"],
+              "path": ["quizzes", "{{uuid}}", "join"]
             }
           },
           "response": []
@@ -465,9 +531,9 @@
               }
             ],
             "url": {
-              "raw": "{{server}}/tests/{{id}}",
+              "raw": "{{server}}/tests/{{id}}/session",
               "host": ["{{server}}"],
-              "path": ["tests", "{{id}}"]
+              "path": ["tests", "{{id}}", "session"]
             }
           },
           "response": []

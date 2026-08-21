@@ -103,7 +103,7 @@ export default function ExploreScreen() {
 
       <Fab
         icon="camera"
-        onPress={() => console.log("Scan QR Code!!")}
+        onPress={() => router.push("/scan")}
         backgroundColor={COLORS.primary}
         iconColor={COLORS.background}
       />

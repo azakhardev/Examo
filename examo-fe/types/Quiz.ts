@@ -5,7 +5,7 @@ export type Visibility = "PRIVATE" | "PUBLIC" | "RESTRICTED";
 export type Quiz = {
   id?: string;
   title?: string;
-  link?: string;
+  shareHash?: string;
   description?: string;
   visibility?: string;
   author_id?: number;

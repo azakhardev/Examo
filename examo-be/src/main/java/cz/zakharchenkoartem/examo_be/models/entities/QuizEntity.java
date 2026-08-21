@@ -50,7 +50,9 @@ public class QuizEntity implements Persistable<UUID> {
     private List<QuizShare> shares = new ArrayList<>();
 
     public enum Visibility {
-        PRIVATE, PUBLIC, RESTRICTED
+        PRIVATE, // 0 (Most restrictive)
+        RESTRICTED, // 1 (Requires invite or hash)
+        PUBLIC // 2 (Open to everyone)
     }
 
     public QuizEntity() {

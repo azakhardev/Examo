@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import cz.zakharchenkoartem.examo_be.exceptions.AccessDeniedException;
+import cz.zakharchenkoartem.examo_be.exceptions.ForbiddenException;
 import cz.zakharchenkoartem.examo_be.exceptions.NotFoundException;
 import cz.zakharchenkoartem.examo_be.models.entities.QuizEntity;
 import cz.zakharchenkoartem.examo_be.models.entities.QuizShare;
@@ -38,21 +38,28 @@ public class QuizSharesService {
         return share;
     }
 
-    public QuizShare ensureAccess(Integer userId, String id) {
-        QuizShare existingShare = quizShareRepository.findByUser_IdAndQuiz_Id(userId, UUID.fromString(id));
+    public QuizShare ensureAccess(Integer userId, String quizUuid, QuizEntity.Visibility accessLevel) {
+        QuizShare existingShare = quizShareRepository.findByUser_IdAndQuiz_Id(userId, UUID.fromString(quizUuid));
         if (existingShare != null) {
             return existingShare;
         }
 
-        QuizEntity quiz = quizEntityRepository.findById(UUID.fromString(id))
+        QuizEntity quiz = quizEntityRepository.findById(UUID.fromString(quizUuid))
                 .orElseThrow(() -> new NotFoundException("Quiz not found"));
 
         boolean isAuthor = quiz.getAuthor().getId().equals(userId);
-        boolean isPublic = quiz.getVisibility() == QuizEntity.Visibility.PUBLIC;
-        boolean isBlocked = quizBlocksService.isUserBlocked(userId, UUID.fromString(id));
+        // Check if the quiz's visibility rank is high enough to satisfy the requested
+        // access level
+        boolean isAccessible = quiz.getVisibility().ordinal() >= accessLevel.ordinal();
+        boolean isBlocked = quizBlocksService.isUserBlocked(userId, UUID.fromString(quizUuid));
 
-        if ((!isAuthor && !isPublic) || isBlocked) {
-            throw new AccessDeniedException("You do not have access to this quiz.");
+        if (!isAuthor && !isAccessible) {
+            throw new ForbiddenException(
+                    "This quiz is visible only to the author. Please, check the visibility of the quiz.");
+        }
+
+        if (isBlocked) {
+            throw new ForbiddenException("You do not have access to this quiz.");
         }
 
         QuizShare newShare = new QuizShare();

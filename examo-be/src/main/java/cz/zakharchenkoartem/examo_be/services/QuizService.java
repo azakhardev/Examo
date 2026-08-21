@@ -6,6 +6,7 @@ import cz.zakharchenkoartem.examo_be.models.documents.QuizDocument;
 import cz.zakharchenkoartem.examo_be.models.documents.QuizSnapshot;
 import cz.zakharchenkoartem.examo_be.models.dtos.QuizFavoriteProjection;
 import cz.zakharchenkoartem.examo_be.models.entities.QuizEntity;
+import cz.zakharchenkoartem.examo_be.models.entities.QuizShare;
 import cz.zakharchenkoartem.examo_be.models.entities.QuizEntity.Visibility;
 import cz.zakharchenkoartem.examo_be.repostiories.mongo.QuizDocumentRepostiory;
 import cz.zakharchenkoartem.examo_be.repostiories.mongo.QuizSnapshotRepository;
@@ -34,14 +35,16 @@ public class QuizService {
     private final QuizDocumentRepostiory quizDocumentRepostiory;
     private final QuizEntityRepository quizEntityRepository;
     private final QuizSnapshotRepository quizSnapshotRepository;
+    private final QuizSharesService quizSharesService;
 
     public QuizService(MongoTemplate mongoTemplate, QuizDocumentRepostiory quizDocumentRepostiory,
-            QuizEntityRepository quizEntityRepository, QuizShareRepository quizShareRepository,
-            QuizSnapshotRepository quizSnapshotRepository) {
+            QuizEntityRepository quizEntityRepository,
+            QuizSnapshotRepository quizSnapshotRepository, QuizSharesService quizSharesService) {
         this.mongoTemplate = mongoTemplate;
         this.quizDocumentRepostiory = quizDocumentRepostiory;
         this.quizEntityRepository = quizEntityRepository;
         this.quizSnapshotRepository = quizSnapshotRepository;
+        this.quizSharesService = quizSharesService;
     }
 
     public List<String> getUserQuizzes(Integer userId) {
@@ -107,7 +110,7 @@ public class QuizService {
         return quizDocumentRepostiory.findByIdIn(ids);
     }
 
-    public QuizDocument getQuizById(String id) {
+    public QuizDocument getQuizDocumentById(String id) {
         Optional<QuizDocument> quiz = quizDocumentRepostiory.findById(id);
 
         if (!quiz.isPresent()) {
@@ -161,11 +164,13 @@ public class QuizService {
     }
 
     @Transactional
-    public QuizDocument updateQuiz(String uuid, QuizDocument quizPayload, Integer authorId) {
+    public QuizDocument updateQuiz(String uuid, QuizDocument quizPayload, Integer userId) {
 
         QuizEntity pgQuiz = this.getQuizEntityById(uuid);
+        QuizDocument mongoQUiz = this.getQuizDocumentById(uuid);
+        QuizShare share = quizSharesService.getShare(userId, uuid);
 
-        if (!pgQuiz.getAuthor().getId().equals(authorId)) {
+        if (share == null || share.getAccessLevel() != QuizShare.AccessLevel.EDIT) {
             throw new AccessDeniedException("You do not have permission to edit this quiz.");
         }
 
@@ -173,9 +178,10 @@ public class QuizService {
         quizEntityRepository.save(pgQuiz);
 
         quizPayload.setId(uuid);
-        quizPayload.setAuthorId(authorId);
+        quizPayload.setAuthorId(userId);
         quizPayload.setAuthor(pgQuiz.getAuthor().getUsername());
         quizPayload.setUpdatedAt(LocalDateTime.now());
+        quizPayload.setShareHash(mongoQUiz.getShareHash());
 
         return quizDocumentRepostiory.save(quizPayload);
     }

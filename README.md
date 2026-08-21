@@ -16,7 +16,7 @@ _Built as a monorepo combining a cross-platform mobile frontend with a backend._
 > [!NOTE]
 > **Project Status: Abandoned**
 >
-> This project is currently abandoned due to a lack of motivation and highly complex logic. I could have used more AI, but then this project would have lacked any meaning for me as a learning experience. At the very least, I was able to try mobile development in React Native and successfully work with a NoSQL database in combination with a standard SQL database. Unfortunately, I didn't get my hands on PDF creation, QR Code scanning/creation, File manipulation and offline mode. Maybe I'll come back to this later (equipped with AI agents). The final roadblock I encountered was with the test creation and submission logic, which required complex algorithms and dealing with messy database data.
+> This project is currently abandoned due to a lack of motivation and highly complex logic. I could have used more AI, but then this project would have lacked any meaning for me as a learning experience. At the very least, I was able to try mobile development in React Native and successfully work with a NoSQL database in combination with a standard SQL database. Unfortunately, I didn't get my hands on PDF creation, File manipulation and offline mode. Maybe I'll come back to this later (equipped with AI agents). The final roadblock I encountered was with the test creation and submission logic, which required complex algorithms and dealing with messy database data.
 
 ## 🛠️ Tech Stack & Architecture
 
@@ -30,13 +30,13 @@ This project was designed with a highly scalable, modern architectural vision. W
 - **NoSQL Database:** MongoDB (For schema-less quiz layouts, flexible question types, and immutable test snapshots).
 - **OAuth2 Integration:** Seamless social authentication (Google login) alongside standard JWT.
 - **WebSockets:** Real-time synchronization for teacher-to-student test broadcasting.
+- **QR Code Generation & Scanning:** Allowing students to instantly join a live test session by scanning a dynamically generated code on the teacher's screen.
 
 ### 🎯 Planned Technologies (The Full Vision)
 
 These technologies were scoped and planned to complete the application's feature set:
 
 - **PDF Generation:** Automated server-side export of quizzes into formatted PDF documents for offline, printable classroom tests.
-- **QR Code Generation & Scanning:** Allowing students to instantly join a live test session by scanning a dynamically generated code on the teacher's screen.
 - **File Manipulation & Offline Mode:** Leveraging `expo-file-system` to download JSON/XML test templates locally, allowing students to study and practice completely offline.
 
 ---
@@ -145,10 +145,10 @@ Stores the live, editable quiz definitions. The `_id` matches the `id` of the qu
 {
   "id": "UUID (Matches quizzes.id in Postgres)",
   "title": "Database Fundamentals",
-  "link": "https://asdfasfd",
+  "shareHash": "SOME_Hash",
   "description": "Preparation for the final exam.",
   "categories": ["IT", "SQL", "Databases"],
-  "authorId": 42,
+  "authorId": 2,
   "author": "Artem Dev",
   "updatedAt": "2026-06-19T18:15:00Z",
   "questions": [
@@ -179,7 +179,7 @@ Stores the live, editable quiz definitions. The `_id` matches the `id` of the qu
 
 _Note on Scoring: If a question has negativePoints > 0, the frontend automatically appends a "Skip / Do not answer" option. Skipping a question yields exactly 0 points, overriding negative point deductions._
 
-#### 2. The quiz_snapshots Collection
+#### 2. The `quiz_snapshots` Collection
 
 Immutable snapshots generated the moment a teacher launches a live online_test or generates a PDF. This ensures historical test records remain perfectly intact even if the author modifies the original quiz later.
 
@@ -207,6 +207,80 @@ Immutable snapshots generated the moment a teacher launches a live online_test o
 
 _In PostgreSQL, the student_answers.question_id column maps directly to the inner id (e.g., "q1", "q2") of the questions inside this specific snapshot document._
 
+#### 3. The `test_sessions` (Active Tests) Collection
+
+Tracks ongoing, active test attempts for users in real-time, holding state details, time constraints, and intermediate answer drafts.
+
+```json
+{
+  "_id": "550e8400-e29b-41d4-a716-446655449999",
+  "testId": 4,
+  "userId": 2,
+  "title": "Missing title",
+  "status": "IN_PROGRESS",
+  "startedAt": "2026-07-25T12:05:00Z",
+  "expiresAt": "2026-07-25T12:35:00Z",
+  "hardDeadline": "2026-07-25T14:00:00Z",
+  "questions": [
+    {
+      "id": "q2",
+      "type": "MULTIPLE_CHOICE",
+      "questionText": "Which of these are core navigation types in React Navigation?",
+      "options": [
+        { "id": "1", "text": "Stack" },
+        { "id": "2", "text": "Tab" },
+        { "id": "3", "text": "Grid" }
+      ],
+      "maxPoints": 2,
+      "negativePoints": 0.5,
+      "imageUrl": "image.jpg"
+    }
+  ],
+  "answers": {
+    "q2": ["1", "2"]
+  }
+}
+```
+
+_Session is automatically deleted after student submits the test or the session time runs out. However I should also add cron checks to delete sessions, that were abondoned by users and not submitted. It would save some temporary memory on the server._
+
+#### 4. Test `test_submissions` Collection
+
+Stores finalized exam submissions, capturing individual student responses, exact point evaluations, and time logs for historical tracking and teacher audits.
+
+```json
+{
+  "_id": "aaa14a2e-4b47-41ab-9b34-8c8511671aaa",
+  "testId": 1,
+  "userId": 2,
+  "author": "azakhardev",
+  "title": "Advanced React Patterns",
+  "totalPointsGained": 1,
+  "start": "2026-06-10T10:00:00Z",
+  "submittedAt": "2026-06-10T10:45:00Z",
+  "end": "2026-06-10T11:00:00Z",
+  "answers": [
+    {
+      "id": "ans_aza_q1_adv",
+      "gainedPoints": 1,
+      "question": {
+        "id": "q1",
+        "type": "SINGLE_CHOICE",
+        "questionText": "What hook is used for caching an expensive calculation?",
+        "maxPoints": 1,
+        "negativePoints": 0,
+        "options": [
+          { "id": "1", "text": "useMemo", "isCorrect": true },
+          { "id": "2", "text": "useCallback", "isCorrect": false },
+          { "id": "3", "text": "useEffect", "isCorrect": false }
+        ]
+      },
+      "answer": [{ "text": "useMemo", "correct": true }]
+    }
+  ]
+}
+```
+
 ## ✨ Key Features
 
 - **Smart Learning:** Flashcards, Practice mode, and a timed Race mode.
@@ -226,7 +300,7 @@ _In PostgreSQL, the student_answers.question_id column maps directly to the inne
 
 ## ⏱️ Development Log
 
-**Total Time Invested: ~71 hours**
+**Total Time Invested: ~75 hours**
 
 <details>
 <summary>Click to view the day-by-day progress</summary>
@@ -264,5 +338,6 @@ _In PostgreSQL, the student_answers.question_id column maps directly to the inne
 | **18.8.** | 2.5h       | Google OAuth (Works in web only)                          |
 | **19.8.** | 3h         | WebSockets                                                |
 | **20.8.** | 2h         | Create & Edit Quiz                                        |
+| **21.8.** | 3.5h       | Joining Quizzes via links or QR codes                     |
 
 </details>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import cz.zakharchenkoartem.examo_be.exceptions.ForbiddenException;
 import cz.zakharchenkoartem.examo_be.models.documents.QuizDocument;
+import cz.zakharchenkoartem.examo_be.models.dtos.quizzes.JoinQuizPayload;
 import cz.zakharchenkoartem.examo_be.models.entities.QuizEntity;
 import cz.zakharchenkoartem.examo_be.models.entities.QuizShare;
 import cz.zakharchenkoartem.examo_be.models.entities.Test;
@@ -104,12 +105,12 @@ public class QuizController {
     public ResponseEntity<QuizDocument> getQuizDetail(Principal principal, @PathVariable String uuid) {
         Integer userId = Integer.valueOf(principal.getName());
 
-        // 1. Ensure the user has access (this automatically creates a share if it's
+        // Ensure the user has access (this automatically creates a share if it's
         // public)
-        QuizShare share = quizSharesService.ensureAccess(userId, uuid);
+        QuizShare share = quizSharesService.ensureAccess(userId, uuid, QuizEntity.Visibility.PUBLIC);
 
-        // 2. Fetch and return the quiz payload from MongoDB
-        QuizDocument quiz = quizService.getQuizById(uuid);
+        // Fetch and return the quiz payload from MongoDB
+        QuizDocument quiz = quizService.getQuizDocumentById(uuid);
 
         quiz.setFavorite(share.getFavorite());
 
@@ -120,7 +121,7 @@ public class QuizController {
     public ResponseEntity<Boolean> saveToFavorite(Principal principal, @PathVariable String uuid) {
         Integer userId = Integer.valueOf(principal.getName());
 
-        quizSharesService.ensureAccess(userId, uuid);
+        quizSharesService.ensureAccess(userId, uuid, QuizEntity.Visibility.PUBLIC);
 
         Boolean isFavorite = quizSharesService.toggleFavorite(userId, uuid);
 
@@ -171,6 +172,7 @@ public class QuizController {
         quizPayload.setAuthorId(author.getId());
         quizPayload.setAuthor(author.getUsername());
         quizPayload.setUpdatedAt(LocalDateTime.now());
+        quizPayload.setShareHash(UUID.randomUUID().toString());
 
         QuizDocument savedQuiz = quizService.saveQuizDocument(quizPayload);
 
@@ -210,6 +212,54 @@ public class QuizController {
         QuizDocument updatedQuiz = quizService.updateQuiz(uuid, quizPayload, authorId);
 
         return ResponseEntity.ok(updatedQuiz);
+    }
+
+    @PostMapping("/{uuid}/join")
+    public ResponseEntity<String> joinQuiz(Principal principal,
+            @PathVariable String uuid,
+            @RequestBody JoinQuizPayload payload) {
+        Integer userId = Integer.valueOf(principal.getName());
+
+        QuizDocument quiz = quizService.getQuizDocumentById(uuid);
+
+        if (!quiz.getShareHash().equals(payload.shareHash())) {
+            throw new ForbiddenException("Incorrect Quiz UUID or Share Hash");
+        }
+
+        quizSharesService.ensureAccess(userId, uuid, QuizEntity.Visibility.RESTRICTED);
+
+        return ResponseEntity.ok(quiz.getId());
+    }
+
+    @GetMapping("/{uuid}/shareHash")
+    public ResponseEntity<String> getShareHash(Principal principal,
+            @PathVariable String uuid) {
+
+        Integer userId = Integer.valueOf(principal.getName());
+
+        QuizDocument quiz = quizService.getQuizDocumentById(uuid);
+        if (!quiz.getAuthorId().equals(userId)) {
+            throw new ForbiddenException("You are not an author of this quiz");
+        }
+
+        return ResponseEntity.ok(quiz.getShareHash());
+    }
+
+    @PutMapping("/{uuid}/regenerateHash")
+    public ResponseEntity<String> regenerateShareHash(Principal principal,
+            @PathVariable String uuid) {
+
+        Integer userId = Integer.valueOf(principal.getName());
+
+        QuizDocument quiz = quizService.getQuizDocumentById(uuid);
+        if (!quiz.getAuthorId().equals(userId)) {
+            throw new ForbiddenException("You are not an author of this quiz");
+        }
+
+        quiz.setShareHash(UUID.randomUUID().toString());
+        quizService.saveQuizDocument(quiz);
+
+        return ResponseEntity.ok(quiz.getShareHash());
     }
 
 }

@@ -127,7 +127,7 @@ public class TestController {
     public ResponseEntity<Test> postMethodName(Principal principal, @Valid @RequestBody CreateTestPayload payload) {
         Integer userId = Integer.valueOf(principal.getName());
 
-        QuizDocument quiz = quizService.getQuizById(payload.quizId());
+        QuizDocument quiz = quizService.getQuizDocumentById(payload.quizId());
 
         if (!userId.equals(quiz.getAuthorId())) {
             throw new AccessDeniedException("You cant create test for this quiz");

@@ -21,6 +21,7 @@ export const queryKeys = {
     recent: ["quizzes", "recent"],
     detail: ["quizzes", "detail"],
     tests: ["quizzes", "tests"],
+    hash: ["quizzes", "hash"],
   },
   users: {
     profile: ["users", "profile"],

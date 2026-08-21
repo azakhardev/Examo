@@ -12,7 +12,7 @@ export const QUIZ_1: Quiz = {
   description: "Preparation for the final exam.",
   author: "Edgar Allan Poe",
   favorite: false,
-  link: "https://examo:4asdf564a...",
+  shareHash: "https://examo:4asdf564a...",
   visibility: "Private",
   updated_at: "2026-06-20T10:00:00Z",
   categories: ["SQL", "Database"],

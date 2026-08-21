@@ -34,6 +34,7 @@ export default function QuizSettingsModal({
         <View style={styles.overlay}>
           <TouchableWithoutFeedback>
             <View style={styles.modalContent}>
+              {/* TODO: Disable for non-editors */}
               <TouchableOpacity
                 style={styles.optionButton}
                 onPress={() => {
@@ -47,6 +48,7 @@ export default function QuizSettingsModal({
                 <Text style={styles.optionText}>Edit Quizz</Text>
               </TouchableOpacity>
 
+              {/* TODO: Disable for non-authors */}
               <TouchableOpacity
                 style={styles.optionButton}
                 onPress={() => {

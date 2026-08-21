@@ -4,38 +4,54 @@ import { Ionicons, Feather } from "@expo/vector-icons";
 import Tabs from "@/components/ui/Tabs";
 import { QuizParticipant } from "@/types/QuizParticipant";
 import COLORS from "@/constants/colors";
-import { INITIAL_SHARES, QUIZ_1 } from "@/constants/mocks";
+import { INITIAL_SHARES } from "@/constants/mocks";
 import ParticipantCard from "@/components/manage-access/ParticipantCard";
 import QrCodeModal from "@/components/manage-access/QrCodeModal";
 import { useLocalSearchParams } from "expo-router";
 import * as Clipboard from "expo-clipboard";
 import ScreenWrapper from "@/components/layout/ScreenWrapper";
 import { Visibility } from "@/types/Quiz";
+import useGetQuizDetail from "@/api/quizzes/useGetQuizDetail";
+import useGetQuizHash from "@/api/quizzes/useGetQuizHash";
+import Toast from "react-native-toast-message";
+import Loader from "@/components/ui/Loader";
+import ErrorView from "@/components/ui/ErrorView";
+import * as Linking from "expo-linking";
 
 function ManageAccessScreen() {
-  const { uuid }: { uuid: string } = useLocalSearchParams();
+  const { uuid } = useLocalSearchParams<{ uuid: string }>();
 
-  const quiz = QUIZ_1; //TODO:Fetch data
+  const { data: quiz, isPending, isError, error } = useGetQuizDetail(uuid);
+  const { data: hash } = useGetQuizHash(uuid);
 
   const [activeTab, setActiveTab] = useState<string>("users");
+  //TODO: Fetch shares
   const [shares, setShares] = useState<QuizParticipant[]>(INITIAL_SHARES);
   const [modalVisible, setModalVisible] = useState(false);
-  const [accessLevel, setAccessLevel] = useState<string>(quiz.visibility ?? "");
+  const [accessLevel, setAccessLevel] = useState<string>(
+    quiz?.visibility ?? "",
+  );
 
   // Filter lists based on block status
   const activeUsers = shares.filter((s) => !s.blocked);
   const blockedUsers = shares.filter((s) => s.blocked);
+  const link = Linking.createURL(`quizzes/${uuid}/join/${hash}`);
 
   async function handleCopyLink() {
     try {
-      await Clipboard.setStringAsync(quiz.link!);
+      await Clipboard.setStringAsync(link);
 
-      Alert.alert(
-        "Link Copied",
-        "The quiz link has been copied to your clipboard.",
-      );
-    } catch (error) {
-      Alert.alert("Error", "Failed to copy the link.");
+      Toast.show({
+        type: "success",
+        text1: "Link Copied",
+        text2: "The quiz link has been copied to your clipboard.",
+      });
+    } catch {
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "Failed to copy the link.",
+      });
     }
   }
 
@@ -133,6 +149,18 @@ function ManageAccessScreen() {
     );
   }
 
+  if (isPending) {
+    return (
+      <ScreenWrapper>
+        <Loader />
+      </ScreenWrapper>
+    );
+  }
+
+  if (isError) {
+    return <ErrorView error={error} />;
+  }
+
   return (
     <ScreenWrapper>
       <Text style={styles.headerTitle}>{quiz.title} - Manage Access</Text>
@@ -152,7 +180,7 @@ function ManageAccessScreen() {
         <View style={styles.sharingBox}>
           <View style={styles.linkContainer}>
             <Text style={styles.linkText} numberOfLines={1}>
-              {quiz.link}
+              {link}
             </Text>
             <TouchableOpacity onPress={handleCopyLink}>
               <Feather name="copy" size={18} color={COLORS.textSecondary} />
@@ -199,7 +227,7 @@ function ManageAccessScreen() {
       <QrCodeModal
         visible={modalVisible}
         onHide={setModalVisible}
-        link={quiz.link!}
+        link={link}
       />
     </ScreenWrapper>
   );

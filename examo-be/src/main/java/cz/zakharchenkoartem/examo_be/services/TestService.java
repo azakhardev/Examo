@@ -222,7 +222,7 @@ public class TestService {
     public TestSubmissionDocument evaluateTestSubmission(Long testId, Integer userId, List<AnswersPayload> answers) {
         Test test = this.getTest(testId);
 
-        QuizDocument quiz = quizService.getQuizById(test.getQuizId().toString());
+        QuizDocument quiz = quizService.getQuizDocumentById(test.getQuizId().toString());
         List<Question> quizQuestions = quiz.getQuestions();
 
         var submission = TestSubmissionDocument.builder()
