@@ -15,7 +15,8 @@ import Toast from "react-native-toast-message";
 import { useAuth } from "@/components/providers/AuthProvider";
 
 //TODO: Replace with .env
-const BASE_URL = "192.168.0.61:8080";
+const BASE_URL =
+  process.env.EXPO_PUBLIC_API_BASE_URL || "http://localhost:8080";
 
 export default function ParticipateTestScreen() {
   const { id } = useLocalSearchParams();

@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: artemzach/examo:postgres-latest
+    environment:
+      POSTGRES_USER: examo_user
+      POSTGRES_PASSWORD: examo_password
+      POSTGRES_DB: examo
+    ports:
+      - "5432:5432"
+
+  mongo:
+    image: artemzach/examo:mongo-latest
+    ports:
+      - "27017:27017"
+
+  backend:
+    image: artemzach/examo:backend-latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - mongo
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/examo
+      - SPRING_DATASOURCE_USERNAME=examo_user
+      - SPRING_DATASOURCE_PASSWORD=examo_password
+      - SPRING_MONGODB_URI=mongodb://mongo:27017/examo
+
+  frontend:
+    image: artemzach/examo:frontend-latest
+    ports:
+      - "8081:8081"
+    depends_on:
+      - backend

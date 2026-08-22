@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: examo_user
+      POSTGRES_PASSWORD: examo_password
+      POSTGRES_DB: examo
+    ports:
+      - "5432:5432"
+    volumes:
+      # Postgres automatically executes any .sql files in this directory on first boot
+      - ./database/init.sql:/docker-entrypoint-initdb.d/1-init.sql
+      - ./database/inserts.sql:/docker-entrypoint-initdb.d/2-inserts.sql
+
+  mongo:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    volumes:
+      # Mount the whole database folder so the JSON files are inside the container
+      - ./database:/init-data
+      # Mount the script to automatically run on first boot
+      - ./database/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
+
+  backend:
+    build:
+      context: ./examo-be
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - mongo
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/examo
+      - SPRING_DATASOURCE_USERNAME=examo_user
+      - SPRING_DATASOURCE_PASSWORD=examo_password
+      # Correct environment variable for Spring Boot 3+
+      - SPRING_MONGODB_URI=mongodb://mongo:27017/examo
+
+  frontend:
+    build:
+      context: ./examo-fe
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - backend
+    environment:
+      # Point the frontend API calls to the backend container
+      - EXPO_PUBLIC_API_BASE_URL=http://localhost:8080

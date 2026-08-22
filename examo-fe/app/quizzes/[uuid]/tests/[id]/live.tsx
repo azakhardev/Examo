@@ -15,7 +15,8 @@ import Loader from "@/components/ui/Loader";
 import useGetQuizTestDetail from "@/api/quizzes/useGetQuizTestDetail";
 
 //TODO: Replace with .env
-const BASE_URL = "192.168.0.61:8080";
+const BASE_URL =
+  process.env.EXPO_PUBLIC_API_BASE_URL || "http://localhost:8080";
 
 function LiveTestScreen() {
   const { id, uuid } = useLocalSearchParams();

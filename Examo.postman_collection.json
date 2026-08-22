@@ -312,6 +312,25 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Download Quiz",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{server}}/quizzes/{{uuid}}/download",
+              "host": ["{{server}}"],
+              "path": ["quizzes", "{{uuid}}", "download"]
+            }
+          },
+          "response": []
         }
       ]
     },

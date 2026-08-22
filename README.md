@@ -291,6 +291,7 @@ Stores finalized exam submissions, capturing individual student responses, exact
 ## Links
 
 - Figma: [Examo](https://www.figma.com/design/IvHsNmpnB761eMDljY8AZ6/Untitled?node-id=0-1&p=f&t=jtLGXAnMlPA03DBp-0)
+- Docker Hub: [artemzach/examo](https://hub.docker.com/r/artemzach/examo/tags)
 
 ## Possible Improvements
 
@@ -298,9 +299,53 @@ Stores finalized exam submissions, capturing individual student responses, exact
 - Autograder based on points criteria
 - Cleaner components & use of orval with openapi
 
+## Quick Start (Run via Docker)
+
+You do not need to install Java, Node, or configure databases to run this application. The entire stack is containerized.
+
+### 1. Launch the Stack
+
+Ensure Docker Desktop is running, then execute:
+
+```bash
+docker-compose up
+```
+
+_This will pull the pre-built images and initialize the databases with sample quiz data._
+
+### 2. Access the Application
+
+**Web Version:**
+Open your browser and navigate to:
+👉 `http://localhost:8081/login`
+
+**Mobile Version (iOS / Android):**
+Because the frontend connects to a local backend, your mobile device must be on the same Wi-Fi network as your computer.
+
+1. Find your computer's local IP address (e.g., `192.168.x.x`).
+2. Download the **Expo Go** app on your phone.
+3. Open Expo Go, select **"Enter URL manually"**, and type:
+   👉 `exp://YOUR_COMPUTER_IP_ADDRESS:8081`
+
+---
+
+## Local Development (Build from Source)
+
+If you want to modify the source code and rebuild the containers locally, use the local compose configuration:
+
+```bash
+docker-compose -f docker-compose.local.yml up --build
+```
+
+**Important Note for Mobile Testing:**
+When running locally, you must update the `.env` file in the `examo-fe` directory with your computer's current IP address so the mobile app knows where to find the Spring Boot backend:
+`EXPO_PUBLIC_API_BASE_URL=http://YOUR_COMPUTER_IP_ADDRESS:8080`
+
+_This will pull the pre-built images and initialize the databases with sample quiz data._
+
 ## ⏱️ Development Log
 
-**Total Time Invested: ~75 hours**
+**Total Time Invested: ~78 hours**
 
 <details>
 <summary>Click to view the day-by-day progress</summary>
@@ -339,6 +384,6 @@ Stores finalized exam submissions, capturing individual student responses, exact
 | **19.8.** | 3h         | WebSockets                                                |
 | **20.8.** | 2h         | Create & Edit Quiz                                        |
 | **21.8.** | 3.5h       | Joining Quizzes via links or QR codes                     |
-| **22.8.** | 1.5h       | Quiz Download                                             |
+| **22.8.** | 3h         | Quiz Download + Docker configuration                      |
 
 </details>

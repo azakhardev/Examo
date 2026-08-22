@@ -24,7 +24,8 @@ export class ApiError extends Error {
 }
 
 //TODO: Replace in env
-const BASE_URL = "http://192.168.0.61:8080";
+const BASE_URL =
+  process.env.EXPO_PUBLIC_API_BASE_URL || "http://localhost:8080";
 
 const api = axios.create({
   baseURL: BASE_URL,

@@ -2,11 +2,11 @@ spring:
   application:
     name: examo-be
 
-  # 1. Pstgresql configuration
+  # 1. Postgresql configuration
   datasource:
-    url: jdbc:postgresql://localhost:5432/examo
-    username: postgres
-    password: 123456Ab
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/examo}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:123456Ab}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -17,7 +17,7 @@ spring:
 
   # 2. MongoDb configuration
   mongodb:
-    uri: mongodb://localhost:27017/examo
+    uri: ${SPRING_MONGODB_URI:mongodb://localhost:27017/examo}
 
 server:
   port: 8080 # Backend port
