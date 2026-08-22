@@ -22,6 +22,7 @@ export const queryKeys = {
     detail: ["quizzes", "detail"],
     tests: ["quizzes", "tests"],
     hash: ["quizzes", "hash"],
+    download: ["quizzes", "download"],
   },
   users: {
     profile: ["users", "profile"],

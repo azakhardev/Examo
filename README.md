@@ -339,5 +339,6 @@ Stores finalized exam submissions, capturing individual student responses, exact
 | **19.8.** | 3h         | WebSockets                                                |
 | **20.8.** | 2h         | Create & Edit Quiz                                        |
 | **21.8.** | 3.5h       | Joining Quizzes via links or QR codes                     |
+| **22.8.** | 1.5h       | Quiz Download                                             |
 
 </details>

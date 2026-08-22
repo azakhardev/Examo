@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import COLORS from "@/constants/colors";
 import { router } from "expo-router";
+import { downloadQuizFile } from "@/api/quizzes/downloadQuiz";
 type QuizSettingsModalProps = {
   uuid: string;
   visible: boolean;
@@ -62,7 +63,10 @@ export default function QuizSettingsModal({
                 <Text style={styles.optionText}>Manage Access</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.optionButton} onPress={onClose}>
+              <TouchableOpacity
+                style={styles.optionButton}
+                onPress={() => downloadQuizFile(uuid)}
+              >
                 <Text style={styles.optionText}>Download</Text>
               </TouchableOpacity>
 

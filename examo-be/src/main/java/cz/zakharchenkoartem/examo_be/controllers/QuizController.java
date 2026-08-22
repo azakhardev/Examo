@@ -2,13 +2,18 @@ package cz.zakharchenkoartem.examo_be.controllers;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cz.zakharchenkoartem.examo_be.exceptions.ForbiddenException;
 import cz.zakharchenkoartem.examo_be.models.documents.QuizDocument;
@@ -260,6 +265,35 @@ public class QuizController {
         quizService.saveQuizDocument(quiz);
 
         return ResponseEntity.ok(quiz.getShareHash());
+    }
+
+    @GetMapping("/{uuid}/download")
+    public ResponseEntity<QuizDocument> downloadQuiz(
+            @PathVariable String uuid,
+            Principal principal) {
+
+        Integer userId = Integer.valueOf(principal.getName());
+
+        quizSharesService.ensureAccess(userId, uuid, QuizEntity.Visibility.RESTRICTED);
+
+        QuizDocument quiz = quizService.getQuizDocumentById(uuid);
+
+        String contentType = "application/json";
+        ;
+        String fileExtension = "json";
+
+        // Sanitize title for filename
+        String safeTitle = quiz.getTitle().replaceAll("[^a-zA-Z0-9-_]", "_");
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        String filename = safeTitle + "_" + timestamp + "." + fileExtension;
+
+        // `Content-Disposition: attachment; filename="filename"`` explicitly commandins
+        // the browser or app to treat this response body as an external payload,
+        // package it up, and pop up a 'Save As'
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                .body(quiz);
     }
 
 }
